@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Age Calculator Online — Exact Age in Years, Months & Days | Docutoolbox</title>
+<meta name="description" content="Free online age calculator. Enter your date of birth to instantly find your exact age in years, months, and days, plus total weeks, hours, minutes, and when your next birthday falls.">
+<link rel="canonical" href="https://docutoolbox.com/age-calculator/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0A2E45; --blue-card:#0E3550; --grid-line:rgba(160,205,225,0.09);
+    --linework:#6FB8D9; --linework-soft:#3E7C99; --accent:#FF6B35; --accent-soft:#FF8A5C;
+    --ink:#EDF3F6; --text-muted:#8FADC0; --radius:12px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/40px 40px,
+      radial-gradient(ellipse 1000px 600px at 50% -5%, rgba(111,184,217,0.10), transparent 60%),
+      var(--blue-deep);
+    color:var(--ink); font-family:'IBM Plex Sans',sans-serif; min-height:100vh; padding:0 0 60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 20px;}
+
+  header.site{ background:rgba(10,46,69,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:50px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px; max-width:1120px; margin:0 auto; flex-wrap:wrap; gap:12px;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px;}
+  .logo-mark{ width:28px; height:28px; border:1.5px solid var(--linework); border-radius:6px; position:relative;}
+  .logo-mark::before{ content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:12px; height:1.5px; background:var(--accent);}
+  .logo-mark::after{ content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:1.5px; height:12px; background:var(--accent);}
+  .nav-links{ display:flex; align-items:center; gap:22px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; flex-wrap:wrap;}
+  .nav-links a{ text-decoration:none; color:var(--text-muted); transition:color 0.15s ease;}
+  .nav-links a:hover, .nav-links a.active{ color:var(--linework);}
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:16px; justify-content:center; width:100%;
+  }
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(28px,5.5vw,42px); line-height:1.1; text-align:center; margin-bottom:14px; letter-spacing:-0.01em;}
+  header.hero-head p{ color:var(--text-muted); font-size:15px; max-width:460px; margin:0 auto 36px; line-height:1.6; text-align:center;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;}
+  .field label{ display:block; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; font-family:'IBM Plex Mono',monospace;}
+  .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif; font-size:14px; padding:11px 10px; border-radius:8px; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center; cursor:pointer;
+  }
+  .field select:focus{ outline:none; border-color:var(--linework);}
+
+  button.calc{
+    width:100%; margin-top:20px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  #errorMsg{ color:#FF9C8A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'IBM Plex Mono',monospace;}
+
+  #results{ margin-top:32px; display:none;}
+  .divider{ display:flex; align-items:center; gap:12px; color:var(--text-muted); font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; margin:32px 0 22px;}
+  .divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--grid-line);}
+
+  .flip-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:8px;}
+  .flip-unit{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:var(--radius); padding:20px 6px; text-align:center;}
+  .flip-num{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(26px,6vw,38px); color:var(--linework); line-height:1;}
+  .flip-label{ margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);}
+
+  .live-line{ text-align:center; font-family:'IBM Plex Mono',monospace; color:var(--linework-soft); font-size:12.5px; margin-top:16px;}
+  .live-line span{ color:var(--accent); font-weight:500;}
+
+  .stat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:8px;}
+  @media (min-width:520px){ .stat-grid{ grid-template-columns:repeat(4,1fr);} }
+  .stat{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:15px 10px; text-align:center;}
+  .stat-num{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .stat-label{ margin-top:5px; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted);}
+
+  .bday-card{ margin-top:22px; display:flex; align-items:center; gap:20px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:var(--radius); padding:20px;}
+  .ring-wrap{ flex:0 0 auto; position:relative; width:80px; height:80px;}
+  .ring-wrap svg{ transform:rotate(-90deg);}
+  .ring-bg{ fill:none; stroke:var(--grid-line); stroke-width:6.5;}
+  .ring-fg{ fill:none; stroke:var(--accent); stroke-width:6.5; stroke-linecap:round; transition:stroke-dashoffset 0.6s ease;}
+  .ring-num{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; color:var(--linework);}
+  .bday-title{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:13.5px; margin-bottom:4px;}
+  .bday-sub{ color:var(--text-muted); font-size:12px; font-family:'IBM Plex Mono',monospace;}
+  #bdayWeekday{ color:var(--accent); margin-top:4px;}
+
+  .faq{ margin-top:52px;}
+  .faq-item{ border-bottom:1px solid var(--grid-line); padding:16px 0;}
+  .faq-item:first-child{ border-top:1px solid var(--grid-line);}
+  .faq-q{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; margin-bottom:8px;}
+  .faq-a{ color:var(--text-muted); font-size:13.5px; line-height:1.6;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'IBM Plex Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><span class="logo-mark"></span>Docutoolbox</a>
+    <nav class="nav-links">
+      <a href="/age-calculator/" class="active">Age Calculator</a>
+      <a href="/word-counter/">Word Counter</a>
+      <a href="/text-case-converter/">Case Converter</a>
+      <a href="/image-compressor/">Image Compressor</a>
+      <a href="/about/">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <header class="hero-head">
+    <div class="eyebrow">Docutoolbox</div>
+    <h1>Your exact age, calculated.</h1>
+    <p>Enter your date of birth. Everything else — the years, the weeks, the seconds still ticking — is worked out below.</p>
+  </header>
+
+  <div class="card">
+    <div class="field-row">
+      <div class="field">
+        <label for="day">Day</label>
+        <select id="day"></select>
+      </div>
+      <div class="field">
+        <label for="month">Month</label>
+        <select id="month">
+          <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+          <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+          <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="year">Year</label>
+        <select id="year"></select>
+      </div>
+    </div>
+    <button class="calc" id="calcBtn">Calculate my age</button>
+    <div id="errorMsg">Please choose a valid date that isn't in the future.</div>
+  </div>
+
+  <div id="results">
+    <div class="divider">Your age</div>
+    <div class="flip-row">
+      <div class="flip-unit"><div class="flip-num" id="outYears">0</div><div class="flip-label">Years</div></div>
+      <div class="flip-unit"><div class="flip-num" id="outMonths">0</div><div class="flip-label">Months</div></div>
+      <div class="flip-unit"><div class="flip-num" id="outDays">0</div><div class="flip-label">Days</div></div>
+    </div>
+    <div class="live-line">Right now you've lived exactly <span id="liveSeconds">0</span> seconds</div>
+
+    <div class="divider">In other units</div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-num" id="statWeeks">0</div><div class="stat-label">Weeks</div></div>
+      <div class="stat"><div class="stat-num" id="statTotalDays">0</div><div class="stat-label">Days</div></div>
+      <div class="stat"><div class="stat-num" id="statHours">0</div><div class="stat-label">Hours</div></div>
+      <div class="stat"><div class="stat-num" id="statMinutes">0</div><div class="stat-label">Minutes</div></div>
+    </div>
+
+    <div class="bday-card">
+      <div class="ring-wrap">
+        <svg width="80" height="80" viewBox="0 0 88 88">
+          <circle class="ring-bg" cx="44" cy="44" r="38"/>
+          <circle class="ring-fg" id="ringFg" cx="44" cy="44" r="38" stroke-dasharray="238.76" stroke-dashoffset="238.76"/>
+        </svg>
+        <div class="ring-num" id="ringNum">0</div>
+      </div>
+      <div class="bday-text">
+        <div class="bday-title">Next birthday</div>
+        <div class="bday-sub" id="bdayText">— days away</div>
+        <div class="bday-sub" id="bdayWeekday">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="divider">Frequently asked</div>
+    <div class="faq-item">
+      <div class="faq-q">How does this age calculator work?</div>
+      <div class="faq-a">It compares your date of birth to today's date and works out the exact difference in years, months, and days — correctly accounting for leap years and varying month lengths.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is my date of birth stored anywhere?</div>
+      <div class="faq-a">No. The calculation happens entirely in your browser — nothing is sent to a server or saved. See the <a href="/privacy/" style="color:var(--linework)">Privacy Policy</a> for details.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I check someone else's age too?</div>
+      <div class="faq-a">Yes — the calculator works for any valid date of birth, not just your own.</div>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const daySel = document.getElementById('day');
+  const monthSel = document.getElementById('month');
+  const yearSel = document.getElementById('year');
+
+  for(let d=1; d<=31; d++){
+    const opt = document.createElement('option'); opt.value = d; opt.textContent = d; daySel.appendChild(opt);
+  }
+  const nowYear = new Date().getFullYear();
+  for(let y=nowYear; y>=nowYear-120; y--){
+    const opt = document.createElement('option'); opt.value = y; opt.textContent = y; yearSel.appendChild(opt);
+  }
+  yearSel.value = nowYear - 25;
+
+  let tickInterval = null;
+  let birthDateGlobal = null;
+
+  function calcAge(){
+    const d = parseInt(daySel.value), m = parseInt(monthSel.value), y = parseInt(yearSel.value);
+    const birthDate = new Date(y, m, d);
+    const now = new Date();
+    const errorMsg = document.getElementById('errorMsg');
+    const results = document.getElementById('results');
+
+    if(birthDate > now || birthDate.getDate() !== d){
+      errorMsg.style.display = 'block'; results.style.display = 'none'; return;
+    }
+    errorMsg.style.display = 'none'; results.style.display = 'block'; birthDateGlobal = birthDate;
+
+    let years = now.getFullYear() - birthDate.getFullYear();
+    let months = now.getMonth() - birthDate.getMonth();
+    let days = now.getDate() - birthDate.getDate();
+    if(days < 0){ months -= 1; const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); }
+    if(months < 0){ years -= 1; months += 12; }
+    document.getElementById('outYears').textContent = years;
+    document.getElementById('outMonths').textContent = months;
+    document.getElementById('outDays').textContent = days;
+
+    const diffMs = now - birthDate;
+    const totalSeconds = Math.floor(diffMs/1000);
+    const totalMinutes = Math.floor(totalSeconds/60);
+    const totalHours = Math.floor(totalMinutes/60);
+    const totalDays = Math.floor(totalHours/24);
+    const totalWeeks = Math.floor(totalDays/7);
+    document.getElementById('statWeeks').textContent = totalWeeks.toLocaleString();
+    document.getElementById('statTotalDays').textContent = totalDays.toLocaleString();
+    document.getElementById('statHours').textContent = totalHours.toLocaleString();
+    document.getElementById('statMinutes').textContent = totalMinutes.toLocaleString();
+
+    let nextBday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if(nextBday < now){ nextBday = new Date(now.getFullYear()+1, birthDate.getMonth(), birthDate.getDate()); }
+    const msToBday = nextBday - now;
+    const daysToBday = Math.ceil(msToBday / (1000*60*60*24));
+
+    let remMonths = nextBday.getMonth() - now.getMonth() + (nextBday.getFullYear()-now.getFullYear())*12;
+    let remDays = nextBday.getDate() - now.getDate();
+    if(remDays < 0){ remMonths -= 1; const prevMonth = new Date(nextBday.getFullYear(), nextBday.getMonth(), 0); remDays += prevMonth.getDate(); }
+
+    const weekdayName = nextBday.toLocaleDateString('en-US', { weekday: 'long' });
+    const dateLabel = nextBday.toLocaleDateString('en-US', { day:'numeric', month:'long' });
+
+    let breakdown = '';
+    if(remMonths > 0) breakdown += remMonths + " month" + (remMonths===1?"":"s") + " ";
+    breakdown += remDays + " day" + (remDays===1?"":"s");
+
+    document.getElementById('bdayText').textContent = daysToBday === 0 ? "It's today! 🎉" : breakdown + " away (" + daysToBday.toLocaleString() + " days total)";
+    document.getElementById('bdayWeekday').textContent = daysToBday === 0 ? "" : "Falls on a " + weekdayName + " · " + dateLabel;
+
+    const yearProgress = 1 - (daysToBday/365.25);
+    const circumference = 238.76;
+    const offset = circumference * (daysToBday/365.25);
+    document.getElementById('ringFg').setAttribute('stroke-dashoffset', offset.toFixed(2));
+    document.getElementById('ringNum').textContent = Math.round(yearProgress*100) + "%";
+
+    if(tickInterval) clearInterval(tickInterval);
+    updateLiveSeconds();
+    tickInterval = setInterval(updateLiveSeconds, 1000);
+  }
+
+  function updateLiveSeconds(){
+    if(!birthDateGlobal) return;
+    const now = new Date();
+    const totalSeconds = Math.floor((now - birthDateGlobal)/1000);
+    document.getElementById('liveSeconds').textContent = totalSeconds.toLocaleString();
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', calcAge);
+  calcAge();
+</script>
+
+</body>
+</html>
