@@ -247,10 +247,7 @@
 
   .feature-visual{
     border:1px solid var(--grid-line); border-radius:14px; background:var(--blue-card);
-    min-height:420px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
-  }
-  @media (max-width:760px){
-    .feature-visual{ min-height:280px; }
+    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
   }
   .feature-visual::before{
     content:""; position:absolute; inset:0;
@@ -402,7 +399,7 @@
 
     <div class="feature-row reveal">
       <a href="/age-calculator/" class="feature-visual" style="text-decoration:none;">
-        <img src="/images/age-calculator.png" alt="Age Calculator" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:1;">
+        <img src="/images/age-calculator.png" alt="Age Calculator" style="display:block;width:100%;height:auto;">
       </a>
       <div class="feature-text">
         <span class="feature-tag">Time</span>
@@ -414,7 +411,7 @@
 
     <div class="feature-row reverse reveal">
       <a href="/image-compressor/" class="feature-visual" style="text-decoration:none;">
-        <img src="/images/image-compressor.jpg" alt="Image Compressor" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:1;">
+        <img src="/images/image-compressor.jpg" alt="Image Compressor" style="display:block;width:100%;height:auto;">
       </a>
       <div class="feature-text">
         <span class="feature-tag">Images</span>
@@ -426,7 +423,7 @@
 
     <div class="feature-row reveal">
       <a href="/text-case-converter/" class="feature-visual" style="text-decoration:none;">
-        <img src="/images/text-case-converter.jpeg" alt="Text Case Converter" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:1;">
+        <img src="/images/text-case-converter.jpeg" alt="Text Case Converter" style="display:block;width:100%;height:auto;">
       </a>
       <div class="feature-text">
         <span class="feature-tag">Writing</span>
@@ -438,7 +435,7 @@
 
     <div class="feature-row reverse reveal">
       <a href="/word-counter/" class="feature-visual" style="text-decoration:none;">
-        <img src="/images/word-counter.jpeg" alt="Word Counter" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:1;">
+        <img src="/images/word-counter.jpeg" alt="Word Counter" style="display:block;width:100%;height:auto;">
       </a>
       <div class="feature-text">
         <span class="feature-tag">Writing</span>
