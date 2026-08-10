@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratio & Proportion Calculator — Simplify Ratios, Solve for X | Docutoolbox</title>
+<meta name="description" content="Free online ratio calculator. Simplify any ratio to its lowest terms, or solve a proportion (A:B = C:X) for the missing value. No sign-up required.">
+<link rel="canonical" href="https://docutoolbox.com/ratio-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+    .sidebar{ position:static; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .tabs{ display:flex; gap:8px; margin-bottom:18px; }
+  .tab-btn{ flex:1; padding:11px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; }
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--linework);}
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .ratio-row{ display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:end;}
+  .ratio-colon{ text-align:center; font-family:'Fraunces',serif; font-size:24px; color:var(--linework); padding-bottom:10px;}
+  .proportion-grid{ display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:8px; align-items:end;}
+  .proportion-sym{ text-align:center; font-family:'Fraunces',serif; font-size:20px; color:var(--linework); padding-bottom:10px;}
+  @media (max-width:600px){ .proportion-grid{ grid-template-columns:1fr 1fr; } .proportion-sym{ display:none; } }
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  .result-grid{ display:grid; grid-template-columns:1fr; gap:10px; margin-top:20px;}
+  .result-grid.cols-2{ grid-template-columns:1fr 1fr; }
+  .result{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:16px; text-align:center;}
+  .result .label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;}
+  .result .value{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; color:var(--accent);}
+  #errorMsg1, #errorMsg2{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
+  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Ratio & proportion calculator</h1>
+  <p class="intro">Simplify any ratio to its lowest terms, or solve a proportion for a missing value.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="tabs">
+          <button class="tab-btn active" id="tabSimplify">Simplify a ratio</button>
+          <button class="tab-btn" id="tabSolve">Solve a proportion</button>
+        </div>
+
+        <div class="tab-panel active" id="panelSimplify">
+          <div class="ratio-row">
+            <div class="field"><label>A</label><input type="number" id="ratioA" value="12"></div>
+            <div class="ratio-colon">:</div>
+            <div class="field"><label>B</label><input type="number" id="ratioB" value="18"></div>
+          </div>
+          <button class="calc" id="simplifyBtn">Simplify</button>
+          <div id="errorMsg1">Please enter two valid, non-zero numbers.</div>
+          <div class="result-grid cols-2" id="simplifyResults" style="display:none;">
+            <div class="result"><span class="label">Simplified ratio</span><span class="value" id="rSimplified">0:0</span></div>
+            <div class="result"><span class="label">Decimal value (A ÷ B)</span><span class="value" id="rDecimal">0</span></div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panelSolve">
+          <div class="proportion-grid">
+            <div class="field"><label>A</label><input type="number" id="propA" value="4"></div>
+            <div class="proportion-sym">:</div>
+            <div class="field"><label>B</label><input type="number" id="propB" value="8"></div>
+            <div class="proportion-sym">=</div>
+            <div class="field"><label>C</label><input type="number" id="propC" value="10"></div>
+            <div class="proportion-sym">:</div>
+            <div class="field"><label>X</label><input type="text" id="propX" placeholder="?" value="?" disabled></div>
+          </div>
+          <div class="field-hint" style="font-size:12px;color:var(--text-muted);margin:-8px 0 16px;">Solves A : B = C : X for X (the classic "cross-multiplication" proportion).</div>
+          <button class="calc" id="solveBtn">Solve for X</button>
+          <div id="errorMsg2">Please enter three valid numbers (A and B cannot be zero).</div>
+          <div class="result-grid" id="solveResults" style="display:none;">
+            <div class="result"><span class="label">X =</span><span class="value" id="rX">0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Calculators</h4>
+      <a href="/percentage-calculator/">Percentage Calculator</a>
+      <a href="/date-calculator/">Date Calculator</a>
+      <a href="/age-calculator/">Age Calculator</a>
+      <a href="/time-calculator/">Time / Duration Calculator</a>
+      <a href="/discount-calculator/">Discount & Sales Tax Calculator</a>
+      <a href="/tip-calculator/">Tip Calculator</a>
+      <a href="/gpa-calculator/">GPA / Grade Calculator</a>
+      <a href="/average-calculator/">Average / Mean Calculator</a>
+      <a href="/scientific-calculator/">Scientific Calculator</a>
+      <a href="/day-counter/">Day Counter / Countdown</a>
+      <a href="/day-of-week-calculator/">Day of the Week Calculator</a>
+      <a href="/roman-numeral-converter/">Roman Numerals Converter</a>
+      <a href="/binary-hex-decimal-converter/">Binary / Hex / Decimal Converter</a>
+      <a href="/random-number-generator/">Random Number Generator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Ratio & Proportion Calculator?</h2>
+      <p>This free tool handles the two most common ratio problems people run into: <strong>simplifying a ratio</strong> down to its lowest terms, and <strong>solving a proportion</strong> when you know three of the four numbers and need to find the missing one. Both calculations happen instantly in your browser, with no sign-up and no data ever leaving your device.</p>
+      <p>Ratios and proportions show up constantly in everyday life — scaling a recipe, mixing paint or cleaning solutions, converting measurements, comparing prices, resizing images, or working through a school assignment. This tool takes the manual arithmetic out of the equation.</p>
+
+      <h2>How to simplify a ratio</h2>
+      <ol>
+        <li>Switch to the <strong>"Simplify a ratio"</strong> tab.</li>
+        <li>Enter the two numbers of your ratio into fields A and B.</li>
+        <li>Click <strong>Simplify</strong>.</li>
+        <li>The calculator reduces the ratio to its lowest whole-number terms and also shows the equivalent decimal value (A ÷ B).</li>
+      </ol>
+      <p>For example, a ratio of 12:18 simplifies to 2:3, because both numbers share a greatest common factor of 6.</p>
+
+      <h2>How to solve a proportion</h2>
+      <ol>
+        <li>Switch to the <strong>"Solve a proportion"</strong> tab.</li>
+        <li>Enter your known values for A, B, and C in the equation A : B = C : X.</li>
+        <li>Click <strong>Solve for X</strong>.</li>
+        <li>The calculator finds the missing value X using cross-multiplication.</li>
+      </ol>
+      <p>For example, if A = 4, B = 8, and C = 10, then X = (B × C) ÷ A = (8 × 10) ÷ 4 = 20.</p>
+
+      <h2>How ratio simplification works</h2>
+      <p>To simplify a ratio, the calculator finds the <strong>greatest common divisor (GCD)</strong> of the two numbers and divides both sides by it. The GCD is the largest number that divides evenly into both A and B. Dividing both numbers by their GCD guarantees the smallest possible whole-number ratio that's still mathematically equivalent to the original.</p>
+      <p>For instance, with a ratio of 45:60, the GCD of 45 and 60 is 15. Dividing both sides by 15 gives 3:4 — the simplest form of that ratio.</p>
+
+      <h2>How proportion solving works</h2>
+      <p>A proportion states that two ratios are equal: A : B = C : D. Cross-multiplication says that A × D = B × C. Rearranging that equation to solve for the unknown value lets you find any missing term as long as you know the other three. This calculator always solves for the fourth term (X) in A : B = C : X, which covers the vast majority of real-world proportion problems.</p>
+
+      <h2>Common real-world uses</h2>
+      <ul>
+        <li><strong>Cooking and baking:</strong> scaling a recipe up or down while keeping ingredient ratios correct</li>
+        <li><strong>Mixing solutions:</strong> working out the correct ratio of concentrate to water for cleaning products, fertilizer, or paint</li>
+        <li><strong>Maps and scale models:</strong> converting a map or blueprint scale (e.g., 1:50) into real-world distances</li>
+        <li><strong>Finance and business:</strong> comparing financial ratios, splitting costs or profits fairly between partners</li>
+        <li><strong>School and exams:</strong> working through ratio and proportion word problems in math class</li>
+        <li><strong>Photography and design:</strong> keeping images or layouts proportional when resizing</li>
+      </ul>
+
+      <h2>Ratio vs. proportion — what's the difference?</h2>
+      <p>A <strong>ratio</strong> compares two quantities, like 3:4. A <strong>proportion</strong> is a statement that two ratios are equal to each other, like 3:4 = 6:8. In other words, a proportion is really just two equivalent ratios placed side by side — which is exactly why solving one lets you find a missing value in the other.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Can I use decimal numbers?</h3>
+      <p>Yes, both the simplify and solve tools accept decimal input, and the solver will return a decimal answer where appropriate.</p>
+      <h3>What if my ratio can't be simplified further?</h3>
+      <p>If the greatest common divisor of A and B is 1, the ratio is already in its simplest form, and the calculator will show it unchanged.</p>
+      <h3>Does the order of A and B matter?</h3>
+      <p>Yes — a ratio of 2:3 is different from 3:2, so make sure you enter your numbers in the order that matches what you're comparing.</p>
+      <h3>Can I solve for a different position, like A instead of X?</h3>
+      <p>This calculator is set up to solve for the fourth term (X) in A : B = C : X. If your unknown is in a different position, you can rearrange your proportion so the unknown is last, then enter the known values accordingly.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const tabSimplify = document.getElementById('tabSimplify');
+  const tabSolve = document.getElementById('tabSolve');
+  const panelSimplify = document.getElementById('panelSimplify');
+  const panelSolve = document.getElementById('panelSolve');
+  tabSimplify.addEventListener('click', () => {
+    tabSimplify.classList.add('active'); tabSolve.classList.remove('active');
+    panelSimplify.classList.add('active'); panelSolve.classList.remove('active');
+  });
+  tabSolve.addEventListener('click', () => {
+    tabSolve.classList.add('active'); tabSimplify.classList.remove('active');
+    panelSolve.classList.add('active'); panelSimplify.classList.remove('active');
+  });
+
+  function gcd(a, b){ a = Math.abs(a); b = Math.abs(b); while(b){ [a, b] = [b, a % b]; } return a || 1; }
+
+  document.getElementById('simplifyBtn').addEventListener('click', () => {
+    const a = parseFloat(document.getElementById('ratioA').value);
+    const b = parseFloat(document.getElementById('ratioB').value);
+    const errorMsg = document.getElementById('errorMsg1');
+    const results = document.getElementById('simplifyResults');
+    if(isNaN(a) || isNaN(b) || a === 0 || b === 0){
+      errorMsg.style.display = 'block'; results.style.display = 'none'; return;
+    }
+    errorMsg.style.display = 'none'; results.style.display = 'grid';
+    // Scale to integers if decimals are involved
+    const factor = Math.pow(10, Math.max((a.toString().split('.')[1]||'').length, (b.toString().split('.')[1]||'').length));
+    const ai = Math.round(a*factor), bi = Math.round(b*factor);
+    const g = gcd(ai, bi);
+    document.getElementById('rSimplified').textContent = `${ai/g}:${bi/g}`;
+    document.getElementById('rDecimal').textContent = (a/b).toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
+  });
+
+  document.getElementById('solveBtn').addEventListener('click', () => {
+    const a = parseFloat(document.getElementById('propA').value);
+    const b = parseFloat(document.getElementById('propB').value);
+    const c = parseFloat(document.getElementById('propC').value);
+    const errorMsg = document.getElementById('errorMsg2');
+    const results = document.getElementById('solveResults');
+    if(isNaN(a) || isNaN(b) || isNaN(c) || a === 0){
+      errorMsg.style.display = 'block'; results.style.display = 'none'; return;
+    }
+    errorMsg.style.display = 'none'; results.style.display = 'grid';
+    const x = (b*c)/a;
+    document.getElementById('rX').textContent = Number.isInteger(x) ? x : x.toFixed(3);
+  });
+</script>
+
+</body>
+</html>
