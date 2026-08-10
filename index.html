@@ -248,7 +248,9 @@
   .feature-visual{
     border:1px solid var(--grid-line); border-radius:14px; background:var(--blue-card);
     display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+    transition:border-color 0.2s ease;
   }
+  .feature-visual:hover{ border-color:var(--linework); }
   .feature-visual img{ display:block; width:100%; height:auto; }
   .feature-visual::before{
     content:""; position:absolute; inset:0;
@@ -262,6 +264,8 @@
     text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; margin-bottom:16px;
   }
   .feature-text h3{ font-family:'Fraunces',sans-serif; font-weight:700; font-size:26px; margin-bottom:14px; letter-spacing:-0.01em;}
+  .feature-text h3 a{ border-bottom:1.5px solid transparent; transition:border-color 0.2s ease; padding-bottom:2px;}
+  .feature-text h3 a:hover{ border-color:var(--linework); }
   .feature-text p{ color:var(--text-muted); font-size:15px; line-height:1.7; margin-bottom:20px;}
   .feature-link{
     display:inline-flex; align-items:center; gap:8px; color:var(--linework); text-decoration:none;
@@ -503,17 +507,6 @@
         <a href="/dev-tools/" class="feature-link">Browse Web Developer & Tech Tools →</a>
       </div>
     </div>
-    <div class="feature-row reverse reveal">
-      <a href="/ai-utility-tools/" class="feature-visual" style="text-decoration:none;">
-        <img src="/images/ai-utility-tools.png" alt="AI & Utility Tools" style="display:block;width:100%;height:auto;">
-      </a>
-      <div class="feature-text">
-        <span class="feature-tag">3 tools</span>
-        <h3><a href="/ai-utility-tools/" style="color:inherit;text-decoration:none;">AI & Utility Tools</a></h3>
-        <p>AI-powered background removal, PDF signing, and OCR.</p>
-        <a href="/ai-utility-tools/" class="feature-link">Browse AI & Utility Tools →</a>
-      </div>
-    </div>
   </section>
 
   <section id="faq">
@@ -577,12 +570,14 @@
     });
   });
 
-  // Scroll-reveal animations
+  // Scroll-reveal animations — replay every time an element enters or leaves the viewport,
+  // so it animates in whether you're scrolling down or back up.
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
         entry.target.classList.add('in-view');
-        revealObserver.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('in-view');
       }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
