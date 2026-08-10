@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Watermark to PDF Online — Free Text Watermark Tool | Docutoolbox</title>
+<meta name="description" content="Free online PDF watermark tool. Add a custom text watermark to every page — choose the text, position, size, color, rotation, and opacity, preview live, then download.">
+<link rel="canonical" href="https://docutoolbox.com/pdf-watermark/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+    .sidebar{ position:static; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .dropzone{
+    border:2px dashed var(--grid-line); border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.dragover{ border-color:var(--linework); background:rgba(201,162,39,0.05); }
+  .dropzone .dz-icon{ font-size:30px; margin-bottom:10px; }
+  .dropzone .dz-title{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+  .dropzone .dz-sub{ color:var(--text-muted); font-size:13px; }
+  input#fileInput{ display:none; }
+
+  .loading-row{ display:flex; align-items:center; gap:10px; margin-top:16px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework); display:none; }
+  .spinner{ width:14px; height:14px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  .settings-grid{ display:none; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+  @media (max-width:520px){ .settings-grid{ grid-template-columns:1fr; } }
+  .setting.full{ grid-column:1 / -1; }
+  .setting label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .setting select, .setting input[type="number"], .setting input[type="text"]{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:14px; padding:10px 12px; border-radius:8px;
+  }
+  .setting select{
+    appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+  .setting select:focus, .setting input:focus{ outline:none; border-color:var(--linework); }
+  .slider-row{ display:flex; align-items:center; gap:10px; }
+  .slider-row input[type="range"]{ flex:1; accent-color:var(--accent); }
+  .slider-val{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework); min-width:38px; text-align:right;}
+  .pos-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:150px; }
+  .pos-btn{ aspect-ratio:1; border:1px solid var(--grid-line); background:var(--blue-deep); border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .pos-btn .dot{ width:6px; height:6px; border-radius:50%; background:var(--text-muted); }
+  .pos-btn.active{ border-color:var(--accent); }
+  .pos-btn.active .dot{ background:var(--accent); }
+
+  .toolbar{ display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:4px; }
+  .toolbar-hint{ font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+
+  .page-grid{
+    display:none; grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); gap:14px; margin-top:16px;
+  }
+  .page-card{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:9px; padding:8px; }
+  .page-thumb-wrap{ position:relative; background:#fff; border-radius:5px; overflow:hidden; aspect-ratio:0.7727; display:flex; align-items:center; justify-content:center;}
+  .page-thumb-wrap img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .wm-overlay{
+    position:absolute; font-family:'Inter',sans-serif; font-weight:700; pointer-events:none; white-space:nowrap;
+  }
+  .wm-tile-layer{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .page-caption{ margin-top:6px; font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; text-align:center; }
+
+  button.calc{
+    width:100%; margin-top:22px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
+  #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
+  #downloadBtn:hover{ background:var(--accent-soft); }
+  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
+  .privacy-note .dot2{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
+  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>PDF watermark generator</h1>
+  <p class="intro">Stamp a custom text watermark across every page of your PDF — see every page update live as you adjust it.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon">📄</div>
+          <div class="dz-title">Drop a PDF here, or click to browse</div>
+          <div class="dz-sub">One file at a time · Max 50MB</div>
+          <input type="file" id="fileInput" accept="application/pdf">
+        </div>
+
+        <div class="loading-row" id="loadingRow"><div class="spinner"></div><span id="loadingText">Rendering pages…</span></div>
+
+        <div class="settings-grid" id="settingsGrid">
+          <div class="setting full">
+            <label>Watermark text</label>
+            <input type="text" id="wmText" value="CONFIDENTIAL" maxlength="60">
+          </div>
+          <div class="setting">
+            <label>Layout</label>
+            <select id="layoutSelect">
+              <option value="single" selected>Single (one placement)</option>
+              <option value="tiled">Tiled (repeated pattern)</option>
+            </select>
+          </div>
+          <div class="setting" id="positionSetting">
+            <label>Position</label>
+            <div class="pos-grid" id="posGrid">
+              <button class="pos-btn" data-pos="top-left"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="top-center"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="top-right"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="mid-left"><span class="dot"></span></button>
+              <button class="pos-btn active" data-pos="mid-center"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="mid-right"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="bottom-left"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="bottom-center"><span class="dot"></span></button>
+              <button class="pos-btn" data-pos="bottom-right"><span class="dot"></span></button>
+            </div>
+          </div>
+          <div class="setting">
+            <label>Rotation: <span id="rotVal">45°</span></label>
+            <div class="slider-row">
+              <input type="range" id="rotSlider" min="0" max="360" value="45">
+            </div>
+          </div>
+          <div class="setting">
+            <label>Opacity: <span id="opVal">35%</span></label>
+            <div class="slider-row">
+              <input type="range" id="opSlider" min="5" max="100" value="35">
+            </div>
+          </div>
+          <div class="setting">
+            <label>Font size</label>
+            <select id="fontSizeSelect">
+              <option value="24">Small</option>
+              <option value="40" selected>Medium</option>
+              <option value="60">Large</option>
+              <option value="80">Extra large</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label>Color</label>
+            <select id="colorSelect">
+              <option value="gray" selected>Gray</option>
+              <option value="red">Red</option>
+              <option value="black">Black</option>
+              <option value="accent">Gold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toolbar" id="toolbar" style="display:none;">
+          <span class="toolbar-hint">Every page below updates live as you change the settings above</span>
+        </div>
+
+        <div class="page-grid" id="pageGrid"></div>
+
+        <button class="calc" id="applyBtn" disabled>Add watermark</button>
+        <div id="errorMsg"></div>
+        <div id="successBox">
+          <div class="s-title">✓ Your watermarked PDF is ready</div>
+          <a id="downloadBtn" href="#" download="watermarked.pdf">Download watermarked.pdf</a>
+        </div>
+        <div class="privacy-note"><span class="dot2"></span> Files are processed entirely in your browser — nothing is uploaded to a server.</div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other PDF Tools</h4>
+      <a href="/merge-pdf/">Merge PDF</a>
+      <a href="/split-pdf/">Split PDF</a>
+      <a href="/rotate-pdf/">PDF Page Rotator</a>
+      <a href="/pdf-to-jpg/">PDF to JPG / PNG</a>
+      <a href="/jpg-to-pdf/">JPG / Image to PDF</a>
+      <a href="/add-page-numbers/">PDF Page Numbers Adder</a>
+      <a href="/unlock-pdf/">Unlock PDF</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the PDF Watermark Generator?</h2>
+      <p>This tool stamps a custom text watermark — like "CONFIDENTIAL," "DRAFT," or your company name — across every page of a PDF. You control the text, position, rotation angle, size, color, and transparency, and every page updates live in the preview as you adjust each setting, so you always see exactly what the final file will look like.</p>
+      <p>Everything runs locally in your browser — your file is never uploaded to a server, so it's fast and private even for sensitive documents.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Drop your PDF onto the upload area, or click it to browse your device.</li>
+        <li>Type your <strong>watermark text</strong> — anything from a single word to a short phrase.</li>
+        <li>Choose a <strong>layout</strong>: a single placement in one spot, or a tiled pattern repeated across the whole page.</li>
+        <li>For a single placement, pick a <strong>position</strong> from the 3×3 grid.</li>
+        <li>Adjust <strong>rotation</strong> (a diagonal 45° angle is the classic watermark look), <strong>opacity</strong> (how see-through it is), <strong>font size</strong>, and <strong>color</strong>.</li>
+        <li>Watch every page thumbnail update live as you change settings.</li>
+        <li>Click <strong>Add watermark</strong> and download your file.</li>
+      </ol>
+
+      <h2>Single vs. tiled layout</h2>
+      <p><strong>Single</strong> places one instance of your watermark text at a chosen position — a clean, minimal look that works well for a subtle "DRAFT" label in a corner, or a bold diagonal stamp across the center. <strong>Tiled</strong> repeats the watermark text in a grid pattern across the entire page, which makes it much harder to crop or edit out — a common choice for documents where you want to strongly discourage unauthorized copying or redistribution.</p>
+
+      <h2>Choosing opacity and rotation</h2>
+      <p>Lower opacity makes the watermark subtle enough that it doesn't interfere with reading the underlying content, which is typical for "DRAFT" or branding watermarks. Higher opacity makes it more prominent and attention-grabbing, often used for stronger warnings like "CONFIDENTIAL" or "DO NOT DISTRIBUTE." A 45° diagonal rotation is the traditional watermark angle because it's visible at a glance without following the natural horizontal reading direction of the text underneath — but a 0° horizontal watermark can look more like a formal stamp or label.</p>
+
+      <h2>How it works technically</h2>
+      <p>The tool renders your watermark text directly into the PDF's page content as real vector text, using the settings you've chosen for opacity, rotation, size, and color — it's not a flattened image, so the underlying document text remains fully selectable and searchable beneath the watermark, and the watermark itself stays crisp at any zoom level.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Marking draft documents clearly as "DRAFT" before a final version is ready</li>
+        <li>Adding "CONFIDENTIAL" to sensitive reports, contracts, or internal documents</li>
+        <li>Branding shared PDFs with a company name or website</li>
+        <li>Discouraging unauthorized redistribution of paid or proprietary content with a tiled watermark</li>
+        <li>Marking sample or preview documents as "SAMPLE — NOT FOR DISTRIBUTION"</li>
+      </ul>
+
+      <h2>File size and privacy</h2>
+      <p>Because watermarking happens entirely on your device, there's no upload wait and no privacy risk. Very large files or a very high page count may take a little longer to render thumbnails for, depending on your device's available memory, since everything runs locally rather than on a remote server.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Can I remove a watermark after adding it?</h3>
+      <p>This tool adds the watermark as part of the page content, so removing it afterward would require editing the PDF directly. Keep your original, unwatermarked file as a backup before downloading the watermarked version.</p>
+      <h3>Will the watermark cover up my document's content?</h3>
+      <p>You control the opacity, so you can keep it subtle enough to stay readable underneath, or make it bold and prominent — the live preview across every page lets you check the balance before downloading.</p>
+      <h3>Can I watermark a password-protected PDF?</h3>
+      <p>Password-protected files need to be unlocked first. Use the <a href="/unlock-pdf/" style="color:var(--linework);">Unlock PDF</a> tool to remove the password, then upload the unlocked file here.</p>
+      <h3>Does a tiled watermark repeat the same way on every page?</h3>
+      <p>Yes — the same tiled pattern, text, rotation, and opacity settings are applied consistently across every page of the document.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const loadingRow = document.getElementById('loadingRow');
+  const loadingText = document.getElementById('loadingText');
+  const settingsGrid = document.getElementById('settingsGrid');
+  const toolbar = document.getElementById('toolbar');
+  const wmText = document.getElementById('wmText');
+  const layoutSelect = document.getElementById('layoutSelect');
+  const positionSetting = document.getElementById('positionSetting');
+  const posGrid = document.getElementById('posGrid');
+  const rotSlider = document.getElementById('rotSlider');
+  const rotVal = document.getElementById('rotVal');
+  const opSlider = document.getElementById('opSlider');
+  const opVal = document.getElementById('opVal');
+  const fontSizeSelect = document.getElementById('fontSizeSelect');
+  const colorSelect = document.getElementById('colorSelect');
+  const pageGrid = document.getElementById('pageGrid');
+  const applyBtn = document.getElementById('applyBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const successBox = document.getElementById('successBox');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let sourceArrayBuffer = null;
+  let sourceFileName = 'document';
+  let pages = [];  // { pageIndex, thumbUrl }
+  let position = 'mid-center';
+
+  const colorHexMap = { gray:'#8a8a8a', red:'#c0392b', black:'#222', accent:'#C9A227' };
+  const colorRgbMap = { gray:[0.5,0.5,0.5], red:[0.75,0.22,0.17], black:[0.1,0.1,0.1], accent:[0.79,0.63,0.15] };
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if(fileInput.files.length) handleFile(fileInput.files[0]); fileInput.value=''; });
+
+  posGrid.querySelectorAll('.pos-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      posGrid.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      position = btn.dataset.pos;
+      renderGrid();
+    });
+  });
+  layoutSelect.addEventListener('change', () => {
+    positionSetting.style.display = layoutSelect.value === 'tiled' ? 'none' : 'block';
+    renderGrid();
+  });
+  rotSlider.addEventListener('input', () => { rotVal.textContent = rotSlider.value + '°'; renderGrid(); });
+  opSlider.addEventListener('input', () => { opVal.textContent = opSlider.value + '%'; renderGrid(); });
+  [wmText, fontSizeSelect, colorSelect].forEach(el => el.addEventListener('input', renderGrid));
+
+  async function handleFile(file){
+    if(!(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'))) return;
+    resetResult();
+    pages = [];
+    pageGrid.innerHTML = '';
+    loadingRow.style.display = 'flex';
+    settingsGrid.style.display = 'none';
+    toolbar.style.display = 'none';
+    pageGrid.style.display = 'none';
+    applyBtn.disabled = true;
+    sourceFileName = file.name.replace(/\.pdf$/i, '');
+
+    const arrayBuffer = await file.arrayBuffer();
+    sourceArrayBuffer = arrayBuffer.slice(0);
+
+    try{
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer.slice(0) });
+      const pdfDoc = await loadingTask.promise;
+      for(let i = 1; i <= pdfDoc.numPages; i++){
+        loadingText.textContent = `Rendering page ${i} of ${pdfDoc.numPages}…`;
+        const page = await pdfDoc.getPage(i);
+        const viewport = page.getViewport({ scale: 0.4 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        pages.push({ pageIndex: i - 1, thumbUrl: canvas.toDataURL('image/jpeg', 0.7) });
+      }
+      settingsGrid.style.display = 'grid';
+      toolbar.style.display = 'flex';
+      pageGrid.style.display = 'grid';
+      applyBtn.disabled = false;
+      renderGrid();
+    }catch(err){
+      errorMsg.textContent = "Couldn't read this PDF — it may be password-protected or corrupted.";
+      errorMsg.style.display = 'block';
+    }
+    loadingRow.style.display = 'none';
+  }
+
+  function posToOverlayStyle(pos){
+    const map = {
+      'top-left': { top:'8%', left:'8%', transform:'' },
+      'top-center': { top:'8%', left:'50%', transform:'translateX(-50%)' },
+      'top-right': { top:'8%', right:'8%', transform:'' },
+      'mid-left': { top:'50%', left:'8%', transform:'translateY(-50%)' },
+      'mid-center': { top:'50%', left:'50%', transform:'translate(-50%,-50%)' },
+      'mid-right': { top:'50%', right:'8%', transform:'translateY(-50%)' },
+      'bottom-left': { bottom:'8%', left:'8%', transform:'' },
+      'bottom-center': { bottom:'8%', left:'50%', transform:'translateX(-50%)' },
+      'bottom-right': { bottom:'8%', right:'8%', transform:'' },
+    };
+    return map[pos] || map['mid-center'];
+  }
+
+  function renderGrid(){
+    if(pages.length === 0) return;
+    pageGrid.innerHTML = '';
+    const text = wmText.value || 'CONFIDENTIAL';
+    const layout = layoutSelect.value;
+    const rot = parseInt(rotSlider.value, 10);
+    const opacity = parseInt(opSlider.value, 10) / 100;
+    const fontSize = Math.max(6, parseInt(fontSizeSelect.value,10) * 0.28);
+    const color = colorHexMap[colorSelect.value];
+
+    pages.forEach((p) => {
+      const card = document.createElement('div');
+      card.className = 'page-card';
+
+      let overlayHtml;
+      if(layout === 'single'){
+        const style = posToOverlayStyle(position);
+        const styleStr = `top:${style.top||'auto'};left:${style.left||'auto'};right:${style.right||'auto'};bottom:${style.bottom||'auto'};transform:${style.transform} rotate(${rot}deg);`;
+        overlayHtml = `<div class="wm-overlay" style="${styleStr}color:${color};opacity:${opacity};font-size:${fontSize}px;">${escapeHtml(text)}</div>`;
+      } else {
+        // tiled pattern: repeat text in a grid
+        let tiles = '';
+        for(let row = 0; row < 4; row++){
+          for(let col = 0; col < 2; col++){
+            const top = 15 + row * 25;
+            const left = 20 + col * 55;
+            tiles += `<div class="wm-overlay" style="top:${top}%;left:${left}%;transform:translate(-50%,-50%) rotate(${rot}deg);color:${color};opacity:${opacity};font-size:${fontSize*0.7}px;">${escapeHtml(text)}</div>`;
+          }
+        }
+        overlayHtml = `<div class="wm-tile-layer">${tiles}</div>`;
+      }
+
+      card.innerHTML = `
+        <div class="page-thumb-wrap">
+          <img src="${p.thumbUrl}" alt="Page ${p.pageIndex+1}">
+          ${overlayHtml}
+        </div>
+        <div class="page-caption">Page ${p.pageIndex+1}</div>
+      `;
+      pageGrid.appendChild(card);
+    });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function resetResult(){
+    successBox.style.display = 'none';
+    errorMsg.style.display = 'none';
+  }
+
+  applyBtn.addEventListener('click', async () => {
+    if(!sourceArrayBuffer) return;
+    errorMsg.style.display = 'none';
+    applyBtn.disabled = true;
+    applyBtn.textContent = 'Adding watermark…';
+    try{
+      const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib;
+      const doc = await PDFDocument.load(sourceArrayBuffer, { ignoreEncryption: true });
+      const font = await doc.embedFont(StandardFonts.HelveticaBold);
+      const docPages = doc.getPages();
+      const text = wmText.value || 'CONFIDENTIAL';
+      const layout = layoutSelect.value;
+      const rot = parseInt(rotSlider.value, 10);
+      const opacity = parseInt(opSlider.value, 10) / 100;
+      const fontSize = parseInt(fontSizeSelect.value, 10);
+      const [r,g,b] = colorRgbMap[colorSelect.value];
+      const color = rgb(r,g,b);
+
+      docPages.forEach((page) => {
+        const { width, height } = page.getSize();
+        if(layout === 'single'){
+          const textWidth = font.widthOfTextAtSize(text, fontSize);
+          let x, y;
+          if(position.includes('left')) x = width * 0.08;
+          else if(position.includes('right')) x = width * 0.92 - textWidth;
+          else x = (width - textWidth) / 2;
+          if(position.startsWith('top')) y = height * 0.92;
+          else if(position.startsWith('mid')) y = height / 2;
+          else y = height * 0.08;
+
+          page.drawText(text, {
+            x, y, size: fontSize, font, color, opacity,
+            rotate: degrees(rot),
+          });
+        } else {
+          const textWidth = font.widthOfTextAtSize(text, fontSize * 0.75);
+          for(let row = 0; row < 4; row++){
+            for(let col = 0; col < 2; col++){
+              const cx = width * (0.2 + col * 0.55);
+              const cy = height * (0.85 - row * 0.25);
+              page.drawText(text, {
+                x: cx - textWidth/2, y: cy, size: fontSize * 0.75, font, color, opacity,
+                rotate: degrees(rot),
+              });
+            }
+          }
+        }
+      });
+
+      const bytes = await doc.save();
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      downloadBtn.href = url;
+      downloadBtn.download = `${sourceFileName}-watermarked.pdf`;
+      downloadBtn.textContent = `Download ${sourceFileName}-watermarked.pdf`;
+      successBox.style.display = 'block';
+    }catch(err){
+      errorMsg.textContent = 'Something went wrong while adding the watermark. Please check your file and try again.';
+      errorMsg.style.display = 'block';
+    }
+    applyBtn.disabled = false;
+    applyBtn.textContent = 'Add watermark';
+  });
+</script>
+
+</body>
+</html>
