@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPG to PDF Converter Online — Combine Images into One PDF Free | Docutoolbox</title>
+<meta name="description" content="Free online image to PDF converter. Upload JPG, PNG, or WEBP images, reorder them, and combine them into a single PDF — instantly, in your browser, with no upload.">
+<link rel="canonical" href="https://docutoolbox.com/jpg-to-pdf/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+    .sidebar{ position:static; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .dropzone{
+    border:2px dashed var(--grid-line); border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.dragover{ border-color:var(--linework); background:rgba(201,162,39,0.05); }
+  .dropzone .dz-icon{ font-size:30px; margin-bottom:10px; }
+  .dropzone .dz-title{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+  .dropzone .dz-sub{ color:var(--text-muted); font-size:13px; }
+  input#fileInput{ display:none; }
+
+  .settings-row{ display:flex; flex-wrap:wrap; gap:14px; margin-top:20px; }
+  .setting{ flex:1; min-width:160px; }
+  .setting label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .setting select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:14px; padding:10px 12px; border-radius:8px; appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+
+  .toolbar{ display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:4px; }
+  .toolbar-hint{ font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+  .add-more-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:7px; cursor:pointer; }
+  .add-more-btn:hover{ border-color:var(--linework); }
+
+  .page-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); gap:14px; margin-top:16px;
+  }
+  .page-card{
+    position:relative; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:9px;
+    padding:8px; cursor:grab; transition:border-color 0.15s ease;
+  }
+  .page-card:hover{ border-color:var(--linework-soft); }
+  .page-card.dragging{ opacity:0.35; }
+  .page-card.drag-over{ border-color:var(--linework); box-shadow:0 0 0 2px var(--linework) inset; }
+  .page-thumb-wrap{ position:relative; background:#fff; border-radius:5px; overflow:hidden; aspect-ratio:0.72; display:flex; align-items:center; justify-content:center;}
+  .page-thumb-wrap img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .order-badge{
+    position:absolute; top:6px; left:6px; background:var(--accent); color:#0A2E45; font-family:'Fraunces',serif;
+    font-weight:700; font-size:12px; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .remove-page-btn{
+    position:absolute; top:4px; right:4px; background:rgba(14,22,32,0.85); color:var(--ink); border:none;
+    width:22px; height:22px; border-radius:50%; font-size:14px; cursor:pointer; line-height:1;
+  }
+  .remove-page-btn:hover{ background:#E39A9A; color:#0A2E45; }
+  .page-caption{ margin-top:6px; font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+  button.calc{
+    width:100%; margin-top:22px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
+  #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
+  #downloadBtn:hover{ background:var(--accent-soft); }
+  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
+  .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
+  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>JPG / image to PDF</h1>
+  <p class="intro">Upload one or more images, drag to set the order, and combine them into a single PDF file.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon">🖼️</div>
+          <div class="dz-title">Drop images here, or click to browse</div>
+          <div class="dz-sub">JPG, PNG, WEBP · You can select multiple files · Max 25MB per image</div>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
+        </div>
+
+        <div class="settings-row" id="settingsRow" style="display:none;">
+          <div class="setting">
+            <label>Page size</label>
+            <select id="pageSizeSelect">
+              <option value="fit" selected>Fit to image</option>
+              <option value="a4">A4</option>
+              <option value="letter">Letter</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label>Orientation (A4/Letter)</label>
+            <select id="orientationSelect">
+              <option value="portrait" selected>Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label>Margin (A4/Letter)</label>
+            <select id="marginSelect">
+              <option value="0">None</option>
+              <option value="20" selected>Small</option>
+              <option value="40">Large</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toolbar" id="toolbar" style="display:none;">
+          <span class="toolbar-hint">Drag any image to reorder · numbers show the final PDF page order</span>
+          <button class="add-more-btn" id="addMoreBtn">+ Add more images</button>
+        </div>
+
+        <div class="page-grid" id="pageGrid"></div>
+
+        <button class="calc" id="convertBtn" disabled>Create PDF</button>
+        <div id="errorMsg"></div>
+        <div id="successBox">
+          <div class="s-title">✓ Your PDF is ready</div>
+          <a id="downloadBtn" href="#" download="images.pdf">Download images.pdf</a>
+        </div>
+        <div class="privacy-note"><span class="dot"></span> Files are processed entirely in your browser — nothing is uploaded to a server.</div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other PDF Tools</h4>
+      <a href="/merge-pdf/">Merge PDF</a>
+      <a href="/split-pdf/">Split PDF</a>
+      <a href="/rotate-pdf/">PDF Page Rotator</a>
+      <a href="/pdf-to-jpg/">PDF to JPG / PNG</a>
+      <a href="/add-page-numbers/">PDF Page Numbers Adder</a>
+      <a href="/pdf-watermark/">PDF Watermark Generator</a>
+      <a href="/unlock-pdf/">Unlock PDF</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the JPG / Image to PDF tool?</h2>
+      <p>This tool combines one or more images — JPG, PNG, or WEBP — into a single PDF document, with each image becoming its own page. It's built for turning scanned photos, screenshots, or picture-based documents into a proper, shareable PDF file.</p>
+      <p>Everything happens locally in your browser — your images are never uploaded to a server, so it's fast and private even for personal photos or sensitive scans.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Drop your images onto the upload area, or click it to browse your device — select as many as you need at once.</li>
+        <li>Choose your page settings: <strong>page size</strong> (fit-to-image, or a standard A4/Letter page), and for A4/Letter, the <strong>orientation</strong> and <strong>margin</strong>.</li>
+        <li>Drag any image thumbnail to change its order — the numbers update live to show the final page order.</li>
+        <li>Click the × on any image to remove it before creating the PDF.</li>
+        <li>Need more images? Click <strong>"+ Add more images"</strong> to add additional files to the set.</li>
+        <li>Click <strong>Create PDF</strong> and download the result.</li>
+      </ol>
+
+      <h2>Choosing a page size</h2>
+      <p><strong>Fit to image</strong> makes each PDF page exactly the same size and shape as its source image — no white borders, no cropping, just the image itself as a page. This is the best choice when your images are already the right shape (like a scanned photo) and you want the PDF to preserve that exactly.</p>
+      <p><strong>A4</strong> and <strong>Letter</strong> place each image centered on a standard, fixed page size, scaling it down to fit if needed. This is useful when you want a document that prints consistently and matches standard paper sizes, especially if you're mixing images of different shapes and want them to look uniform.</p>
+
+      <h2>Orientation and margins</h2>
+      <p>When using A4 or Letter page sizes, you can choose <strong>portrait</strong> (taller than wide, the default for most documents) or <strong>landscape</strong> (wider than tall, useful for wide photos or panoramas). The margin setting controls how much blank space surrounds the image on the page — "None" fills the page edge-to-edge, while "Small" or "Large" leaves a visible white border, similar to a printed photo mat.</p>
+
+      <h2>How it works technically</h2>
+      <p>Each image is placed onto its own PDF page according to your chosen size and orientation settings, preserving the original image quality — images are embedded directly into the PDF rather than being re-compressed or degraded in the process.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Turning a batch of scanned document photos into one shareable PDF</li>
+        <li>Combining screenshots into a single file for a report or bug submission</li>
+        <li>Creating a simple photo book or portfolio PDF from a set of images</li>
+        <li>Converting a phone-scanned receipt or ID photo into a PDF for form submissions</li>
+        <li>Assembling multiple whiteboard or notes photos into one organized document</li>
+      </ul>
+
+      <h2>File size and privacy</h2>
+      <p>Because everything happens on your device, there's no upload wait and no privacy risk. A large number of high-resolution images may take a little longer to process, depending on your device's available memory, since everything runs locally rather than on a remote server.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Can I mix JPG, PNG, and WEBP images in the same PDF?</h3>
+      <p>Yes — you can upload any combination of these formats, and they'll all be combined into the same PDF, each becoming its own page.</p>
+      <h3>Will converting reduce my image quality?</h3>
+      <p>No — your original image data is embedded into the PDF without additional lossy recompression, so quality is preserved.</p>
+      <h3>Can I change the order after adding images?</h3>
+      <p>Yes — simply drag any image thumbnail to a new position in the grid at any time before creating the PDF.</p>
+      <h3>Is there a limit to how many images I can combine?</h3>
+      <p>There's no hard limit built into the tool, though a very large number of high-resolution images will naturally take longer to process since everything runs on your device.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script>
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const addMoreBtn = document.getElementById('addMoreBtn');
+  const toolbar = document.getElementById('toolbar');
+  const settingsRow = document.getElementById('settingsRow');
+  const pageSizeSelect = document.getElementById('pageSizeSelect');
+  const orientationSelect = document.getElementById('orientationSelect');
+  const marginSelect = document.getElementById('marginSelect');
+  const pageGrid = document.getElementById('pageGrid');
+  const convertBtn = document.getElementById('convertBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const successBox = document.getElementById('successBox');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let images = [];  // { id, file, thumbUrl }
+  let dragSrcId = null;
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  addMoreBtn.addEventListener('click', () => fileInput.click());
+  pageSizeSelect.addEventListener('change', renderGrid);
+  orientationSelect.addEventListener('change', renderGrid);
+  marginSelect.addEventListener('change', renderGrid);
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => { handleFiles(fileInput.files); fileInput.value = ''; });
+
+  async function handleFiles(fileListInput){
+    const imgFiles = Array.from(fileListInput).filter(f => /^image\/(jpeg|png|webp)$/.test(f.type));
+    if(imgFiles.length === 0) return;
+    for(const file of imgFiles){
+      const id = Math.random().toString(36).slice(2);
+      const url = URL.createObjectURL(file);
+      const dims = await new Promise((resolve) => {
+        const probe = new Image();
+        probe.onload = () => resolve({ width: probe.naturalWidth, height: probe.naturalHeight });
+        probe.onerror = () => resolve({ width: 1, height: 1.414 });
+        probe.src = url;
+      });
+      images.push({ id, file, thumbUrl: url, width: dims.width, height: dims.height });
+    }
+    resetResult();
+    renderGrid();
+    toolbar.style.display = 'flex';
+    settingsRow.style.display = 'flex';
+  }
+
+  const A4_PT = { w: 595.28, h: 841.89 };
+  const LETTER_PT = { w: 612, h: 792 };
+
+  function currentPageDims(){
+    const mode = pageSizeSelect.value;
+    if(mode === 'fit') return null;
+    const size = mode === 'a4' ? A4_PT : LETTER_PT;
+    const orientation = orientationSelect.value;
+    return orientation === 'landscape' ? { w: size.h, h: size.w } : { w: size.w, h: size.h };
+  }
+
+  function renderGrid(){
+    pageGrid.innerHTML = '';
+    const pageDims = currentPageDims();
+    const margin = parseInt(marginSelect.value, 10);
+
+    images.forEach((img, idx) => {
+      const card = document.createElement('div');
+      card.className = 'page-card';
+      card.draggable = true;
+      card.dataset.id = img.id;
+
+      let wrapStyle, imgStyle;
+      if(!pageDims){
+        // Fit to image: thumbnail matches the image's own aspect ratio exactly, no padding
+        wrapStyle = `aspect-ratio:${img.width}/${img.height};`;
+        imgStyle = `width:100%;height:100%;object-fit:contain;`;
+      } else {
+        // A4 / Letter: thumbnail matches the page aspect ratio, with proportional margin as padding
+        const padX = (margin / pageDims.w) * 100;
+        const padY = (margin / pageDims.h) * 100;
+        wrapStyle = `aspect-ratio:${pageDims.w}/${pageDims.h}; padding:${padY}% ${padX}%; box-sizing:border-box;`;
+        imgStyle = `width:100%;height:100%;object-fit:contain;`;
+      }
+
+      card.innerHTML = `
+        <div class="order-badge">${idx+1}</div>
+        <button class="remove-page-btn" data-id="${img.id}">×</button>
+        <div class="page-thumb-wrap" style="${wrapStyle}"><img src="${img.thumbUrl}" alt="Image ${idx+1}" style="${imgStyle}"></div>
+        <div class="page-caption">${img.file.name}</div>
+      `;
+      card.addEventListener('dragstart', () => { dragSrcId = img.id; card.classList.add('dragging'); });
+      card.addEventListener('dragend', () => card.classList.remove('dragging'));
+      card.addEventListener('dragover', (e) => { e.preventDefault(); card.classList.add('drag-over'); });
+      card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+      card.addEventListener('drop', (e) => {
+        e.preventDefault();
+        card.classList.remove('drag-over');
+        if(dragSrcId === null || dragSrcId === img.id) return;
+        const srcIdx = images.findIndex(x => x.id === dragSrcId);
+        const targetIdx = images.findIndex(x => x.id === img.id);
+        const moved = images.splice(srcIdx, 1)[0];
+        images.splice(targetIdx, 0, moved);
+        dragSrcId = null;
+        renderGrid();
+      });
+      card.querySelector('.remove-page-btn').addEventListener('click', () => {
+        images = images.filter(x => x.id !== img.id);
+        renderGrid();
+        resetResult();
+        if(images.length === 0){ toolbar.style.display = 'none'; settingsRow.style.display = 'none'; }
+      });
+      pageGrid.appendChild(card);
+    });
+    convertBtn.disabled = images.length === 0;
+  }
+
+  function resetResult(){
+    successBox.style.display = 'none';
+    errorMsg.style.display = 'none';
+  }
+
+  async function embedImage(pdfDoc, file){
+    const bytes = await file.arrayBuffer();
+    if(file.type === 'image/png') return pdfDoc.embedPng(bytes);
+    // jpeg + webp: convert webp via canvas since pdf-lib doesn't support webp natively
+    if(file.type === 'image/webp'){
+      const dataUrl = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+      const img = new Image();
+      await new Promise((resolve) => { img.onload = resolve; img.src = dataUrl; });
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width; canvas.height = img.height;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      const jpgBytes = await (await fetch(jpgDataUrl)).arrayBuffer();
+      return pdfDoc.embedJpg(jpgBytes);
+    }
+    return pdfDoc.embedJpg(bytes);
+  }
+
+  convertBtn.addEventListener('click', async () => {
+    if(images.length === 0) return;
+    errorMsg.style.display = 'none';
+    convertBtn.disabled = true;
+    convertBtn.textContent = 'Creating PDF…';
+    try{
+      const { PDFDocument } = PDFLib;
+      const pdfDoc = await PDFDocument.create();
+      const pageSizeMode = pageSizeSelect.value;
+      const orientation = orientationSelect.value;
+      const margin = parseInt(marginSelect.value, 10);
+
+      const A4 = { w: 595.28, h: 841.89 };
+      const LETTER = { w: 612, h: 792 };
+
+      for(const img of images){
+        const embedded = await embedImage(pdfDoc, img.file);
+        const imgDims = embedded.scale(1);
+
+        if(pageSizeMode === 'fit'){
+          const page = pdfDoc.addPage([imgDims.width, imgDims.height]);
+          page.drawImage(embedded, { x: 0, y: 0, width: imgDims.width, height: imgDims.height });
+        } else {
+          let size = pageSizeMode === 'a4' ? A4 : LETTER;
+          let pageW = orientation === 'landscape' ? size.h : size.w;
+          let pageH = orientation === 'landscape' ? size.w : size.h;
+          const page = pdfDoc.addPage([pageW, pageH]);
+          const availW = pageW - margin*2;
+          const availH = pageH - margin*2;
+          const scale = Math.min(availW / imgDims.width, availH / imgDims.height);
+          const drawW = imgDims.width * scale;
+          const drawH = imgDims.height * scale;
+          const x = (pageW - drawW) / 2;
+          const y = (pageH - drawH) / 2;
+          page.drawImage(embedded, { x, y, width: drawW, height: drawH });
+        }
+      }
+
+      const bytes = await pdfDoc.save();
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      downloadBtn.href = url;
+      successBox.style.display = 'block';
+    }catch(err){
+      errorMsg.textContent = 'Something went wrong while creating the PDF. Please check your images and try again.';
+      errorMsg.style.display = 'block';
+    }
+    convertBtn.disabled = false;
+    convertBtn.textContent = 'Create PDF';
+  });
+</script>
+
+</body>
+</html>
