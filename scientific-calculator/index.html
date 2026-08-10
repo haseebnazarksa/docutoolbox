@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Calculator Online — Free Trig, Log & Exponent Calculator | Docutoolbox</title>
+<meta name="description" content="Free online scientific calculator with trigonometry, logarithms, powers, roots, and memory functions. Works instantly in your browser — no download, no sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/scientific-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+    .sidebar{ position:static; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; margin-bottom:20px;}
+  .sci-display{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:18px; margin-bottom:16px; text-align:right; overflow-x:auto;}
+  .sci-expr{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-muted); min-height:16px; word-break:break-all;}
+  .sci-result{ font-family:'Fraunces',serif; font-weight:700; font-size:32px; color:var(--ink); min-height:38px; word-break:break-all;}
+  .sci-mode-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+  .mode-toggle{ display:flex; gap:6px;}
+  .mode-btn{ padding:6px 12px; border-radius:6px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:11px; cursor:pointer;}
+  .mode-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+  .mem-indicator{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--linework); min-width:20px;}
+
+  .sci-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:8px;}
+  .sci-btn{
+    padding:14px 0; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep);
+    color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:14px; cursor:pointer; transition:background 0.12s ease, transform 0.08s ease;
+  }
+  .sci-btn:hover{ background:var(--blue-card-2); }
+  .sci-btn:active{ transform:scale(0.95); }
+  .sci-btn.op{ color:var(--linework); }
+  .sci-btn.fn{ font-size:12px; color:var(--text-muted); }
+  .sci-btn.equals{ background:var(--accent); color:#0A2E45; font-weight:700; border-color:var(--accent);}
+  .sci-btn.equals:hover{ background:var(--accent-soft); }
+  .sci-btn.clear{ color:#E39A9A; }
+  @media (max-width:480px){ .sci-grid{ gap:6px;} .sci-btn{ padding:12px 0; font-size:12.5px;} .sci-btn.fn{ font-size:10.5px;} }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
+  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Scientific calculator</h1>
+  <p class="intro">A full scientific calculator with trigonometry, logarithms, powers, roots, and memory — right in your browser.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="sci-mode-row">
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="degBtn">DEG</button>
+            <button class="mode-btn" id="radBtn">RAD</button>
+          </div>
+          <div class="mem-indicator" id="memIndicator"></div>
+        </div>
+        <div class="sci-display">
+          <div class="sci-expr" id="sciExpr">&nbsp;</div>
+          <div class="sci-result" id="sciResult">0</div>
+        </div>
+        <div class="sci-grid">
+          <button class="sci-btn fn" data-fn="mc">MC</button>
+          <button class="sci-btn fn" data-fn="mr">MR</button>
+          <button class="sci-btn fn" data-fn="m+">M+</button>
+          <button class="sci-btn fn" data-fn="m-">M−</button>
+          <button class="sci-btn clear" data-fn="ac">AC</button>
+
+          <button class="sci-btn fn" data-fn="sin">sin</button>
+          <button class="sci-btn fn" data-fn="cos">cos</button>
+          <button class="sci-btn fn" data-fn="tan">tan</button>
+          <button class="sci-btn fn" data-fn="log">log</button>
+          <button class="sci-btn clear" data-fn="del">⌫</button>
+
+          <button class="sci-btn fn" data-fn="sqrt">√x</button>
+          <button class="sci-btn fn" data-fn="sq">x²</button>
+          <button class="sci-btn fn" data-fn="pow">xʸ</button>
+          <button class="sci-btn fn" data-fn="ln">ln</button>
+          <button class="sci-btn op" data-val="/">÷</button>
+
+          <button class="sci-btn" data-val="7">7</button>
+          <button class="sci-btn" data-val="8">8</button>
+          <button class="sci-btn" data-val="9">9</button>
+          <button class="sci-btn fn" data-fn="fact">n!</button>
+          <button class="sci-btn op" data-val="*">×</button>
+
+          <button class="sci-btn" data-val="4">4</button>
+          <button class="sci-btn" data-val="5">5</button>
+          <button class="sci-btn" data-val="6">6</button>
+          <button class="sci-btn fn" data-fn="inv">1/x</button>
+          <button class="sci-btn op" data-val="-">−</button>
+
+          <button class="sci-btn" data-val="1">1</button>
+          <button class="sci-btn" data-val="2">2</button>
+          <button class="sci-btn" data-val="3">3</button>
+          <button class="sci-btn fn" data-fn="pi">π</button>
+          <button class="sci-btn op" data-val="+">+</button>
+
+          <button class="sci-btn" data-val="0">0</button>
+          <button class="sci-btn" data-val=".">.</button>
+          <button class="sci-btn fn" data-fn="pm">±</button>
+          <button class="sci-btn fn" data-fn="e">e</button>
+          <button class="sci-btn equals" data-fn="equals">=</button>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Calculators</h4>
+      <a href="/percentage-calculator/">Percentage Calculator</a>
+      <a href="/date-calculator/">Date Calculator</a>
+      <a href="/age-calculator/">Age Calculator</a>
+      <a href="/time-calculator/">Time / Duration Calculator</a>
+      <a href="/discount-calculator/">Discount & Sales Tax Calculator</a>
+      <a href="/tip-calculator/">Tip Calculator</a>
+      <a href="/gpa-calculator/">GPA / Grade Calculator</a>
+      <a href="/average-calculator/">Average / Mean Calculator</a>
+      <a href="/ratio-calculator/">Ratio & Proportion Calculator</a>
+      <a href="/day-counter/">Day Counter / Countdown</a>
+      <a href="/day-of-week-calculator/">Day of the Week Calculator</a>
+      <a href="/roman-numeral-converter/">Roman Numerals Converter</a>
+      <a href="/binary-hex-decimal-converter/">Binary / Hex / Decimal Converter</a>
+      <a href="/random-number-generator/">Random Number Generator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Scientific Calculator?</h2>
+      <p>This is a full-featured scientific calculator that runs entirely in your browser — no app to download, no account to create. Beyond the basic four operations, it supports trigonometric functions, logarithms, powers and roots, factorials, memory storage, and both degree and radian angle modes, covering everything a student, engineer, or curious number-cruncher typically needs.</p>
+      <p>Every calculation happens instantly on your device. Nothing you type is transmitted anywhere, so you can use it for schoolwork, lab reports, or quick engineering checks with complete privacy.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Click the number and operator buttons to build your expression, just like a physical calculator.</li>
+        <li>For functions like sin, cos, log, or √x, click the function first, and it will apply to the number currently on the display (or to the result of your expression so far).</li>
+        <li>Press <strong>=</strong> to evaluate the full expression.</li>
+        <li>Use <strong>AC</strong> to clear everything, or <strong>⌫</strong> to delete the last character.</li>
+      </ol>
+
+      <h2>Available functions</h2>
+      <ul>
+        <li><strong>sin, cos, tan:</strong> standard trigonometric functions, calculated in either degrees or radians depending on the mode you select</li>
+        <li><strong>log:</strong> base-10 logarithm</li>
+        <li><strong>ln:</strong> natural logarithm (base e)</li>
+        <li><strong>√x:</strong> square root</li>
+        <li><strong>x²:</strong> square (x raised to the power of 2)</li>
+        <li><strong>xʸ:</strong> raises the current number to any power you enter next</li>
+        <li><strong>n!:</strong> factorial — the product of all positive integers up to n</li>
+        <li><strong>1/x:</strong> reciprocal of the current number</li>
+        <li><strong>π and e:</strong> insert the constants pi (≈3.14159) and Euler's number (≈2.71828)</li>
+        <li><strong>±:</strong> toggles the sign of the current number between positive and negative</li>
+      </ul>
+
+      <h2>Degrees vs. radians</h2>
+      <p>Trigonometric functions can be calculated in two different angle units. <strong>Degrees</strong> (DEG) is the everyday unit most people learn in school, where a full circle is 360°. <strong>Radians</strong> (RAD) is the unit most commonly used in higher mathematics, physics, and engineering, where a full circle is 2π radians. Use the DEG/RAD toggle above the display to switch between them — this affects sin, cos, and tan calculations only.</p>
+
+      <h2>Using memory functions</h2>
+      <p>The memory buttons let you store a number and reuse it later without retyping it:</p>
+      <ul>
+        <li><strong>M+</strong> adds the current display value to memory</li>
+        <li><strong>M−</strong> subtracts the current display value from memory</li>
+        <li><strong>MR</strong> recalls the stored memory value onto the display</li>
+        <li><strong>MC</strong> clears the memory back to zero</li>
+      </ul>
+      <p>A small indicator appears above the display whenever a non-zero value is stored in memory, so you always know when memory is active.</p>
+
+      <h2>Order of operations</h2>
+      <p>The calculator follows the standard mathematical order of operations (PEMDAS/BODMAS) — parentheses and functions first, then exponents, then multiplication and division, then addition and subtraction — so complex expressions evaluate the way you'd expect from a scientific calculator.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Homework and exam practice for algebra, trigonometry, and pre-calculus</li>
+        <li>Quick engineering or physics calculations involving angles, logs, or exponents</li>
+        <li>Statistics and probability work involving factorials</li>
+        <li>Everyday math that goes beyond what a basic calculator can handle</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Why did I get an unexpected result from a trig function?</h3>
+      <p>Double-check whether you're in DEG or RAD mode — the same input produces very different results depending on the angle unit, and this is the most common source of confusion with scientific calculators.</p>
+      <h3>What happens if I try to divide by zero or take the square root of a negative number?</h3>
+      <p>The calculator will show an error, since these operations are undefined in standard real-number arithmetic.</p>
+      <h3>Can I chain multiple operations together?</h3>
+      <p>Yes — you can build a full expression with multiple operators and functions before pressing equals, just like on a physical scientific calculator.</p>
+      <h3>Does the factorial function work with decimals?</h3>
+      <p>Factorial is defined for non-negative whole numbers, so decimal or negative inputs to n! will return an error.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  let expr = '';
+  let angleMode = 'deg';
+  let memory = 0;
+  const exprEl = document.getElementById('sciExpr');
+  const resultEl = document.getElementById('sciResult');
+  const memIndicator = document.getElementById('memIndicator');
+
+  document.getElementById('degBtn').addEventListener('click', () => {
+    angleMode = 'deg';
+    document.getElementById('degBtn').classList.add('active');
+    document.getElementById('radBtn').classList.remove('active');
+  });
+  document.getElementById('radBtn').addEventListener('click', () => {
+    angleMode = 'rad';
+    document.getElementById('radBtn').classList.add('active');
+    document.getElementById('degBtn').classList.remove('active');
+  });
+
+  function toRad(deg){ return angleMode === 'deg' ? deg * Math.PI / 180 : deg; }
+  function factorial(n){
+    if(n < 0 || !Number.isInteger(n)) return NaN;
+    if(n > 170) return Infinity;
+    let r = 1; for(let i = 2; i <= n; i++) r *= i; return r;
+  }
+
+  function safeEval(str){
+    // Only allow digits, operators, parentheses, decimal points
+    if(!/^[0-9+\-*/.() ]+$/.test(str)) throw new Error('bad expr');
+    // eslint-disable-next-line no-new-func
+    return Function('"use strict"; return (' + str + ')')();
+  }
+
+  function updateDisplay(){
+    exprEl.textContent = expr || '\u00A0';
+  }
+
+  function getCurrentNumber(){
+    const match = expr.match(/(-?\d+\.?\d*)$/);
+    return match ? match[0] : null;
+  }
+
+  document.querySelectorAll('.sci-btn[data-val]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      expr += btn.dataset.val;
+      updateDisplay();
+    });
+  });
+
+  document.querySelectorAll('.sci-btn[data-fn]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const fn = btn.dataset.fn;
+      try{
+        switch(fn){
+          case 'ac': expr = ''; resultEl.textContent = '0'; break;
+          case 'del': expr = expr.slice(0, -1); break;
+          case 'equals': {
+            const val = safeEval(expr || '0');
+            resultEl.textContent = formatNum(val);
+            expr = formatNum(val);
+            break;
+          }
+          case 'sin': applyUnary(x => Math.sin(toRad(x))); break;
+          case 'cos': applyUnary(x => Math.cos(toRad(x))); break;
+          case 'tan': applyUnary(x => Math.tan(toRad(x))); break;
+          case 'log': applyUnary(x => Math.log10(x)); break;
+          case 'ln': applyUnary(x => Math.log(x)); break;
+          case 'sqrt': applyUnary(x => Math.sqrt(x)); break;
+          case 'sq': applyUnary(x => x*x); break;
+          case 'fact': applyUnary(x => factorial(x)); break;
+          case 'inv': applyUnary(x => 1/x); break;
+          case 'pm': applyUnary(x => -x); break;
+          case 'pi': expr += Math.PI.toFixed(8); break;
+          case 'e': expr += Math.E.toFixed(8); break;
+          case 'pow': expr += '**'; break;
+          case 'mc': memory = 0; updateMem(); break;
+          case 'mr': expr += formatNum(memory); break;
+          case 'm+': memory += safeEval(expr || resultEl.textContent || '0'); updateMem(); break;
+          case 'm-': memory -= safeEval(expr || resultEl.textContent || '0'); updateMem(); break;
+        }
+      }catch(e){
+        resultEl.textContent = 'Error'; expr = '';
+      }
+      updateDisplay();
+    });
+  });
+
+  function applyUnary(fn){
+    const currentVal = expr ? safeEval(expr) : parseFloat(resultEl.textContent) || 0;
+    const result = fn(currentVal);
+    expr = formatNum(result);
+    resultEl.textContent = expr;
+  }
+  function formatNum(n){
+    if(!isFinite(n)) return n > 0 ? 'Infinity' : (n < 0 ? '-Infinity' : 'Error');
+    if(isNaN(n)) return 'Error';
+    return Math.abs(n) < 1e15 ? (Number.isInteger(n) ? n.toString() : parseFloat(n.toFixed(10)).toString()) : n.toExponential(6);
+  }
+  function updateMem(){
+    memIndicator.textContent = memory !== 0 ? 'M' : '';
+  }
+  updateDisplay();
+</script>
+
+</body>
+</html>
