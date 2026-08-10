@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unlock PDF Online — Remove PDF Password Free & Private | Docutoolbox</title>
+<meta name="description" content="Free online PDF unlocker. Enter your PDF's password to remove protection and download an unlocked copy. Everything happens in your browser — your file and password are never uploaded.">
+<link rel="canonical" href="https://docutoolbox.com/unlock-pdf/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+    .sidebar{ position:static; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .info-banner{
+    display:flex; gap:10px; background:rgba(201,162,39,0.08); border:1px solid var(--linework-soft); border-radius:10px;
+    padding:14px 16px; margin-bottom:20px; font-size:12.5px; line-height:1.6; color:var(--ink);
+  }
+  .info-banner .icon{ flex:0 0 auto; font-size:15px; }
+
+  .dropzone{
+    border:2px dashed var(--grid-line); border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.dragover{ border-color:var(--linework); background:rgba(201,162,39,0.05); }
+  .dropzone .dz-icon{ font-size:30px; margin-bottom:10px; }
+  .dropzone .dz-title{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+  .dropzone .dz-sub{ color:var(--text-muted); font-size:13px; }
+  input#fileInput{ display:none; }
+
+  .file-chip{ display:none; align-items:center; gap:10px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:12px 14px; margin-top:14px; }
+  .file-chip .f-icon{ width:30px; height:36px; flex:0 0 auto; background:rgba(201,162,39,0.12); border:1px solid var(--linework-soft); border-radius:4px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:8.5px; color:var(--linework); font-weight:700;}
+  .file-chip .f-name{ font-size:13px; font-weight:500; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .file-chip .f-remove{ background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; }
+  .file-chip .f-remove:hover{ color:#E39A9A; }
+
+  .field{ margin-top:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .pass-row{ position:relative; }
+  .pass-row input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 44px 11px 12px; border-radius:8px;
+  }
+  .pass-row input:focus{ outline:none; border-color:var(--linework);}
+  .pass-toggle{ position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; font-family:'JetBrains Mono',monospace;}
+  .pass-toggle:hover{ color:var(--linework); }
+
+  .loading-row{ display:flex; align-items:center; gap:10px; margin-top:16px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework); display:none; }
+  .spinner{ width:14px; height:14px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  .page-grid{
+    display:none; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr)); gap:12px; margin-top:20px;
+  }
+  .page-card{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:8px; padding:6px; }
+  .page-thumb-wrap{ background:#fff; border-radius:4px; overflow:hidden; aspect-ratio:0.7727; display:flex; align-items:center; justify-content:center;}
+  .page-thumb-wrap img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .page-caption{ margin-top:5px; font-size:9.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; text-align:center; }
+
+  button.calc{
+    width:100%; margin-top:22px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
+  #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
+  #downloadBtn:hover{ background:var(--accent-soft); }
+  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
+  .privacy-note .dot2{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
+  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Unlock PDF</h1>
+  <p class="intro">Remove the password from a PDF you already have the password for, and download an unlocked copy.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="info-banner">
+          <span class="icon">🔓</span>
+          <span>You need to know the PDF's existing password — this tool removes protection from a file you can already open, it does not crack or guess unknown passwords.</span>
+        </div>
+
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon">🔒</div>
+          <div class="dz-title">Drop a password-protected PDF here, or click to browse</div>
+          <div class="dz-sub">One file at a time · Max 50MB</div>
+          <input type="file" id="fileInput" accept="application/pdf">
+        </div>
+
+        <div class="file-chip" id="fileChip">
+          <div class="f-icon">PDF</div>
+          <div class="f-name" id="fileName">document.pdf</div>
+          <button class="f-remove" id="fileRemove">×</button>
+        </div>
+
+        <div class="field" id="passwordField" style="display:none;">
+          <label>PDF password</label>
+          <div class="pass-row">
+            <input type="password" id="passwordInput" placeholder="Enter the PDF's password" autocomplete="off">
+            <button class="pass-toggle" id="passToggle">Show</button>
+          </div>
+        </div>
+
+        <div class="loading-row" id="loadingRow"><div class="spinner"></div><span id="loadingText">Unlocking…</span></div>
+
+        <div class="page-grid" id="pageGrid"></div>
+
+        <button class="calc" id="unlockBtn" disabled>Unlock PDF</button>
+        <div id="errorMsg"></div>
+        <div id="successBox">
+          <div class="s-title">✓ Your unlocked PDF is ready</div>
+          <a id="downloadBtn" href="#" download="unlocked.pdf">Download unlocked.pdf</a>
+        </div>
+        <div class="privacy-note"><span class="dot2"></span> Your file and password are processed entirely in your browser — neither is ever uploaded to a server.</div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other PDF Tools</h4>
+      <a href="/merge-pdf/">Merge PDF</a>
+      <a href="/split-pdf/">Split PDF</a>
+      <a href="/rotate-pdf/">PDF Page Rotator</a>
+      <a href="/pdf-to-jpg/">PDF to JPG / PNG</a>
+      <a href="/jpg-to-pdf/">JPG / Image to PDF</a>
+      <a href="/add-page-numbers/">PDF Page Numbers Adder</a>
+      <a href="/pdf-watermark/">PDF Watermark Generator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Unlock PDF tool?</h2>
+      <p>Unlock PDF removes password protection from a PDF you're already able to open — you provide the file and its current password, and the tool produces a new copy with no password required, so you (or anyone you share it with) can open it freely without re-entering a password each time.</p>
+      <p>Everything runs locally in your browser. Neither your file nor the password you type is ever sent to a server — the entire unlock process happens on your own device.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Drop your password-protected PDF onto the upload area, or click it to browse your device.</li>
+        <li>Type the PDF's existing password into the password field — click "Show" if you want to check what you've typed.</li>
+        <li>Click <strong>Unlock PDF</strong>.</li>
+        <li>Once processed, a thumbnail preview of every page confirms the file unlocked correctly.</li>
+        <li>Download your new, password-free copy.</li>
+      </ol>
+
+      <h2>An important note on how unlocking works</h2>
+      <p>To reliably remove protection from an encrypted PDF entirely inside your browser — without any server involved — this tool opens each page using your password and rebuilds a brand-new, unprotected PDF from high-quality page images. This is a deliberate trade-off: it guarantees the unlock works correctly and privately for any password-protected PDF, but the resulting file's text is no longer selectable or searchable the way it might have been in the original — each page becomes a sharp, high-resolution image of that page instead.</p>
+      <p>For most everyday uses — reading, printing, or sharing a document you already have the password for — this makes no visible difference. If you specifically need the unlocked file's text to remain selectable and searchable, that requires more advanced decryption than is currently possible fully client-side, and you may need a desktop PDF application for that particular need.</p>
+
+      <h2>Why you need the password</h2>
+      <p>This tool is designed to help with PDFs you're authorized to access — for example, a document you password-protected yourself and forgot to share the password-free version, or a file you have explicit permission to unlock. It cannot crack, guess, or brute-force an unknown password; you must already know the correct password to use it.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Removing a password from a document you protected yourself, once you no longer need that protection</li>
+        <li>Preparing a password-protected PDF for merging, splitting, or editing with tools that require an unprotected file first</li>
+        <li>Making a document easier to open repeatedly on a personal device where the password isn't needed</li>
+        <li>Sharing a previously protected file with someone in a context where the password requirement is no longer necessary</li>
+      </ul>
+
+      <h2>File size and privacy</h2>
+      <p>Because unlocking happens entirely on your device — including the password itself — there's no risk of either your file or your password touching a remote server. Larger files or a high page count may take a little longer to process, since every page is being rendered and rebuilt locally rather than on a powerful remote server.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>What if I don't know the PDF's password?</h3>
+      <p>This tool can't help in that case — it only removes protection from files where you already know and can enter the correct password. It does not attempt to guess or crack unknown passwords.</p>
+      <h3>Will the unlocked PDF look exactly like the original?</h3>
+      <p>Visually, yes — every page is rendered at high resolution and looks the same as the original. The one difference is that the text is no longer selectable/searchable, since each page becomes a high-quality image rather than editable text.</p>
+      <h3>Is this safe to use for sensitive documents?</h3>
+      <p>Yes — since both your file and the password you enter stay entirely on your device and are never transmitted anywhere, this is safe to use even for confidential or sensitive documents.</p>
+      <h3>What if I enter the wrong password?</h3>
+      <p>The tool will let you know the password wasn't accepted so you can try again — it won't produce a file if the password doesn't match.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const fileChip = document.getElementById('fileChip');
+  const fileName = document.getElementById('fileName');
+  const fileRemove = document.getElementById('fileRemove');
+  const passwordField = document.getElementById('passwordField');
+  const passwordInput = document.getElementById('passwordInput');
+  const passToggle = document.getElementById('passToggle');
+  const loadingRow = document.getElementById('loadingRow');
+  const loadingText = document.getElementById('loadingText');
+  const pageGrid = document.getElementById('pageGrid');
+  const unlockBtn = document.getElementById('unlockBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const successBox = document.getElementById('successBox');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let currentFile = null;
+  let sourceFileName = 'document';
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if(e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if(fileInput.files.length) setFile(fileInput.files[0]); fileInput.value=''; });
+
+  fileRemove.addEventListener('click', () => {
+    currentFile = null;
+    fileChip.style.display = 'none';
+    passwordField.style.display = 'none';
+    dropzone.style.display = 'block';
+    pageGrid.style.display = 'none';
+    unlockBtn.disabled = true;
+    resetResult();
+  });
+
+  passToggle.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    passToggle.textContent = isPassword ? 'Hide' : 'Show';
+  });
+
+  passwordInput.addEventListener('input', () => {
+    unlockBtn.disabled = !(currentFile && passwordInput.value.length > 0);
+  });
+
+  function setFile(file){
+    if(!(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'))) return;
+    currentFile = file;
+    sourceFileName = file.name.replace(/\.pdf$/i, '');
+    fileName.textContent = file.name;
+    fileChip.style.display = 'flex';
+    dropzone.style.display = 'none';
+    passwordField.style.display = 'block';
+    resetResult();
+    pageGrid.style.display = 'none';
+    pageGrid.innerHTML = '';
+    unlockBtn.disabled = passwordInput.value.length === 0;
+  }
+
+  function resetResult(){
+    successBox.style.display = 'none';
+    errorMsg.style.display = 'none';
+  }
+
+  unlockBtn.addEventListener('click', async () => {
+    if(!currentFile || !passwordInput.value) return;
+    errorMsg.style.display = 'none';
+    successBox.style.display = 'none';
+    pageGrid.innerHTML = '';
+    pageGrid.style.display = 'none';
+    unlockBtn.disabled = true;
+    loadingRow.style.display = 'flex';
+    loadingText.textContent = 'Verifying password…';
+
+    try{
+      const arrayBuffer = await currentFile.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer, password: passwordInput.value });
+
+      let pdfDoc;
+      try{
+        pdfDoc = await loadingTask.promise;
+      }catch(err){
+        if(err.name === 'PasswordException'){
+          errorMsg.textContent = 'That password was not accepted. Please check it and try again.';
+        } else {
+          errorMsg.textContent = "Couldn't read this PDF — it may be corrupted or not password-protected.";
+        }
+        errorMsg.style.display = 'block';
+        loadingRow.style.display = 'none';
+        unlockBtn.disabled = false;
+        return;
+      }
+
+      const { PDFDocument } = PDFLib;
+      const newDoc = await PDFDocument.create();
+
+      for(let i = 1; i <= pdfDoc.numPages; i++){
+        loadingText.textContent = `Unlocking page ${i} of ${pdfDoc.numPages}…`;
+        const page = await pdfDoc.getPage(i);
+        const scale = 2;
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+        const jpgBytes = await (await fetch(jpgDataUrl)).arrayBuffer();
+        const embedded = await newDoc.embedJpg(jpgBytes);
+        const newPage = newDoc.addPage([viewport.width / scale, viewport.height / scale]);
+        newPage.drawImage(embedded, { x: 0, y: 0, width: viewport.width / scale, height: viewport.height / scale });
+
+        // build small thumbnail for confirmation preview
+        const thumbCanvas = document.createElement('canvas');
+        const thumbScale = 0.35 / scale;
+        thumbCanvas.width = canvas.width * thumbScale;
+        thumbCanvas.height = canvas.height * thumbScale;
+        thumbCanvas.getContext('2d').drawImage(canvas, 0, 0, thumbCanvas.width, thumbCanvas.height);
+        const card = document.createElement('div');
+        card.className = 'page-card';
+        card.innerHTML = `
+          <div class="page-thumb-wrap"><img src="${thumbCanvas.toDataURL('image/jpeg', 0.6)}" alt="Page ${i}"></div>
+          <div class="page-caption">Page ${i}</div>
+        `;
+        pageGrid.appendChild(card);
+        pageGrid.style.display = 'grid';
+      }
+
+      const bytes = await newDoc.save();
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      downloadBtn.href = url;
+      downloadBtn.download = `${sourceFileName}-unlocked.pdf`;
+      downloadBtn.textContent = `Download ${sourceFileName}-unlocked.pdf`;
+      successBox.style.display = 'block';
+    }catch(err){
+      errorMsg.textContent = 'Something went wrong while unlocking. Please check your file and password, then try again.';
+      errorMsg.style.display = 'block';
+    }
+    loadingRow.style.display = 'none';
+    unlockBtn.disabled = false;
+  });
+</script>
+
+</body>
+</html>
