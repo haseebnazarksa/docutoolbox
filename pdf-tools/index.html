@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF & Document Tools — Free Online PDF Editor | Docutoolbox</title>
-<meta name="description" content="Merge, split, compress, convert, and edit PDF files — all free, in your browser, with no sign-up. 15 PDF tools for everything you need to do with a PDF.">
+<title>PDF & Document Tools - Free Online PDF Editor | Docutoolbox</title>
+<meta name="description" content="Merge, split, compress, convert, and edit PDF files - all free, in your browser, with no sign-up. 15 PDF tools for everything you need to do with a PDF.">
 <link rel="canonical" href="https://docutoolbox.com/pdf-tools/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,10 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -92,11 +95,11 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox · 15 tools</div>
   <h1><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>PDF & Document Tools</h1>
-  <p class="intro">Merge, split, compress, convert, and edit PDF files — all free, all in your browser, with no sign-up.</p>
+  <p class="intro">Merge, split, compress, convert, and edit PDF files - all free, all in your browser, with no sign-up.</p>
 
   <div class="filter-row">
-    <button class="filter-chip active" data-filter="all">All tools</button>
-    <button class="filter-chip" data-filter="live">Available now</button>
+    <button class="filter-chip" data-filter="all">All tools</button>
+    <button class="filter-chip active" data-filter="live">Available now</button>
     <button class="filter-chip" data-filter="soon">Coming soon</button>
   </div>
 
@@ -105,7 +108,7 @@
     <a href="/merge-pdf/" class="tool-card live" data-status="live">
       <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><circle cx="12" cy="12" r="3"/></svg></div>
       <div class="tool-title">Merge PDF <span class="tool-tag tag-live">Live</span></div>
-      <div class="tool-desc">Combine multiple PDFs into one — drag pages into the exact order you want.</div>
+      <div class="tool-desc">Combine multiple PDFs into one - drag pages into the exact order you want.</div>
       <div class="tool-arrow">Open tool →</div>
     </a>
 
@@ -171,7 +174,7 @@
     <a href="/add-page-numbers/" class="tool-card live" data-status="live">
       <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5"/><text x="9" y="17" font-size="7" fill="var(--linework)" stroke="none" font-family="monospace">1</text></svg></div>
       <div class="tool-title">PDF Page Numbers <span class="tool-tag tag-live">Live</span></div>
-      <div class="tool-desc">Stamp page numbers onto every page — pick the position and format.</div>
+      <div class="tool-desc">Stamp page numbers onto every page - pick the position and format.</div>
       <div class="tool-arrow">Open tool →</div>
     </a>
 
@@ -214,40 +217,40 @@
     </style>
 
     <h2>What are Docutoolbox's PDF & Document Tools?</h2>
-    <p>This is a growing collection of free, browser-based tools for everything people commonly need to do with a PDF — combining files, pulling pages apart, fixing orientation, converting to and from images, adding page numbers or a watermark, and removing a password from a file you already have access to. Every tool listed here runs entirely on your own device.</p>
-    <p>There's no software to install, no account to create, and no file size charged against a monthly quota. Open the tool you need, do the task, and download the result — that's the whole workflow.</p>
+    <p>This is a growing collection of free, browser-based tools for everything people commonly need to do with a PDF - combining files, pulling pages apart, fixing orientation, converting to and from images, adding page numbers or a watermark, and removing a password from a file you already have access to. Every tool listed here runs entirely on your own device.</p>
+    <p>There's no software to install, no account to create, and no file size charged against a monthly quota. Open the tool you need, do the task, and download the result - that's the whole workflow.</p>
 
     <h2>Why browser-based PDF tools?</h2>
-    <p>Most PDF websites work by uploading your file to a remote server, processing it there, and sending a result back down — which means your document (which might contain contracts, IDs, financial statements, or other private information) briefly sits on someone else's servers. Docutoolbox's tools are built differently: the PDF libraries that do the actual work (<strong>pdf-lib</strong> and <strong>pdf.js</strong>) run directly inside your browser using JavaScript, so your file never leaves your device. This also tends to be faster, since there's no upload or download wait over a network connection — everything happens locally at the speed of your own computer.</p>
+    <p>Most PDF websites work by uploading your file to a remote server, processing it there, and sending a result back down - which means your document (which might contain contracts, IDs, financial statements, or other private information) briefly sits on someone else's servers. Docutoolbox's tools are built differently: the PDF libraries that do the actual work (<strong>pdf-lib</strong> and <strong>pdf.js</strong>) run directly inside your browser using JavaScript, so your file never leaves your device. This also tends to be faster, since there's no upload or download wait over a network connection - everything happens locally at the speed of your own computer.</p>
 
     <h2>What each tool does</h2>
     <ul>
-      <li><strong>Merge PDF</strong> — combine multiple PDFs into one, with full control over page order via drag-and-drop thumbnails</li>
-      <li><strong>Split PDF</strong> — pull specific pages out of a PDF, either combined into one new file or as separate files</li>
-      <li><strong>PDF Page Rotator</strong> — fix pages that scanned in sideways or upside-down, individually or all at once</li>
-      <li><strong>PDF to JPG / PNG</strong> — export every page of a PDF as a standalone image file</li>
-      <li><strong>JPG / Image to PDF</strong> — combine one or more images into a single PDF document</li>
-      <li><strong>PDF Page Numbers</strong> — stamp page numbers onto every page, with control over position, format, and starting number</li>
-      <li><strong>PDF Watermark</strong> — add a custom text watermark (like "DRAFT" or "CONFIDENTIAL") across every page</li>
-      <li><strong>Unlock PDF</strong> — remove password protection from a PDF you already know the password for</li>
+      <li><strong>Merge PDF</strong> - combine multiple PDFs into one, with full control over page order via drag-and-drop thumbnails</li>
+      <li><strong>Split PDF</strong> - pull specific pages out of a PDF, either combined into one new file or as separate files</li>
+      <li><strong>PDF Page Rotator</strong> - fix pages that scanned in sideways or upside-down, individually or all at once</li>
+      <li><strong>PDF to JPG / PNG</strong> - export every page of a PDF as a standalone image file</li>
+      <li><strong>JPG / Image to PDF</strong> - combine one or more images into a single PDF document</li>
+      <li><strong>PDF Page Numbers</strong> - stamp page numbers onto every page, with control over position, format, and starting number</li>
+      <li><strong>PDF Watermark</strong> - add a custom text watermark (like "DRAFT" or "CONFIDENTIAL") across every page</li>
+      <li><strong>Unlock PDF</strong> - remove password protection from a PDF you already know the password for</li>
     </ul>
-    <p>More tools — including PDF to Word, Word to PDF, Compress PDF, Protect/Lock PDF, OCR text extraction, digital signing, and Excel conversion — are in active development and will appear here as they're finished.</p>
+    <p>More tools - including PDF to Word, Word to PDF, Compress PDF, Protect/Lock PDF, OCR text extraction, digital signing, and Excel conversion - are in active development and will appear here as they're finished.</p>
 
     <h2>How to choose the right tool</h2>
-    <p>If you're not sure which tool fits your task, think about what you're starting with and what you need to end up with. Combining several PDFs into one document is a job for <strong>Merge PDF</strong>. Pulling a few pages out of a longer document is <strong>Split PDF</strong>. Turning pages into pictures — for a slideshow, a social post, or embedding elsewhere — is <strong>PDF to JPG/PNG</strong>, while going the other direction, turning photos or scans into one PDF, is <strong>JPG/Image to PDF</strong>. If a page looks sideways, that's the <strong>Page Rotator</strong>; if you need a document professionally numbered or stamped with a "DRAFT" label, that's <strong>Page Numbers</strong> or <strong>Watermark</strong>; and if you're locked out of editing a PDF you already have the password for, that's <strong>Unlock PDF</strong>.</p>
+    <p>If you're not sure which tool fits your task, think about what you're starting with and what you need to end up with. Combining several PDFs into one document is a job for <strong>Merge PDF</strong>. Pulling a few pages out of a longer document is <strong>Split PDF</strong>. Turning pages into pictures - for a slideshow, a social post, or embedding elsewhere - is <strong>PDF to JPG/PNG</strong>, while going the other direction, turning photos or scans into one PDF, is <strong>JPG/Image to PDF</strong>. If a page looks sideways, that's the <strong>Page Rotator</strong>; if you need a document professionally numbered or stamped with a "DRAFT" label, that's <strong>Page Numbers</strong> or <strong>Watermark</strong>; and if you're locked out of editing a PDF you already have the password for, that's <strong>Unlock PDF</strong>.</p>
 
     <h2>Is it really free?</h2>
-    <p>Yes — every tool on this page is free to use, with no page limits, no watermarked output, and no account required. Because processing happens on your own device rather than on paid server infrastructure, there's no per-file cost to offset with a subscription.</p>
+    <p>Yes - every tool on this page is free to use, with no page limits, no watermarked output, and no account required. Because processing happens on your own device rather than on paid server infrastructure, there's no per-file cost to offset with a subscription.</p>
 
     <h2>Frequently asked questions</h2>
     <h3>Do I need to install anything?</h3>
-    <p>No — every tool runs directly in your web browser. There's nothing to download or install beyond the page itself.</p>
+    <p>No - every tool runs directly in your web browser. There's nothing to download or install beyond the page itself.</p>
     <h3>Is my file uploaded anywhere?</h3>
     <p>No. All processing happens locally in your browser using JavaScript. Your files are never transmitted to a server.</p>
     <h3>Is there a file size limit?</h3>
     <p>Each tool notes a practical size guideline (typically around 50MB), mainly because very large files take longer to process on your own device rather than a powerful remote server. There's no hard cap enforced beyond what your device's memory can comfortably handle.</p>
     <h3>Which browsers are supported?</h3>
-    <p>Any modern browser — Chrome, Firefox, Edge, or Safari — on desktop or mobile will work, since these tools rely on standard JavaScript features built into all current browsers.</p>
+    <p>Any modern browser - Chrome, Firefox, Edge, or Safari - on desktop or mobile will work, since these tools rely on standard JavaScript features built into all current browsers.</p>
   </div>
 
   <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a></footer>
@@ -256,16 +259,20 @@
 <script>
   const chips = document.querySelectorAll('.filter-chip');
   const cards = document.querySelectorAll('.tool-card');
+  function applyFilter(filter){
+    cards.forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+    });
+  }
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
       chips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
-      const filter = chip.dataset.filter;
-      cards.forEach(card => {
-        card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
-      });
+      applyFilter(chip.dataset.filter);
     });
   });
+  // Apply whichever chip is active by default on page load
+  applyFilter(document.querySelector('.filter-chip.active').dataset.filter);
 </script>
 
 </body>
