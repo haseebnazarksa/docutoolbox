@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passport Photo Resizer Online Free - Standard ID Sizes | Docutoolbox</title>
+<meta name="description" content="Free online passport photo resizer. Crop and resize a photo to standard passport, visa, and ID sizes with the correct pixel dimensions. No upload, works in your browser.">
+<link rel="canonical" href="https://docutoolbox.com/passport-photo-resizer/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .dropzone{
+    border:2px dashed var(--grid-line); border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.dragover{ border-color:var(--linework); background:rgba(201,162,39,0.05); }
+  .dropzone .dz-icon{ font-size:30px; margin-bottom:10px; }
+  .dropzone .dz-title{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+  .dropzone .dz-sub{ color:var(--text-muted); font-size:13px; }
+  input#fileInput{ display:none; }
+
+  .crop-area{ display:none; }
+  .setting{ margin-bottom:18px; }
+  .setting label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .setting select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:14px; padding:11px 12px; border-radius:8px; appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+  .setting select:focus{ outline:none; border-color:var(--linework); }
+  .size-info-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework-soft); margin-bottom:16px;}
+  .size-info-line strong{ color:var(--accent); }
+
+  .crop-stage{
+    position:relative; display:flex; justify-content:center; max-width:100%; margin:0 auto 16px; user-select:none; touch-action:none;
+    background:var(--blue-deep); border-radius:10px; overflow:hidden;
+  }
+  .crop-stage img{ display:block; max-width:100%; max-height:420px; user-select:none; -webkit-user-drag:none; }
+  .crop-box{ position:absolute; border:1.5px solid var(--linework); cursor:move; box-shadow:0 0 0 2000px rgba(14,22,32,0.55); }
+  .crop-box::before{
+    content:""; position:absolute; inset:0;
+    background-image:linear-gradient(rgba(228,199,102,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(228,199,102,0.5) 1px, transparent 1px);
+    background-size:33.33% 33.33%; pointer-events:none;
+  }
+  .handle{ position:absolute; width:14px; height:14px; background:var(--accent); border:2px solid var(--blue-deep); border-radius:50%; z-index:5;}
+  .handle.nw{ top:-7px; left:-7px; cursor:nwse-resize; }
+  .handle.ne{ top:-7px; right:-7px; cursor:nesw-resize; }
+  .handle.sw{ bottom:-7px; left:-7px; cursor:nesw-resize; }
+  .handle.se{ bottom:-7px; right:-7px; cursor:nwse-resize; }
+
+  .hint-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-muted); margin-bottom:18px;}
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  .change-img-btn{ width:100%; margin-top:10px; padding:11px; border:1px solid var(--grid-line); border-radius:9px; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer;}
+  .change-img-btn:hover{ border-color:var(--linework); color:var(--linework); }
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
+  #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
+  #downloadBtn:hover{ background:var(--accent-soft); }
+  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
+  .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+  .desc-block table{ width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13.5px;}
+  .desc-block th, .desc-block td{ padding:8px 10px; border-bottom:1px solid var(--grid-line); text-align:left;}
+  .desc-block th{ color:var(--linework); font-family:'Inter',sans-serif; font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Passport photo resizer</h1>
+  <p class="intro">Crop and resize a photo to a standard passport, visa, or ID size, with the correct pixel dimensions for printing or online submission.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon">🖼️</div>
+          <div class="dz-title">Drop a photo here, or click to browse</div>
+          <div class="dz-sub">JPG, PNG, or WEBP · Max 25MB</div>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+        </div>
+
+        <div class="crop-area" id="cropArea">
+          <div class="setting">
+            <label>Photo type</label>
+            <select id="presetSelect">
+              <option value="us" selected>US Passport / Visa (2x2 in, 600x600px)</option>
+              <option value="uk">UK Passport (35x45mm, 413x531px)</option>
+              <option value="eu">EU / Schengen Visa (35x45mm, 413x531px)</option>
+              <option value="india">India Passport (2x2 in, 600x600px)</option>
+              <option value="id">Standard ID Card (25x35mm, 295x413px)</option>
+            </select>
+          </div>
+
+          <div class="size-info-line" id="sizeInfoLine"></div>
+
+          <div class="crop-stage" id="cropStage">
+            <img id="cropImg" alt="Photo to crop" draggable="false">
+            <div class="crop-box" id="cropBox">
+              <div class="handle nw" data-handle="nw"></div>
+              <div class="handle ne" data-handle="ne"></div>
+              <div class="handle sw" data-handle="sw"></div>
+              <div class="handle se" data-handle="se"></div>
+            </div>
+          </div>
+          <div class="hint-line">Position the crop box so your face is centered, then drag corners to resize</div>
+
+          <button class="calc" id="cropBtn">Crop & download photo</button>
+          <button class="change-img-btn" id="changeImgBtn">Choose a different photo</button>
+          <div id="successBox">
+            <div class="s-title">✓ Your photo is ready</div>
+            <a id="downloadBtn" href="#" download="passport-photo.jpg">Download</a>
+          </div>
+        </div>
+        <div class="privacy-note"><span class="dot"></span> Your photo is processed entirely in your browser - nothing is uploaded to a server.</div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Image Tools</h4>
+      <a href="/image-compressor/">Image Compressor</a>
+      <a href="/image-resizer/">Image Resizer</a>
+      <a href="/image-cropper/">Image Cropper</a>
+      <a href="/image-format-converter/">Image Format Converter</a>
+      <a href="/image-flip-rotate/">Flip / Rotate Image</a>
+      <a href="/image-color-inverter/">Image Color Inverter</a>
+      <a href="/image-blur/">Blur Image</a>
+      <a href="/image-color-picker/">Color Picker from Image</a>
+      <a href="/base64-image-converter/">Base64 ↔ Image</a>
+      <a href="/svg-to-png/">SVG to PNG Converter</a>
+      <a href="/exif-viewer/">EXIF Viewer & Remover</a>
+      <a href="/favicon-generator/">Favicon Generator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Passport Photo Resizer?</h2>
+      <p>This tool crops and resizes a photo to the exact pixel dimensions required for a passport, visa, or standard ID photo. Choose your country or document type, position the crop box over your face, and download a photo sized correctly for printing or online submission.</p>
+      <p>Everything happens locally in your browser using the Canvas API. Your photo is never uploaded to a server, which matters for a photo of your own face.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Drop your photo onto the upload area, or click it to browse your device.</li>
+        <li>Choose the <strong>photo type</strong> you need from the dropdown, each option locks the crop box to the correct aspect ratio.</li>
+        <li>Drag the crop box to center your face, and drag the corner handles to resize it.</li>
+        <li>Click <strong>Crop & download photo</strong> to get your correctly sized image.</li>
+      </ol>
+
+      <h2>Standard sizes covered</h2>
+      <table>
+        <tr><th>Type</th><th>Physical size</th><th>Pixel size (300 DPI)</th></tr>
+        <tr><td>US Passport / Visa</td><td>2 x 2 inches</td><td>600 x 600 px</td></tr>
+        <tr><td>UK Passport</td><td>35 x 45 mm</td><td>413 x 531 px</td></tr>
+        <tr><td>EU / Schengen Visa</td><td>35 x 45 mm</td><td>413 x 531 px</td></tr>
+        <tr><td>India Passport</td><td>2 x 2 inches</td><td>600 x 600 px</td></tr>
+        <tr><td>Standard ID Card</td><td>25 x 35 mm</td><td>295 x 413 px</td></tr>
+      </table>
+      <p>These dimensions are calculated at 300 DPI (dots per inch), the standard resolution for sharp, print-quality photos. If you're submitting your photo online rather than printing it, most services will still accept these pixel dimensions directly.</p>
+
+      <h2>Tips for a compliant passport photo</h2>
+      <ul>
+        <li>Use a plain, light-colored background if possible, many official requirements specify a white or off-white background</li>
+        <li>Face the camera directly with a neutral expression, most official guidelines require this</li>
+        <li>Make sure your face is well-lit and clearly visible, without shadows or glare</li>
+        <li>Center your face within the crop box, leaving appropriate space above your head and below your chin</li>
+        <li>Check your specific country or document's official requirements, since exact rules (background color, head size within frame, glasses policy) vary by issuing authority and can change over time</li>
+      </ul>
+
+      <h2>A note on official requirements</h2>
+      <p>This tool crops your photo to the correct pixel dimensions for common document types, but it doesn't verify that your photo meets every official requirement, like background color, head positioning within the frame, or lighting. Always check your country or organization's current official photo guidelines before submitting, since requirements can be strict and vary by issuing authority.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Will this photo be accepted for my passport application?</h3>
+      <p>This tool ensures your photo has the correct pixel dimensions, but acceptance also depends on meeting other requirements like background, lighting, and expression set by your specific passport office. Always check your country's current official guidelines.</p>
+      <h3>What DPI are these pixel sizes based on?</h3>
+      <p>300 DPI, the standard resolution for print-quality photos. If you print the resulting image at that resolution, it will come out at the correct physical size in inches or millimeters.</p>
+      <h3>Can I use this for other ID types not listed?</h3>
+      <p>The <strong>Standard ID Card</strong> preset covers a common size, but if you need a very specific unusual size, the free-form <a href="/image-cropper/" style="color:var(--linework);">Image Cropper</a> tool lets you crop to any custom dimensions.</p>
+      <h3>Does this tool check my background color or lighting?</h3>
+      <p>No, it only handles cropping and resizing to the correct dimensions. You're responsible for taking a photo that meets your document's other requirements before uploading it here.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const cropArea = document.getElementById('cropArea');
+  const cropStage = document.getElementById('cropStage');
+  const cropImg = document.getElementById('cropImg');
+  const cropBox = document.getElementById('cropBox');
+  const presetSelect = document.getElementById('presetSelect');
+  const sizeInfoLine = document.getElementById('sizeInfoLine');
+  const cropBtn = document.getElementById('cropBtn');
+  const changeImgBtn = document.getElementById('changeImgBtn');
+  const successBox = document.getElementById('successBox');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  const PRESETS = {
+    us:    { label: 'US Passport / Visa', mm: '2 x 2 in', px: [600, 600] },
+    uk:    { label: 'UK Passport', mm: '35 x 45 mm', px: [413, 531] },
+    eu:    { label: 'EU / Schengen Visa', mm: '35 x 45 mm', px: [413, 531] },
+    india: { label: 'India Passport', mm: '2 x 2 in', px: [600, 600] },
+    id:    { label: 'Standard ID Card', mm: '25 x 35 mm', px: [295, 413] },
+  };
+
+  let currentFile = null;
+  let naturalW = 0, naturalH = 0;
+  let box = { x: 0, y: 0, w: 0, h: 0 };
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if(e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if(fileInput.files.length) loadFile(fileInput.files[0]); fileInput.value=''; });
+  changeImgBtn.addEventListener('click', () => {
+    cropArea.style.display = 'none';
+    dropzone.style.display = 'block';
+    successBox.style.display = 'none';
+  });
+
+  function currentRatio(){
+    const p = PRESETS[presetSelect.value];
+    return p.px[0] / p.px[1];
+  }
+
+  function updateSizeInfo(){
+    const p = PRESETS[presetSelect.value];
+    sizeInfoLine.innerHTML = `<strong>${p.px[0]} x ${p.px[1]} px</strong> (${p.mm} at 300 DPI)`;
+  }
+
+  presetSelect.addEventListener('change', () => {
+    updateSizeInfo();
+    if(naturalW) applyAspectToBox();
+    renderBox();
+  });
+
+  function loadFile(file){
+    if(!/^image\/(jpeg|png|webp)$/.test(file.type)) return;
+    currentFile = file;
+    successBox.style.display = 'none';
+    const url = URL.createObjectURL(file);
+    cropImg.src = url;
+    cropImg.onload = () => {
+      naturalW = cropImg.naturalWidth;
+      naturalH = cropImg.naturalHeight;
+      dropzone.style.display = 'none';
+      cropArea.style.display = 'block';
+      updateSizeInfo();
+      requestAnimationFrame(() => {
+        const dispW = cropImg.clientWidth, dispH = cropImg.clientHeight;
+        const r = currentRatio();
+        let initH = dispH * 0.75;
+        let initW = initH * r;
+        if(initW > dispW){ initW = dispW * 0.75; initH = initW / r; }
+        box = { x: (dispW - initW)/2, y: (dispH - initH)/2, w: initW, h: initH };
+        renderBox();
+      });
+    };
+  }
+
+  function getStageOffset(){
+    const imgRect = cropImg.getBoundingClientRect();
+    const stageRect = cropStage.getBoundingClientRect();
+    return { left: imgRect.left - stageRect.left, top: imgRect.top - stageRect.top, w: cropImg.clientWidth, h: cropImg.clientHeight };
+  }
+
+  function renderBox(){
+    const off = getStageOffset();
+    cropBox.style.left = (off.left + box.x) + 'px';
+    cropBox.style.top = (off.top + box.y) + 'px';
+    cropBox.style.width = box.w + 'px';
+    cropBox.style.height = box.h + 'px';
+  }
+
+  function applyAspectToBox(){
+    const r = currentRatio();
+    const off = getStageOffset();
+    let newH = box.w / r;
+    if(newH > off.h){ newH = off.h; box.w = newH * r; }
+    box.h = newH;
+    box.x = Math.min(Math.max(0, box.x), off.w - box.w);
+    box.y = Math.min(Math.max(0, box.y), off.h - box.h);
+  }
+
+  let dragMode = null;
+  let dragStart = { x:0, y:0 };
+  let boxStart = { x:0, y:0, w:0, h:0 };
+
+  cropBox.addEventListener('pointerdown', (e) => {
+    if(e.target.classList.contains('handle')) return;
+    startDrag(e, 'move');
+  });
+  cropBox.querySelectorAll('.handle').forEach(h => {
+    h.addEventListener('pointerdown', (e) => { e.stopPropagation(); startDrag(e, h.dataset.handle); });
+  });
+
+  function startDrag(e, mode){
+    dragMode = mode;
+    dragStart = { x: e.clientX, y: e.clientY };
+    boxStart = { ...box };
+    e.preventDefault();
+  }
+
+  document.addEventListener('pointermove', (e) => {
+    if(!dragMode) return;
+    const off = getStageOffset();
+    const dx = e.clientX - dragStart.x;
+    const dy = e.clientY - dragStart.y;
+    const r = currentRatio();
+
+    if(dragMode === 'move'){
+      box.x = Math.min(Math.max(0, boxStart.x + dx), off.w - box.w);
+      box.y = Math.min(Math.max(0, boxStart.y + dy), off.h - box.h);
+    } else {
+      let { x, y, w, h } = boxStart;
+      if(dragMode.includes('e')) w = Math.max(20, boxStart.w + dx);
+      if(dragMode.includes('w')){ w = Math.max(20, boxStart.w - dx); x = boxStart.x + boxStart.w - w; }
+      h = w / r;
+      if(dragMode.includes('n')) y = boxStart.y + boxStart.h - h;
+
+      x = Math.max(0, x); y = Math.max(0, y);
+      if(x + w > off.w) w = off.w - x;
+      if(y + h > off.h) h = off.h - y;
+      h = w / r;
+      box = { x, y, w, h };
+    }
+    renderBox();
+  });
+  document.addEventListener('pointerup', () => { dragMode = null; });
+  window.addEventListener('resize', () => { if(naturalW) renderBox(); });
+
+  cropBtn.addEventListener('click', () => {
+    if(!currentFile) return;
+    cropBtn.disabled = true;
+    cropBtn.textContent = 'Processing…';
+
+    const off = getStageOffset();
+    const scale = naturalW / off.w;
+    const sx = Math.round(box.x * scale);
+    const sy = Math.round(box.y * scale);
+    const sw = Math.round(box.w * scale);
+    const sh = Math.round(box.h * scale);
+
+    const p = PRESETS[presetSelect.value];
+    const [outW, outH] = p.px;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = outW;
+    canvas.height = outH;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, outW, outH);
+
+    const fullImg = new Image();
+    fullImg.onload = () => {
+      ctx.drawImage(fullImg, sx, sy, sw, sh, 0, 0, outW, outH);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+      downloadBtn.href = dataUrl;
+      downloadBtn.download = `passport-photo-${outW}x${outH}.jpg`;
+      successBox.style.display = 'block';
+      cropBtn.disabled = false;
+      cropBtn.textContent = 'Crop & download photo';
+    };
+    fullImg.src = cropImg.src;
+  });
+</script>
+
+</body>
+</html>
