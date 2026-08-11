@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Image Resizer Online - Resize JPG, PNG & WEBP Free | Docutoolbox</title>
-<meta name="description" content="Free online image resizer. Resize any JPG, PNG, or WEBP image to exact dimensions or a percentage, with aspect ratio lock and live preview. No upload, works in your browser.">
+<meta name="description" content="Free online image resizer. Resize to exact dimensions, a percentage, or a social media preset, with aspect ratio lock, target file size, and bulk resizing. No upload, works in your browser.">
 <link rel="canonical" href="https://docutoolbox.com/image-resizer/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,13 +64,49 @@
   input#fileInput{ display:none; }
 
   .preview-area{ display:none; }
-  .preview-img-wrap{
-    background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:16px;
-    display:flex; align-items:center; justify-content:center; min-height:200px; margin-bottom:18px; overflow:hidden;
+
+  .loading-row{ display:none; align-items:center; justify-content:center; gap:10px; padding:30px 0; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework); }
+  .spinner{ width:16px; height:16px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  .live-preview-card{ margin-bottom:20px; }
+  .live-preview-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .live-preview-label .live-dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+  .live-preview-box{
+    position:relative; background:
+      linear-gradient(45deg, #2a3444 25%, transparent 25%), linear-gradient(-45deg, #2a3444 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #2a3444 75%), linear-gradient(-45deg, transparent 75%, #2a3444 75%);
+    background-size:16px 16px; background-position:0 0, 0 8px, 8px -8px, -8px 0px;
+    background-color:var(--blue-deep);
+    border:1px solid var(--grid-line); border-radius:10px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; width:100%; height:280px;
   }
-  .preview-img-wrap img{ max-width:100%; max-height:340px; object-fit:contain; border-radius:4px; }
-  .orig-meta{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted); margin-bottom:18px; }
-  .orig-meta strong{ color:var(--linework); }
+  .live-preview-box img{ display:block; max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; opacity:0; transition:opacity 0.2s ease; }
+  .live-preview-box img.ready{ opacity:1; }
+  .live-preview-meta{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--linework-soft); margin-top:10px; min-height:34px; line-height:17px; display:flex; align-items:center; justify-content:center; }
+  .live-preview-meta strong{ color:var(--accent); }
+
+  /* Bulk file list */
+  .toolbar{ display:flex; justify-content:space-between; align-items:center; margin:16px 0 10px; }
+  .toolbar-hint{ font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+  .add-more-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:7px; cursor:pointer; }
+  .add-more-btn:hover{ border-color:var(--linework); }
+  .file-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+  .file-row{ display:flex; align-items:center; gap:12px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:10px 14px; }
+  .file-row .thumb{ width:38px; height:38px; border-radius:6px; object-fit:cover; flex:0 0 auto; background:#fff; }
+  .file-row .f-info{ flex:1; min-width:0; }
+  .file-row .f-name{ font-size:12.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .file-row .f-meta{ font-size:10.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; margin-top:2px;}
+  .file-row .f-remove{ background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:2px 6px; }
+  .file-row .f-remove:hover{ color:#E39A9A; }
+
+  /* Mode tabs */
+  .tabs{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+  .tab-btn{ flex:1; min-width:110px; padding:11px 8px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; }
 
   .field-row{ display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:end; margin-bottom:16px;}
   .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
@@ -91,18 +127,23 @@
 
   .setting{ margin-bottom:16px; }
   .setting label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
-  .setting select{
+  .setting select, .setting input[type="number"]{
     width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
     font-family:'JetBrains Mono',monospace; font-size:14px; padding:10px 12px; border-radius:8px; appearance:none; cursor:pointer;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
     background-repeat:no-repeat; background-position:right 12px center;
   }
+  .setting input[type="number"]{ background-image:none; cursor:text; }
   .slider-row{ display:flex; align-items:center; gap:10px; }
   .slider-row input[type="range"]{ flex:1; accent-color:var(--accent); }
   .slider-val{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework); min-width:38px; text-align:right;}
 
-  .new-size-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); margin-bottom:18px; }
+  .quality-toggle{ display:flex; gap:8px; margin-bottom:16px; }
+  .quality-toggle .tab-btn{ padding:9px 8px; font-size:12.5px; }
+
+  .new-size-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); margin-bottom:18px; min-height:18px; }
   .new-size-line strong{ color:var(--accent); }
+  .fit-note{ font-size:11.5px; color:var(--text-muted); margin:-8px 0 16px; font-family:'JetBrains Mono',monospace; }
 
   button.calc{
     width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
@@ -113,7 +154,9 @@
   .change-img-btn{ width:100%; margin-top:10px; padding:11px; border:1px solid var(--grid-line); border-radius:9px; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer;}
   .change-img-btn:hover{ border-color:var(--linework); color:var(--linework); }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
-  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center; opacity:0; transform:translateY(6px); transition:opacity 0.35s ease, transform 0.35s ease; }
+  #successBox.show{ opacity:1; transform:translateY(0); }
+  .btn-spinner{ display:inline-block; width:14px; height:14px; border:2px solid rgba(10,46,69,0.3); border-top-color:#0A2E45; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:8px;}
   #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
   #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
   #downloadBtn:hover{ background:var(--accent-soft); }
@@ -155,38 +198,117 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>Image resizer</h1>
-  <p class="intro">Resize any image to exact dimensions or a percentage, with the aspect ratio locked so nothing looks stretched.</p>
+  <p class="intro">Resize one or many images to exact dimensions, a percentage, or a social media preset, with aspect ratio lock and an optional target file size.</p>
 
   <div class="content-grid">
     <div class="calc-block">
       <div class="card">
         <div class="dropzone" id="dropzone">
           <div class="dz-icon">🖼️</div>
-          <div class="dz-title">Drop an image here, or click to browse</div>
-          <div class="dz-sub">JPG, PNG, or WEBP · Max 25MB</div>
-          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+          <div class="dz-title">Drop images here, or click to browse</div>
+          <div class="dz-sub">JPG, PNG, or WEBP · You can select multiple files · Max 25MB each</div>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
         </div>
 
+        <div class="loading-row" id="uploadLoadingRow"><div class="spinner"></div><span id="uploadLoadingText">Reading your image…</span></div>
+
         <div class="preview-area" id="previewArea">
-          <div class="preview-img-wrap"><img id="previewImg" alt="Uploaded image preview"></div>
-          <div class="orig-meta">Original: <strong id="origDims">0 × 0</strong> px · <strong id="origSize">0 KB</strong></div>
+          <div class="toolbar">
+            <span class="toolbar-hint" id="fileCountHint">1 image loaded</span>
+            <button class="add-more-btn" id="addMoreBtn">+ Add more images</button>
+          </div>
+          <div class="file-list" id="fileList"></div>
 
-          <div class="preset-row" id="presetRow">
-            <button class="preset-btn" data-pct="25">25%</button>
-            <button class="preset-btn" data-pct="50">50%</button>
-            <button class="preset-btn" data-pct="75">75%</button>
-            <button class="preset-btn active" data-pct="100">100%</button>
+          <div class="live-preview-card">
+            <div class="live-preview-label"><span class="live-dot"></span> Live preview</div>
+            <div class="live-preview-box" id="livePreviewBox">
+              <img id="livePreviewImg" alt="Live preview of resized image">
+            </div>
+            <div class="live-preview-meta" id="livePreviewMeta">0 × 0 px</div>
           </div>
 
-          <div class="field-row">
-            <div class="field"><label>Width (px)</label><input type="number" id="widthInput" min="1"></div>
-            <div class="dim-x">×</div>
-            <div class="field"><label>Height (px)</label><input type="number" id="heightInput" min="1"></div>
+          <div class="tabs" id="modeTabs">
+            <button class="tab-btn active" data-mode="custom">Custom size</button>
+            <button class="tab-btn" data-mode="percent">Percentage</button>
+            <button class="tab-btn" data-mode="social">Social media</button>
           </div>
-          <div class="lock-row">
-            <input type="checkbox" id="lockAspect" checked>
-            <label for="lockAspect">Lock aspect ratio</label>
+
+          <div class="tab-panel active" id="panelCustom">
+            <div class="field-row">
+              <div class="field"><label>Width (px)</label><input type="number" id="widthInput" min="1"></div>
+              <div class="dim-x">×</div>
+              <div class="field"><label>Height (px)</label><input type="number" id="heightInput" min="1"></div>
+            </div>
+            <div class="lock-row">
+              <input type="checkbox" id="lockAspect" checked>
+              <label for="lockAspect">Lock aspect ratio (applies when resizing a single image)</label>
+            </div>
           </div>
+
+          <div class="tab-panel" id="panelPercent">
+            <div class="preset-row" id="presetRow">
+              <button class="preset-btn" data-pct="25">25%</button>
+              <button class="preset-btn" data-pct="50">50%</button>
+              <button class="preset-btn" data-pct="75">75%</button>
+              <button class="preset-btn active" data-pct="100">100%</button>
+              <button class="preset-btn" data-pct="150">150%</button>
+              <button class="preset-btn" data-pct="200">200%</button>
+            </div>
+            <div class="setting">
+              <label>Custom percentage: <span class="slider-val" id="pctVal" style="display:inline;">100%</span></label>
+              <input type="range" id="pctSlider" min="1" max="400" value="100">
+            </div>
+          </div>
+
+          <div class="tab-panel" id="panelSocial">
+            <div class="setting">
+              <label>Platform & size</label>
+              <select id="socialSelect">
+                <optgroup label="Instagram">
+                  <option value="1080x1080">Square Post - 1080 x 1080</option>
+                  <option value="1080x1350">Portrait Post - 1080 x 1350</option>
+                  <option value="1080x1920">Story / Reel - 1080 x 1920</option>
+                  <option value="320x320">Profile Picture - 320 x 320</option>
+                </optgroup>
+                <optgroup label="Facebook">
+                  <option value="1200x630">Shared Post Image - 1200 x 630</option>
+                  <option value="820x312">Cover Photo - 820 x 312</option>
+                  <option value="170x170">Profile Picture - 170 x 170</option>
+                </optgroup>
+                <optgroup label="YouTube">
+                  <option value="1280x720">Thumbnail - 1280 x 720</option>
+                  <option value="2560x1440">Channel Banner - 2560 x 1440</option>
+                  <option value="800x800">Profile Picture - 800 x 800</option>
+                </optgroup>
+                <optgroup label="X (Twitter)">
+                  <option value="1200x675">Post Image - 1200 x 675</option>
+                  <option value="1500x500">Header - 1500 x 500</option>
+                  <option value="400x400">Profile Picture - 400 x 400</option>
+                </optgroup>
+                <optgroup label="LinkedIn">
+                  <option value="1200x627">Post Image - 1200 x 627</option>
+                  <option value="1584x396">Banner - 1584 x 396</option>
+                  <option value="400x400">Profile Picture - 400 x 400</option>
+                </optgroup>
+                <optgroup label="Pinterest">
+                  <option value="1000x1500">Standard Pin - 1000 x 1500</option>
+                  <option value="1080x1080">Square Pin - 1080 x 1080</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="setting" id="fitModeSetting" style="display:none;">
+            <label>When the shape does not match</label>
+            <select id="fitModeSelect">
+              <option value="crop" selected>Crop to fill</option>
+              <option value="stretch">Stretch to fit</option>
+              <option value="white">Fit with white bars</option>
+              <option value="black">Fit with black bars</option>
+              <option value="blurred">Fit with blurred background</option>
+            </select>
+          </div>
+          <div class="fit-note" id="fitNote" style="display:none;">Choose how to handle images whose shape does not exactly match the target size above.</div>
 
           <div class="setting">
             <label>Output format</label>
@@ -197,6 +319,12 @@
               <option value="webp">WEBP</option>
             </select>
           </div>
+
+          <div class="quality-toggle" id="qualityToggle">
+            <button class="tab-btn active" data-qmode="quality">Quality slider</button>
+            <button class="tab-btn" data-qmode="target">Target file size</button>
+          </div>
+
           <div class="setting" id="qualitySetting">
             <label>Quality: <span id="qualityVal">90%</span></label>
             <div class="slider-row">
@@ -204,17 +332,22 @@
             </div>
           </div>
 
-          <div class="new-size-line">New size: <strong id="newSizeLine">0 × 0 px</strong></div>
+          <div class="setting" id="targetSizeSetting" style="display:none;">
+            <label>Target file size (KB)</label>
+            <input type="number" id="targetSizeInput" min="5" value="200" placeholder="e.g. 200">
+            <div class="fit-note" style="margin-top:8px;">Only applies to JPG output. Output format will switch to JPG automatically.</div>
+          </div>
+
+          <div class="new-size-line" id="newSizeLine"></div>
 
           <button class="calc" id="resizeBtn">Resize image</button>
-          <button class="change-img-btn" id="changeImgBtn">Choose a different image</button>
+          <button class="change-img-btn" id="changeImgBtn">Start over</button>
           <div id="errorMsg"></div>
           <div id="successBox">
-            <div class="s-title">✓ Your resized image is ready</div>
+            <div class="s-title" id="successTitle">✓ Your resized image is ready</div>
             <a id="downloadBtn" href="#" download="resized.jpg">Download</a>
           </div>
         </div>
-        <div class="privacy-note"><span class="dot"></span> Your image is processed entirely in your browser - nothing is uploaded to a server.</div>
       </div>
     </div>
     <aside class="sidebar">
@@ -234,208 +367,498 @@
     </aside>
     <div class="desc-block">
       <h2>What is the Image Resizer?</h2>
-      <p>The Image Resizer changes the pixel dimensions of an image, either to an exact width and height you type in, or to a percentage of the original size. With the aspect ratio locked, changing one dimension automatically adjusts the other, so your image never comes out stretched or squashed.</p>
-      <p>Everything happens locally in your browser using the Canvas API. Your image is never uploaded to a server, so it's fast and private, and there's no file size charged against a quota.</p>
+      <p>The Image Resizer changes the pixel dimensions of one or more images, either to an exact width and height, a percentage of the original size, or a ready-made social media preset. It handles a single photo or a whole batch at once, with control over how mismatched shapes are handled and, optionally, a target file size to hit.</p>
+      <p>Everything happens locally in your browser using the Canvas API. Your images are never uploaded to a server, so it's fast and private, and there's no file size charged against a quota.</p>
 
       <h2>How to use it</h2>
       <ol>
-        <li>Drop your image onto the upload area, or click it to browse your device.</li>
-        <li>Use the quick <strong>25% / 50% / 75% / 100%</strong> buttons for a fast percentage resize, or type an exact width or height into the fields.</li>
-        <li>Leave <strong>"Lock aspect ratio"</strong> checked so the other dimension updates automatically and your image stays proportional.</li>
-        <li>Optionally choose an output format and, for JPG or WEBP, a quality level.</li>
-        <li>Click <strong>Resize image</strong> and download your result.</li>
+        <li>Drop one or more images onto the upload area, or click it to browse your device.</li>
+        <li>Choose a resize mode: <strong>Custom size</strong> for exact pixels, <strong>Percentage</strong> for proportional scaling, or <strong>Social media</strong> for a ready-made platform preset.</li>
+        <li>If your target shape does not match an image's original shape, choose how to handle it: crop to fill, stretch, or fit with white, black, or blurred bars.</li>
+        <li>Pick an output format, and either a quality level or a target file size in KB.</li>
+        <li>Click <strong>Resize image</strong>. A single image downloads directly; multiple images download together as a ZIP.</li>
       </ol>
 
-      <h2>Exact dimensions vs. percentage resizing</h2>
-      <p>Use <strong>exact dimensions</strong> when you know precisely what size you need, such as a 1200×630px image for a social media banner, or an 800px-wide product photo for a website. Use <strong>percentage resizing</strong> (the 25/50/75/100% buttons) when you just want to shrink an image by a proportional amount without worrying about the exact pixel count, like halving a photo's size before sharing it.</p>
+      <h2>Custom size vs. percentage vs. social media</h2>
+      <p>Use <strong>custom size</strong> when you know precisely what pixel dimensions you need. Use <strong>percentage</strong> to scale proportionally without worrying about exact numbers, this mode never distorts an image since width and height always scale together. Use <strong>social media</strong> presets to instantly match the exact size a platform recommends, like an Instagram Story or a YouTube thumbnail, without looking up the numbers yourself.</p>
 
-      <h2>Why the aspect ratio lock matters</h2>
-      <p>Every image has a natural width-to-height ratio. If you resize only the width without adjusting the height to match (or vice versa), the image gets stretched or squashed and looks distorted. With the lock enabled, typing a new width automatically calculates the matching height (and the reverse), so the image always keeps its original proportions no matter what size you choose.</p>
-
-      <h2>Choosing an output format</h2>
+      <h2>Handling a shape mismatch</h2>
       <ul>
-        <li><strong>Keep original format</strong> (default) - outputs the same file type you uploaded</li>
-        <li><strong>JPG</strong> - smaller file size, ideal for photos, with adjustable quality</li>
-        <li><strong>PNG</strong> - lossless, best for graphics, screenshots, or images needing transparency</li>
-        <li><strong>WEBP</strong> - modern format offering strong compression with good quality, supported by all current browsers</li>
+        <li><strong>Crop to fill</strong> - scales the image up to completely cover the target size, then trims the overflow from the edges. No empty space, but some of the image is cut off.</li>
+        <li><strong>Stretch to fit</strong> - forces the image to the exact target dimensions, which can distort it if the shapes are very different.</li>
+        <li><strong>Fit with white/black bars</strong> - scales the image down to fit entirely within the target size, filling any leftover space with a solid white or black background. Nothing is cropped or distorted.</li>
+        <li><strong>Fit with blurred background</strong> - same as above, but fills the leftover space with a softly blurred, zoomed-in copy of the image itself instead of a solid color, a popular look for turning a landscape photo into a square or vertical post without harsh bars.</li>
       </ul>
 
-      <h2>How it works technically</h2>
-      <p>The tool loads your image into an in-browser canvas at the target dimensions, letting the browser's own high-quality image scaling handle the resize, then exports the result as a new image file in your chosen format and quality. This is the same underlying technology used by professional image editing tools for resizing.</p>
+      <h2>Setting a target file size</h2>
+      <p>Instead of picking a quality percentage, you can tell the tool a target file size in kilobytes, useful when you have a strict upload limit, like a 200KB cap on a form or ad platform. The tool searches for the highest JPG quality setting that still lands at or under your target size. This only works for JPG output, since JPG's compression level directly controls file size in a predictable way, PNG and WEBP don't offer the same simple lever.</p>
 
-      <h2>Common uses</h2>
-      <ul>
-        <li>Shrinking a large photo before uploading it to a website with a file size limit</li>
-        <li>Resizing an image to exact dimensions required by a social media platform or ad specification</li>
-        <li>Making a smaller thumbnail version of a larger image</li>
-        <li>Preparing product photos to a consistent size for an online store</li>
-        <li>Reducing image dimensions to speed up a webpage's load time</li>
-      </ul>
+      <h2>Resizing multiple images at once</h2>
+      <p>Add as many images as you like, they all appear in a list where you can review or remove any before resizing. The same settings (size, format, quality) apply to every image in the batch. When you click resize, a single image downloads directly, while a batch of several images downloads together as one ZIP file, saving you from clicking download over and over.</p>
 
       <h2>Frequently asked questions</h2>
       <h3>Will resizing reduce my image's quality?</h3>
-      <p>Reducing dimensions (making an image smaller) generally looks sharp, since there's more detail than needed for the smaller size. Increasing dimensions beyond the original size can make an image look softer, since new pixels are being estimated rather than captured originally.</p>
-      <h3>What happens if I uncheck "Lock aspect ratio"?</h3>
-      <p>You can then set width and height independently, which lets you deliberately stretch or squash an image if that's what you need, though for most uses keeping the lock on gives a natural-looking result.</p>
-      <h3>Can I resize to a larger size than the original?</h3>
-      <p>Yes, though enlarging an image beyond its original resolution will look less sharp than the source, since no new detail is actually being added.</p>
-      <h3>Does this tool preserve transparency in PNG images?</h3>
-      <p>Yes, transparent areas in a PNG stay transparent after resizing, as long as you keep the output format as PNG (JPG does not support transparency).</p>
+      <p>Reducing dimensions generally looks sharp, since there's more original detail than the smaller size needs. Enlarging beyond the original size looks softer, since new pixels are being estimated rather than captured originally.</p>
+      <h3>Does the aspect ratio lock work with multiple images?</h3>
+      <p>The lock calculates a matching height from the width you type based on a single image's ratio, so it's most useful with one image loaded. With multiple images of different shapes, set your width and height directly and use the shape mismatch options to control how each image fits.</p>
+      <h3>Why does target file size force JPG output?</h3>
+      <p>JPG's lossy compression scales smoothly with quality, making it possible to search for a setting that lands near a specific file size. PNG is lossless and doesn't compress the same predictable way, so a target size in KB isn't a meaningful option for it.</p>
+      <h3>Can I mix different image formats in one batch?</h3>
+      <p>Yes, you can upload a mix of JPG, PNG, and WEBP files together, the same output format and size settings will apply to all of them.</p>
     </div>
   </div>
 
   <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('fileInput');
+  const addMoreBtn = document.getElementById('addMoreBtn');
+  const uploadLoadingRow = document.getElementById('uploadLoadingRow');
+  const uploadLoadingText = document.getElementById('uploadLoadingText');
   const previewArea = document.getElementById('previewArea');
-  const previewImg = document.getElementById('previewImg');
-  const origDims = document.getElementById('origDims');
-  const origSize = document.getElementById('origSize');
+  const fileCountHint = document.getElementById('fileCountHint');
+  const fileList = document.getElementById('fileList');
+  const livePreviewBox = document.getElementById('livePreviewBox');
+  const livePreviewImg = document.getElementById('livePreviewImg');
+  const livePreviewMeta = document.getElementById('livePreviewMeta');
+
+  const modeTabs = document.getElementById('modeTabs');
+  const panelCustom = document.getElementById('panelCustom');
+  const panelPercent = document.getElementById('panelPercent');
+  const panelSocial = document.getElementById('panelSocial');
+
   const widthInput = document.getElementById('widthInput');
   const heightInput = document.getElementById('heightInput');
   const lockAspect = document.getElementById('lockAspect');
   const presetRow = document.getElementById('presetRow');
+  const pctSlider = document.getElementById('pctSlider');
+  const pctVal = document.getElementById('pctVal');
+  const socialSelect = document.getElementById('socialSelect');
+
+  const fitModeSetting = document.getElementById('fitModeSetting');
+  const fitModeSelect = document.getElementById('fitModeSelect');
+  const fitNote = document.getElementById('fitNote');
+
   const formatSelect = document.getElementById('formatSelect');
+  const qualityToggle = document.getElementById('qualityToggle');
   const qualitySetting = document.getElementById('qualitySetting');
   const qualitySlider = document.getElementById('qualitySlider');
   const qualityVal = document.getElementById('qualityVal');
+  const targetSizeSetting = document.getElementById('targetSizeSetting');
+  const targetSizeInput = document.getElementById('targetSizeInput');
+
   const newSizeLine = document.getElementById('newSizeLine');
   const resizeBtn = document.getElementById('resizeBtn');
   const changeImgBtn = document.getElementById('changeImgBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
+  const successTitle = document.getElementById('successTitle');
   const downloadBtn = document.getElementById('downloadBtn');
 
-  let currentFile = null;
-  let origW = 0, origH = 0;
-  let aspectRatio = 1;
+  let files = []; // { id, file, url, w, h }
+  let mode = 'custom';
+  let qMode = 'quality';
 
   dropzone.addEventListener('click', () => fileInput.click());
+  addMoreBtn.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
   dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
   dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropzone.classList.remove('dragover');
-    if(e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+    addFiles(e.dataTransfer.files);
   });
-  fileInput.addEventListener('change', () => { if(fileInput.files.length) loadFile(fileInput.files[0]); fileInput.value=''; });
-  changeImgBtn.addEventListener('click', () => {
-    previewArea.style.display = 'none';
-    dropzone.style.display = 'block';
-    resetResult();
-  });
+  fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
 
-  function loadFile(file){
-    if(!/^image\/(jpeg|png|webp)$/.test(file.type)) return;
-    currentFile = file;
-    resetResult();
-    const url = URL.createObjectURL(file);
-    previewImg.src = url;
-    previewImg.onload = () => {
-      origW = previewImg.naturalWidth;
-      origH = previewImg.naturalHeight;
-      aspectRatio = origW / origH;
-      origDims.textContent = `${origW} × ${origH}`;
-      origSize.textContent = formatBytes(file.size);
-      widthInput.value = origW;
-      heightInput.value = origH;
-      presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.pct === '100'));
-      updateNewSizeLine();
-      updateQualityVisibility();
-    };
+  function addFiles(fileListInput){
+    const imgFiles = Array.from(fileListInput).filter(f => /^image\/(jpeg|png|webp)$/.test(f.type));
+    if(imgFiles.length === 0) return;
+
+    dropzone.style.display = 'none';
+    previewArea.style.display = 'none';
+    uploadLoadingRow.style.display = 'flex';
+    uploadLoadingText.textContent = imgFiles.length === 1 ? 'Reading your image…' : `Reading ${imgFiles.length} images…`;
+
+    const startTime = Date.now();
+    let pending = imgFiles.length;
+    imgFiles.forEach(file => {
+      const url = URL.createObjectURL(file);
+      const probe = new Image();
+      probe.onload = () => {
+        files.push({ id: Math.random().toString(36).slice(2), file, url, w: probe.naturalWidth, h: probe.naturalHeight });
+        pending--;
+        if(pending === 0){
+          // small artificial minimum delay so the loading state feels solid, not flashy
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, 900 - elapsed);
+          setTimeout(() => {
+            uploadLoadingRow.style.display = 'none';
+            onFilesReady();
+          }, remaining);
+        }
+      };
+      probe.src = url;
+    });
+  }
+
+  function onFilesReady(){
     dropzone.style.display = 'none';
     previewArea.style.display = 'block';
+    if(files.length === 1){
+      widthInput.value = files[0].w;
+      heightInput.value = files[0].h;
+    }
+    renderFileList();
+    resetResult();
+    updateFitModeVisibility();
+    updateNewSizeLine();
+  }
+
+  function renderFileList(){
+    fileCountHint.textContent = `${files.length} image${files.length===1?'':'s'} loaded`;
+    fileList.innerHTML = '';
+    files.forEach(f => {
+      const row = document.createElement('div');
+      row.className = 'file-row';
+      row.innerHTML = `
+        <img class="thumb" src="${f.url}" alt="${f.file.name}">
+        <div class="f-info">
+          <div class="f-name">${f.file.name}</div>
+          <div class="f-meta">${f.w} × ${f.h} px · ${formatBytes(f.file.size)}</div>
+        </div>
+        <button class="f-remove" data-id="${f.id}">×</button>
+      `;
+      row.querySelector('.f-remove').addEventListener('click', () => {
+        files = files.filter(x => x.id !== f.id);
+        if(files.length === 0){
+          previewArea.style.display = 'none';
+          dropzone.style.display = 'block';
+        } else {
+          renderFileList();
+          if(files.length === 1){ widthInput.value = files[0].w; heightInput.value = files[0].h; }
+          updateNewSizeLine();
+        }
+        resetResult();
+      });
+      fileList.appendChild(row);
+    });
   }
 
   function formatBytes(bytes){
     return bytes < 1024*1024 ? (bytes/1024).toFixed(0) + ' KB' : (bytes/(1024*1024)).toFixed(1) + ' MB';
   }
 
-  function updateNewSizeLine(){
-    newSizeLine.innerHTML = `<strong>${widthInput.value} × ${heightInput.value} px</strong>`;
+  changeImgBtn.addEventListener('click', () => {
+    files = [];
+    previewArea.style.display = 'none';
+    dropzone.style.display = 'block';
+    resetResult();
+  });
+
+  // Mode tabs
+  modeTabs.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      panelCustom.classList.toggle('active', mode === 'custom');
+      panelPercent.classList.toggle('active', mode === 'percent');
+      panelSocial.classList.toggle('active', mode === 'social');
+      updateFitModeVisibility();
+      updateNewSizeLine();
+    });
+  });
+
+  function updateFitModeVisibility(){
+    const show = (mode === 'social') || (mode === 'custom' && !lockAspect.checked) || (mode === 'custom' && files.length > 1);
+    fitModeSetting.style.display = show ? 'block' : 'none';
+    fitNote.style.display = show ? 'block' : 'none';
   }
 
   widthInput.addEventListener('input', () => {
-    if(lockAspect.checked && origW){
-      heightInput.value = Math.round(widthInput.value / aspectRatio);
+    if(lockAspect.checked && files.length === 1){
+      heightInput.value = Math.round(widthInput.value / (files[0].w / files[0].h));
     }
-    clearPresetActive();
+    updateFitModeVisibility();
     updateNewSizeLine();
   });
   heightInput.addEventListener('input', () => {
-    if(lockAspect.checked && origH){
-      widthInput.value = Math.round(heightInput.value * aspectRatio);
+    if(lockAspect.checked && files.length === 1){
+      widthInput.value = Math.round(heightInput.value * (files[0].w / files[0].h));
     }
-    clearPresetActive();
+    updateFitModeVisibility();
     updateNewSizeLine();
   });
-  function clearPresetActive(){
-    presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-  }
+  lockAspect.addEventListener('change', () => { updateFitModeVisibility(); updateNewSizeLine(); });
 
   presetRow.querySelectorAll('.preset-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const pct = parseInt(btn.dataset.pct, 10) / 100;
-      widthInput.value = Math.round(origW * pct);
-      heightInput.value = Math.round(origH * pct);
+      pctSlider.value = btn.dataset.pct;
+      pctVal.textContent = btn.dataset.pct + '%';
       updateNewSizeLine();
     });
   });
+  pctSlider.addEventListener('input', () => {
+    pctVal.textContent = pctSlider.value + '%';
+    presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.pct === pctSlider.value));
+    updateNewSizeLine();
+  });
 
-  function updateQualityVisibility(){
-    const fmt = formatSelect.value;
-    const isOriginalJpeg = fmt === 'original' && currentFile && currentFile.type === 'image/jpeg';
-    qualitySetting.style.display = (fmt === 'jpeg' || fmt === 'webp' || isOriginalJpeg) ? 'block' : 'none';
-  }
-  formatSelect.addEventListener('change', updateQualityVisibility);
-  qualitySlider.addEventListener('input', () => { qualityVal.textContent = qualitySlider.value + '%'; });
+  socialSelect.addEventListener('change', () => { updateFitModeVisibility(); updateNewSizeLine(); });
 
-  function resetResult(){
-    successBox.style.display = 'none';
-    errorMsg.style.display = 'none';
-  }
-
-  resizeBtn.addEventListener('click', () => {
-    const w = parseInt(widthInput.value, 10);
-    const h = parseInt(heightInput.value, 10);
-    if(!currentFile || !w || !h || w < 1 || h < 1){
-      errorMsg.textContent = 'Please enter a valid width and height.';
-      errorMsg.style.display = 'block';
-      return;
+  function updateNewSizeLine(){
+    if(files.length === 0){ newSizeLine.innerHTML = ''; return; }
+    if(mode === 'custom'){
+      newSizeLine.innerHTML = `New size: <strong>${widthInput.value || 0} × ${heightInput.value || 0} px</strong>`;
+    } else if(mode === 'percent'){
+      const pct = pctSlider.value;
+      if(files.length === 1){
+        const w = Math.round(files[0].w * pct/100), h = Math.round(files[0].h * pct/100);
+        newSizeLine.innerHTML = `New size: <strong>${w} × ${h} px</strong>`;
+      } else {
+        newSizeLine.innerHTML = `Each image will be scaled to <strong>${pct}%</strong> of its own original size`;
+      }
+    } else if(mode === 'social'){
+      const [w,h] = socialSelect.value.split('x');
+      newSizeLine.innerHTML = `New size: <strong>${w} × ${h} px</strong>`;
     }
-    errorMsg.style.display = 'none';
-    resizeBtn.disabled = true;
-    resizeBtn.textContent = 'Resizing…';
+    scheduleLivePreview();
+  }
+
+  // ---- Live preview ----
+  let previewDebounceTimer = null;
+  function scheduleLivePreview(){
+    clearTimeout(previewDebounceTimer);
+    previewDebounceTimer = setTimeout(drawLivePreview, 220);
+  }
+
+  async function drawLivePreview(){
+    if(files.length === 0) return;
+    const item = files[0];
+    const { w: tw, h: th } = getTargetDims(item);
+    if(!tw || !th) return;
+
+    // Keep the on-screen preview box a manageable render size while preserving the exact target aspect ratio
+    const maxSide = 480;
+    const scale = Math.min(1, maxSide / Math.max(tw, th));
+    const pw = Math.max(1, Math.round(tw * scale));
+    const ph = Math.max(1, Math.round(th * scale));
+
+    const img = new Image();
+    await new Promise((resolve) => { img.onload = resolve; img.onerror = resolve; img.src = item.url; });
 
     const canvas = document.createElement('canvas');
-    canvas.width = w;
-    canvas.height = h;
+    canvas.width = pw; canvas.height = ph;
     const ctx = canvas.getContext('2d');
 
     let outFormat = formatSelect.value;
-    if(outFormat === 'original') outFormat = currentFile.type.split('/')[1] === 'jpg' ? 'jpeg' : currentFile.type.split('/')[1];
-    if(outFormat === 'jpeg'){ ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h); }
+    if(outFormat === 'original') outFormat = item.file.type.split('/')[1] === 'jpg' ? 'jpeg' : item.file.type.split('/')[1];
+    if(qMode === 'target') outFormat = 'jpeg';
+    if(outFormat === 'jpeg'){ ctx.fillStyle = '#fff'; ctx.fillRect(0,0,pw,ph); }
 
-    const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, w, h);
+    if(needsFitMode()){
+      drawFitted(ctx, img, item.w, item.h, pw, ph, fitModeSelect.value);
+    } else {
+      ctx.drawImage(img, 0, 0, pw, ph);
+    }
+
+    livePreviewImg.classList.remove('ready');
+
+    if(qMode === 'target' && outFormat === 'jpeg'){
+      const targetBytes = parseInt(targetSizeInput.value,10) * 1024;
+      const result = await binarySearchQuality(canvas, 'image/jpeg', targetBytes, 4);
+      livePreviewImg.src = result.dataUrl;
+      const approxKb = Math.round(dataUrlSize(result.dataUrl) / 1024);
+      livePreviewMeta.innerHTML = `<strong>${tw} × ${th} px</strong> · ~${approxKb} KB (preview estimate)`;
+    } else {
       const mime = 'image/' + (outFormat === 'jpg' ? 'jpeg' : outFormat);
       const quality = qualitySlider.value / 100;
       const dataUrl = canvas.toDataURL(mime, quality);
-      const ext = outFormat === 'jpeg' ? 'jpg' : outFormat;
-      downloadBtn.href = dataUrl;
-      downloadBtn.download = `resized-${w}x${h}.${ext}`;
-      successBox.style.display = 'block';
-      resizeBtn.disabled = false;
-      resizeBtn.textContent = 'Resize image';
-    };
-    img.src = previewImg.src;
+      livePreviewImg.src = dataUrl;
+      livePreviewMeta.innerHTML = `<strong>${tw} × ${th} px</strong> · ${outFormat.toUpperCase().replace('JPEG','JPG')}`;
+    }
+    requestAnimationFrame(() => livePreviewImg.classList.add('ready'));
+  }
+
+  // Quality vs target size toggle
+  qualityToggle.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      qualityToggle.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      qMode = btn.dataset.qmode;
+      qualitySetting.style.display = qMode === 'quality' ? 'block' : 'none';
+      targetSizeSetting.style.display = qMode === 'target' ? 'block' : 'none';
+      scheduleLivePreview();
+    });
   });
+  qualitySlider.addEventListener('input', () => { qualityVal.textContent = qualitySlider.value + '%'; scheduleLivePreview(); });
+  targetSizeInput.addEventListener('input', scheduleLivePreview);
+  formatSelect.addEventListener('change', scheduleLivePreview);
+  fitModeSelect.addEventListener('change', scheduleLivePreview);
+
+  function resetResult(){
+    successBox.style.display = 'none';
+    successBox.classList.remove('show');
+    errorMsg.style.display = 'none';
+  }
+
+  function getTargetDims(item){
+    if(mode === 'custom'){
+      return { w: parseInt(widthInput.value,10) || item.w, h: parseInt(heightInput.value,10) || item.h };
+    } else if(mode === 'percent'){
+      const pct = parseInt(pctSlider.value,10) / 100;
+      return { w: Math.round(item.w * pct), h: Math.round(item.h * pct) };
+    } else {
+      const [w,h] = socialSelect.value.split('x').map(Number);
+      return { w, h };
+    }
+  }
+
+  function needsFitMode(){
+    return mode === 'social' || (mode === 'custom' && (!lockAspect.checked || files.length > 1));
+  }
+
+  function drawFitted(ctx, img, sw, sh, tw, th, fitMode){
+    if(fitMode === 'stretch'){
+      ctx.drawImage(img, 0, 0, sw, sh, 0, 0, tw, th);
+      return;
+    }
+    if(fitMode === 'crop'){
+      const scale = Math.max(tw/sw, th/sh);
+      const dw = sw*scale, dh = sh*scale;
+      const dx = (tw-dw)/2, dy = (th-dh)/2;
+      ctx.drawImage(img, 0, 0, sw, sh, dx, dy, dw, dh);
+      return;
+    }
+    // contain modes: white / black / blurred background, image centered
+    if(fitMode === 'blurred'){
+      const coverScale = Math.max(tw/sw, th/sh);
+      const cw = sw*coverScale, ch = sh*coverScale;
+      ctx.save();
+      ctx.filter = 'blur(18px)';
+      ctx.drawImage(img, 0, 0, sw, sh, (tw-cw)/2, (th-ch)/2, cw, ch);
+      ctx.restore();
+    } else {
+      ctx.fillStyle = fitMode === 'black' ? '#000' : '#fff';
+      ctx.fillRect(0, 0, tw, th);
+    }
+    const containScale = Math.min(tw/sw, th/sh);
+    const dw = sw*containScale, dh = sh*containScale;
+    const dx = (tw-dw)/2, dy = (th-dh)/2;
+    ctx.drawImage(img, 0, 0, sw, sh, dx, dy, dw, dh);
+  }
+
+  async function renderOne(item, outFormatOverride){
+    const { w: tw, h: th } = getTargetDims(item);
+    const img = new Image();
+    await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; img.src = item.url; });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = tw; canvas.height = th;
+    const ctx = canvas.getContext('2d');
+
+    let outFormat = outFormatOverride || formatSelect.value;
+    if(outFormat === 'original') outFormat = item.file.type.split('/')[1] === 'jpg' ? 'jpeg' : item.file.type.split('/')[1];
+    if(outFormat === 'jpeg'){ ctx.fillStyle = '#fff'; ctx.fillRect(0,0,tw,th); }
+
+    if(needsFitMode()){
+      drawFitted(ctx, img, item.w, item.h, tw, th, fitModeSelect.value);
+    } else {
+      ctx.drawImage(img, 0, 0, tw, th);
+    }
+
+    const mime = 'image/' + (outFormat === 'jpg' ? 'jpeg' : outFormat);
+
+    if(qMode === 'target' && outFormat === 'jpeg'){
+      const targetBytes = parseInt(targetSizeInput.value,10) * 1024;
+      return await binarySearchQuality(canvas, mime, targetBytes);
+    } else {
+      const quality = qualitySlider.value / 100;
+      const dataUrl = canvas.toDataURL(mime, quality);
+      return { dataUrl, ext: outFormat === 'jpeg' ? 'jpg' : outFormat };
+    }
+  }
+
+  function dataUrlSize(dataUrl){
+    return Math.round(dataUrl.split(',')[1].length * 0.75);
+  }
+
+  async function binarySearchQuality(canvas, mime, targetBytes, iterations){
+    iterations = iterations || 7;
+    let low = 0.1, high = 1.0, best = null;
+    for(let i = 0; i < iterations; i++){
+      const mid = (low + high) / 2;
+      const dataUrl = canvas.toDataURL(mime, mid);
+      const size = dataUrlSize(dataUrl);
+      if(size <= targetBytes){
+        best = dataUrl;
+        low = mid;
+      } else {
+        high = mid;
+      }
+    }
+    if(!best) best = canvas.toDataURL(mime, 0.1);
+    return { dataUrl: best, ext: 'jpg' };
+  }
+
+  resizeBtn.addEventListener('click', async () => {
+    if(files.length === 0) return;
+    errorMsg.style.display = 'none';
+    successBox.classList.remove('show');
+    resizeBtn.disabled = true;
+
+    const forceJpeg = qMode === 'target';
+    const startTime = Date.now();
+
+    try{
+      if(files.length === 1){
+        resizeBtn.innerHTML = '<span class="btn-spinner"></span>Preparing your image…';
+        const result = await renderOne(files[0], forceJpeg ? 'jpeg' : null);
+        await minDelay(startTime, 900);
+        downloadBtn.href = result.dataUrl;
+        downloadBtn.download = `resized.${result.ext}`;
+        downloadBtn.textContent = `Download resized.${result.ext}`;
+        successTitle.textContent = '✓ Your resized image is ready';
+        successBox.style.display = 'block';
+        requestAnimationFrame(() => successBox.classList.add('show'));
+      } else {
+        const zip = new JSZip();
+        for(let i = 0; i < files.length; i++){
+          resizeBtn.innerHTML = `<span class="btn-spinner"></span>Resizing ${i+1} of ${files.length}…`;
+          const result = await renderOne(files[i], forceJpeg ? 'jpeg' : null);
+          const base64 = result.dataUrl.split(',')[1];
+          const baseName = files[i].file.name.replace(/\.[^.]+$/, '');
+          zip.file(`${baseName}-resized.${result.ext}`, base64, { base64: true });
+        }
+        resizeBtn.innerHTML = '<span class="btn-spinner"></span>Packaging your files…';
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        await minDelay(startTime, 900);
+        const url = URL.createObjectURL(zipBlob);
+        downloadBtn.href = url;
+        downloadBtn.download = 'resized-images.zip';
+        downloadBtn.textContent = `Download ${files.length} images (.zip)`;
+        successTitle.textContent = `✓ ${files.length} images resized`;
+        successBox.style.display = 'block';
+        requestAnimationFrame(() => successBox.classList.add('show'));
+      }
+    }catch(err){
+      errorMsg.textContent = 'Something went wrong while resizing. Please check your images and try again.';
+      errorMsg.style.display = 'block';
+    }
+    resizeBtn.disabled = false;
+    resizeBtn.textContent = 'Resize image';
+  });
+
+  function minDelay(startTime, minMs){
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, minMs - elapsed);
+    return new Promise(resolve => setTimeout(resolve, remaining));
+  }
 </script>
 
 </body>
