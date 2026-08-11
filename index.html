@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Docutoolbox — Free Online Tools. No Sign-up, No Uploads.</title>
+<title>Docutoolbox - Free Online Tools. No Sign-up, No Uploads.</title>
 <meta name="description" content="A free toolbox of browser-based utilities: word counter, text case converter, image compressor, age calculator and more. Nothing you enter ever leaves your device.">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +22,10 @@
     --text-muted:#8B96A3;
     --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   html{scroll-behavior:smooth;}
   body{
     background:
@@ -169,7 +172,7 @@
     font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--text-muted);
     display:flex; justify-content:center; gap:22px; flex-wrap:wrap; margin-top:8px;
   }
-  .trust-line span::before{ content:"— "; color:var(--linework-soft); }
+  .trust-line span::before{ content:"- "; color:var(--linework-soft); }
 
   /* ---------- Schematic diagram (signature element) ---------- */
   .schematic{
@@ -427,7 +430,7 @@
     <div class="section-head reveal">
       <div class="section-eyebrow">The toolbox</div>
       <h2>Pick a category, get to work</h2>
-      <p>Every tool runs instantly and locally on your device — no waiting, no accounts, no limits.</p>
+      <p>Every tool runs instantly and locally on your device - no waiting, no accounts, no limits.</p>
     </div>
 
     <div class="feature-row reveal">
@@ -437,7 +440,7 @@
       <div class="feature-text">
         <span class="feature-tag">15 tools</span>
         <h3><a href="/pdf-tools/" style="color:inherit;text-decoration:none;">PDF & Document Tools</a></h3>
-        <p>Merge, split, compress, convert, and edit PDF files — all in your browser.</p>
+        <p>Merge, split, compress, convert, and edit PDF files - all in your browser.</p>
         <a href="/pdf-tools/" class="feature-link">Browse PDF & Document Tools →</a>
       </div>
     </div>
@@ -470,7 +473,7 @@
       <div class="feature-text">
         <span class="feature-tag">15 tools</span>
         <h3><a href="/image-tools/" style="color:inherit;text-decoration:none;">Image Tools & Editing</a></h3>
-        <p>Compress, resize, crop, and convert images — no uploads, all local.</p>
+        <p>Compress, resize, crop, and convert images - no uploads, all local.</p>
         <a href="/image-tools/" class="feature-link">Browse Image Tools & Editing →</a>
       </div>
     </div>
@@ -517,7 +520,7 @@
     <div class="faq-list" id="faqList">
       <div class="faq-item open">
         <button class="faq-q">What is Docutoolbox? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Docutoolbox is a free collection of small, focused web tools — a word counter, a text case converter, an image compressor, an age calculator, and more being added over time. Each one is built to do a single job well.</p></div>
+        <div class="faq-a"><p>Docutoolbox is a free collection of small, focused web tools - a word counter, a text case converter, an image compressor, an age calculator, and more being added over time. Each one is built to do a single job well.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Is it really free? <span class="plus">+</span></button>
@@ -529,7 +532,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Will more tools be added? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Yes — Docutoolbox is actively growing. New tools are added regularly based on what's genuinely useful for everyday tasks.</p></div>
+        <div class="faq-a"><p>Yes - Docutoolbox is actively growing. New tools are added regularly based on what's genuinely useful for everyday tasks.</p></div>
       </div>
     </div>
   </section>
@@ -570,7 +573,7 @@
     });
   });
 
-  // Scroll-reveal animations — replay every time an element enters or leaves the viewport,
+  // Scroll-reveal animations - replay every time an element enters or leaves the viewport,
   // so it animates in whether you're scrolling down or back up.
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
