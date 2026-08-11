@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Life & Math Calculators — Free Online Calculators | Docutoolbox</title>
-<meta name="description" content="Free online calculators for everyday math — percentages, dates, age, time, tips, GPA, averages, ratios, and more. 15 tools, no sign-up, all in your browser.">
+<title>Daily Life & Math Calculators - Free Online Calculators | Docutoolbox</title>
+<meta name="description" content="Free online calculators for everyday math - percentages, dates, age, time, tips, GPA, averages, ratios, and more. 15 tools, no sign-up, all in your browser.">
 <link rel="canonical" href="https://docutoolbox.com/math-calculators/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,10 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -99,11 +102,11 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox · 15 tools</div>
   <h1><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg>Daily Life & Math Calculators</h1>
-  <p class="intro">Everyday calculators for percentages, dates, time, money, grades, and numbers — free, instant, and all in your browser.</p>
+  <p class="intro">Everyday calculators for percentages, dates, time, money, grades, and numbers - free, instant, and all in your browser.</p>
 
   <div class="filter-row">
-    <button class="filter-chip active" data-filter="all">All tools</button>
-    <button class="filter-chip" data-filter="live">Available now</button>
+    <button class="filter-chip" data-filter="all">All tools</button>
+    <button class="filter-chip active" data-filter="live">Available now</button>
   </div>
 
   <div class="tool-grid" id="toolGrid">
@@ -125,7 +128,7 @@
     <a href="/age-calculator/" class="tool-card live" data-status="live">
       <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
       <div class="tool-title">Age Calculator <span class="tool-tag tag-live">Live</span></div>
-      <div class="tool-desc">Find your exact age in years, months, days — and when your next birthday falls.</div>
+      <div class="tool-desc">Find your exact age in years, months, days - and when your next birthday falls.</div>
       <div class="tool-arrow">Open tool →</div>
     </a>
 
@@ -217,46 +220,46 @@
 
   <div class="desc-block">
     <h2>What are Docutoolbox's Daily Life & Math Calculators?</h2>
-    <p>This is a complete set of 15 free, browser-based calculators for the everyday math people run into constantly — working out a discount, splitting a bill, checking a grade point average, converting a number base, or finding how many days are left until an event. Every calculator here runs instantly and entirely on your own device.</p>
+    <p>This is a complete set of 15 free, browser-based calculators for the everyday math people run into constantly - working out a discount, splitting a bill, checking a grade point average, converting a number base, or finding how many days are left until an event. Every calculator here runs instantly and entirely on your own device.</p>
     <p>There's no software to install, no account to create, and no limit on how many times you can use any tool. Open the calculator you need, enter your numbers, and get your answer immediately.</p>
 
     <h2>Why use a dedicated calculator instead of a general search?</h2>
-    <p>A quick web search can sometimes give a rough answer to a simple calculation, but it won't walk you through a discount plus tax, a GPA weighted by credit hours, or a proportion with a missing value — and it definitely won't let you adjust your numbers and instantly see a new result. These calculators are purpose-built for their specific job, with the right inputs, the right formula, and a clear, instant answer every time — plus a full explanation of the math underneath, in case you want to understand how the answer was reached.</p>
+    <p>A quick web search can sometimes give a rough answer to a simple calculation, but it won't walk you through a discount plus tax, a GPA weighted by credit hours, or a proportion with a missing value - and it definitely won't let you adjust your numbers and instantly see a new result. These calculators are purpose-built for their specific job, with the right inputs, the right formula, and a clear, instant answer every time - plus a full explanation of the math underneath, in case you want to understand how the answer was reached.</p>
 
     <h2>What each calculator does</h2>
     <ul>
-      <li><strong>Percentage Calculator</strong> — find X% of Y, what percent one number is of another, or a percentage increase/decrease</li>
-      <li><strong>Date Calculator</strong> — find the days between two dates, or add/subtract days from a date</li>
-      <li><strong>Age Calculator</strong> — find your exact age in years, months, and days, plus your next birthday countdown</li>
-      <li><strong>Time Calculator</strong> — add or subtract hours, minutes, and seconds</li>
-      <li><strong>Discount Calculator</strong> — find the sale price and savings for any discount percentage</li>
-      <li><strong>Tip Calculator</strong> — calculate a tip and split the bill among any number of people</li>
-      <li><strong>GPA / Grade Calculator</strong> — calculate a weighted grade point average from course grades and credit hours</li>
-      <li><strong>Average / Mean Calculator</strong> — find the mean, median, mode, sum, and range of a list of numbers</li>
-      <li><strong>Ratio & Proportion Calculator</strong> — simplify a ratio or solve a proportion for a missing value</li>
-      <li><strong>Scientific Calculator</strong> — trigonometry, logarithms, powers, roots, and memory functions</li>
-      <li><strong>Day Counter / Countdown</strong> — count the days until a future date, or since a past one</li>
-      <li><strong>Day of the Week Calculator</strong> — find what day of the week any date falls on</li>
-      <li><strong>Roman Numerals Converter</strong> — convert between numbers and Roman numerals</li>
-      <li><strong>Binary / Hex / Decimal Converter</strong> — convert instantly between binary, decimal, hex, and octal</li>
-      <li><strong>Random Number Generator</strong> — generate one or many random numbers within a chosen range</li>
+      <li><strong>Percentage Calculator</strong> - find X% of Y, what percent one number is of another, or a percentage increase/decrease</li>
+      <li><strong>Date Calculator</strong> - find the days between two dates, or add/subtract days from a date</li>
+      <li><strong>Age Calculator</strong> - find your exact age in years, months, and days, plus your next birthday countdown</li>
+      <li><strong>Time Calculator</strong> - add or subtract hours, minutes, and seconds</li>
+      <li><strong>Discount Calculator</strong> - find the sale price and savings for any discount percentage</li>
+      <li><strong>Tip Calculator</strong> - calculate a tip and split the bill among any number of people</li>
+      <li><strong>GPA / Grade Calculator</strong> - calculate a weighted grade point average from course grades and credit hours</li>
+      <li><strong>Average / Mean Calculator</strong> - find the mean, median, mode, sum, and range of a list of numbers</li>
+      <li><strong>Ratio & Proportion Calculator</strong> - simplify a ratio or solve a proportion for a missing value</li>
+      <li><strong>Scientific Calculator</strong> - trigonometry, logarithms, powers, roots, and memory functions</li>
+      <li><strong>Day Counter / Countdown</strong> - count the days until a future date, or since a past one</li>
+      <li><strong>Day of the Week Calculator</strong> - find what day of the week any date falls on</li>
+      <li><strong>Roman Numerals Converter</strong> - convert between numbers and Roman numerals</li>
+      <li><strong>Binary / Hex / Decimal Converter</strong> - convert instantly between binary, decimal, hex, and octal</li>
+      <li><strong>Random Number Generator</strong> - generate one or many random numbers within a chosen range</li>
     </ul>
 
     <h2>How to choose the right calculator</h2>
-    <p>If your question involves dates and time — how long until an event, what day something falls on, how old you are, or a duration in hours and minutes — reach for the <strong>Date</strong>, <strong>Age</strong>, <strong>Time</strong>, <strong>Day Counter</strong>, or <strong>Day of the Week</strong> calculators. If it's about money or percentages, the <strong>Percentage</strong>, <strong>Discount</strong>, or <strong>Tip</strong> calculators cover the most common everyday cases. For school and grading, the <strong>GPA/Grade Calculator</strong> handles weighted averages. For a set of numbers you want to summarize or compare, the <strong>Average/Mean</strong> and <strong>Ratio & Proportion</strong> calculators are built for exactly that. And for anything technical — number base conversion, trigonometry, or generating random values — the <strong>Scientific Calculator</strong>, <strong>Binary/Hex/Decimal Converter</strong>, and <strong>Random Number Generator</strong> are purpose-built for those tasks.</p>
+    <p>If your question involves dates and time - how long until an event, what day something falls on, how old you are, or a duration in hours and minutes - reach for the <strong>Date</strong>, <strong>Age</strong>, <strong>Time</strong>, <strong>Day Counter</strong>, or <strong>Day of the Week</strong> calculators. If it's about money or percentages, the <strong>Percentage</strong>, <strong>Discount</strong>, or <strong>Tip</strong> calculators cover the most common everyday cases. For school and grading, the <strong>GPA/Grade Calculator</strong> handles weighted averages. For a set of numbers you want to summarize or compare, the <strong>Average/Mean</strong> and <strong>Ratio & Proportion</strong> calculators are built for exactly that. And for anything technical - number base conversion, trigonometry, or generating random values - the <strong>Scientific Calculator</strong>, <strong>Binary/Hex/Decimal Converter</strong>, and <strong>Random Number Generator</strong> are purpose-built for those tasks.</p>
 
     <h2>Is it really free?</h2>
-    <p>Yes — every calculator on this page is completely free, with no usage limits and no account required. Since all the math happens on your own device rather than a paid server, there's no per-calculation cost to offset.</p>
+    <p>Yes - every calculator on this page is completely free, with no usage limits and no account required. Since all the math happens on your own device rather than a paid server, there's no per-calculation cost to offset.</p>
 
     <h2>Frequently asked questions</h2>
     <h3>Do I need to install anything?</h3>
-    <p>No — every calculator runs directly in your web browser. There's nothing to download or install beyond the page itself.</p>
+    <p>No - every calculator runs directly in your web browser. There's nothing to download or install beyond the page itself.</p>
     <h3>Is my data stored or sent anywhere?</h3>
     <p>No. All calculations happen locally in your browser using JavaScript. Nothing you enter is transmitted to a server or saved anywhere.</p>
     <h3>Can I use these calculators on my phone?</h3>
-    <p>Yes — every calculator is fully responsive and works on any modern phone, tablet, or desktop browser.</p>
+    <p>Yes - every calculator is fully responsive and works on any modern phone, tablet, or desktop browser.</p>
     <h3>Are the results accurate enough for schoolwork or financial decisions?</h3>
-    <p>Yes — each calculator uses the standard, correct formula for its calculation. That said, for high-stakes financial or academic decisions, it's always a good idea to double-check important figures against your institution's or employer's official records.</p>
+    <p>Yes - each calculator uses the standard, correct formula for its calculation. That said, for high-stakes financial or academic decisions, it's always a good idea to double-check important figures against your institution's or employer's official records.</p>
   </div>
 
   <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a></footer>
@@ -265,16 +268,19 @@
 <script>
   const chips = document.querySelectorAll('.filter-chip');
   const cards = document.querySelectorAll('.tool-card');
+  function applyFilter(filter){
+    cards.forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+    });
+  }
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
       chips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
-      const filter = chip.dataset.filter;
-      cards.forEach(card => {
-        card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
-      });
+      applyFilter(chip.dataset.filter);
     });
   });
+  applyFilter(document.querySelector('.filter-chip.active').dataset.filter);
 </script>
 
 </body>
