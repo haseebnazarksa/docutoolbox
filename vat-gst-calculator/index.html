@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAT / GST Calculator - Add or Remove Tax | Docutoolbox</title>
+<meta name="description" content="Free VAT and GST calculator. Add tax to a net price, or extract the tax from a gross price, with common country rate presets.">
+<link rel="canonical" href="https://docutoolbox.com/vat-gst-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+    --c-net:#5FA8D3; --c-tax:#C9A227;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .tabs{ display:flex; gap:8px; margin-bottom:22px; }
+  .tab-btn{ flex:1; padding:12px 8px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field select{
+    appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--linework);}
+
+  .preset-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .preset-btn{ background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:12px; padding:8px 14px; border-radius:20px; cursor:pointer; transition:all 0.15s ease;}
+  .preset-btn:hover{ border-color:var(--linework-soft); color:var(--ink); }
+  .preset-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent); font-weight:600;}
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:34px; color:var(--accent); }
+
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--grid-line); }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row .r-label{ font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px; }
+  .result-row .r-dot{ width:9px; height:9px; border-radius:3px; flex:0 0 auto; }
+  .result-row .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+
+  .chart-row{ display:flex; align-items:center; gap:24px; margin-top:20px; flex-wrap:wrap; justify-content:center; }
+  .donut{ width:130px; height:130px; border-radius:50%; flex:0 0 auto; }
+  .legend{ display:flex; flex-direction:column; gap:10px; }
+  .legend-item{ display:flex; align-items:center; gap:10px; font-size:13px; }
+  .legend-dot{ width:11px; height:11px; border-radius:3px; flex:0 0 auto; }
+  .legend-pct{ font-family:'JetBrains Mono',monospace; color:var(--linework); margin-left:4px; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+  .desc-block table{ width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13.5px;}
+  .desc-block th, .desc-block td{ padding:8px 10px; border-bottom:1px solid var(--grid-line); text-align:left;}
+  .desc-block th{ color:var(--linework); font-family:'Inter',sans-serif; font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>VAT / GST calculator</h1>
+  <p class="intro">Add tax to a net price, or pull the tax back out of a price that already includes it.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="tabs" id="modeTabs">
+          <button class="tab-btn active" data-mode="add">Add tax</button>
+          <button class="tab-btn" data-mode="remove">Remove tax</button>
+        </div>
+
+        <div class="field">
+          <label id="amountLabel">Price excluding tax ($)</label>
+          <input type="number" id="amountInput" value="100" min="0" step="0.01">
+        </div>
+
+        <div class="field">
+          <label>Tax rate (%)</label>
+          <div class="preset-row" id="presetRow">
+            <button class="preset-btn" data-rate="5">5%</button>
+            <button class="preset-btn" data-rate="10">10%</button>
+            <button class="preset-btn" data-rate="12">12%</button>
+            <button class="preset-btn" data-rate="15">15%</button>
+            <button class="preset-btn active" data-rate="18">18%</button>
+            <button class="preset-btn" data-rate="20">20%</button>
+          </div>
+          <input type="number" id="rateInput" value="18" step="0.1" min="0">
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate</button>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label" id="heroLabel">Price including tax</div>
+            <div class="m-value" id="heroValue">$0.00</div>
+          </div>
+
+          <div class="result-row"><span class="r-label"><span class="r-dot" style="background:var(--c-net);"></span>Price excluding tax</span><span class="r-value" id="rNet">$0.00</span></div>
+          <div class="result-row"><span class="r-label"><span class="r-dot" style="background:var(--c-tax);"></span>Tax amount</span><span class="r-value" id="rTax">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Price including tax</span><span class="r-value" id="rGross">$0.00</span></div>
+
+          <div class="chart-row">
+            <div class="donut" id="vatDonut"></div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-dot" style="background:var(--c-net);"></span>Net price <span class="legend-pct" id="netPct">0%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--c-tax);"></span>Tax <span class="legend-pct" id="taxPct">0%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/simple-interest-calculator/">Simple Interest Calculator</a>
+      <a href="/inflation-calculator/">Inflation Calculator</a>
+      <a href="/profit-margin-calculator/">Profit Margin & Markup Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/npv-calculator/">Net Present Value (NPV) Calculator</a>
+      <a href="/freelance-rate-calculator/">Freelance Hourly Rate Calculator</a>
+      <a href="/savings-goal-calculator/">Savings Goal Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What are VAT and GST?</h2>
+      <p>VAT (Value Added Tax) and GST (Goods and Services Tax) are consumption taxes added to the price of most goods and services, used by most countries around the world outside the United States. Though the names and specific rules differ by country, they work the same basic way: a percentage is added to a good's price, collected by the seller, and passed on to the government.</p>
+      <p>This calculator works in either direction, add tax to a price that doesn't include it yet, or extract the tax amount from a price that already does.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Choose <strong>"Add tax"</strong> if you have a price before tax and want to find the final price, or <strong>"Remove tax"</strong> if you have a final price and want to find what it was before tax and how much tax is included.</li>
+        <li>Enter your <strong>amount</strong>.</li>
+        <li>Enter the <strong>tax rate</strong>, or click one of the common rate presets.</li>
+        <li>Click <strong>Calculate</strong> to see the net price, tax amount, and gross price broken down.</li>
+      </ol>
+
+      <h2>Common VAT / GST rates around the world</h2>
+      <table>
+        <tr><th>Country / Region</th><th>Typical standard rate</th></tr>
+        <tr><td>United Kingdom (VAT)</td><td>20%</td></tr>
+        <tr><td>European Union (VAT)</td><td>~19-25% (varies by country)</td></tr>
+        <tr><td>Australia (GST)</td><td>10%</td></tr>
+        <tr><td>India (GST)</td><td>5%, 12%, 18%, or 28% (varies by item)</td></tr>
+        <tr><td>Canada (GST/HST)</td><td>5% GST, up to 15% combined with provincial tax</td></tr>
+        <tr><td>Pakistan (GST/Sales Tax)</td><td>~17-18%</td></tr>
+      </table>
+      <p>These are general reference points only, actual rates vary by country, region, and even by specific product or service category (many countries apply reduced rates or exemptions to essentials like food, books, or medicine). Always confirm the exact current rate for your situation with your local tax authority.</p>
+
+      <h2>How the formulas work</h2>
+      <p><strong>Adding tax:</strong> Gross price = Net price × (1 + rate ÷ 100). For example, $100 with 18% GST added becomes $100 × 1.18 = $118, with $18 of that being tax.</p>
+      <p><strong>Removing tax:</strong> Net price = Gross price ÷ (1 + rate ÷ 100). For example, $118 that already includes 18% GST breaks down to $118 ÷ 1.18 = $100 net, with $18 of tax embedded in that price. Note this isn't the same as simply subtracting 18% from $118, since the tax was calculated on the smaller net amount, not the final gross price.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Working out the final price of a product before checkout</li>
+        <li>Extracting the tax portion from a receipt or invoice for accounting purposes</li>
+        <li>Pricing products for sale by working backward from a target after-tax price</li>
+        <li>Checking whether a business has calculated VAT/GST correctly on an invoice</li>
+        <li>Comparing prices between tax-inclusive and tax-exclusive listings</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Why can't I just subtract the tax percentage directly from a tax-inclusive price?</h3>
+      <p>Because the tax percentage was originally calculated on the smaller net price, not the larger final price, directly subtracting the percentage from the gross price overstates the tax amount. Always divide by (1 + rate/100) to remove tax correctly, rather than multiplying the gross price by the rate.</p>
+      <h3>Does this work for sales tax in the United States too?</h3>
+      <p>Yes, the math is identical, US sales tax is typically added at checkout rather than included in listed prices, but the same add/remove tax formulas apply regardless of what the tax is called.</p>
+      <h3>What if my country has multiple tax rates for different products?</h3>
+      <p>Enter the specific rate that applies to your particular product or service category, since these calculators work with a single rate at a time, check your local tax authority for which rate applies to what you're calculating.</p>
+      <h3>Is VAT the same as sales tax?</h3>
+      <p>They're similar in that both add a percentage to a sale price, but they're structured differently behind the scenes, VAT is collected incrementally at each stage of production and distribution, while sales tax is typically collected only once, at the final point of sale to the consumer. For calculating the tax on a single purchase, the math works the same either way.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const modeTabs = document.getElementById('modeTabs');
+  const amountLabel = document.getElementById('amountLabel');
+  let mode = 'add';
+
+  modeTabs.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      amountLabel.textContent = mode === 'add' ? 'Price excluding tax ($)' : 'Price including tax ($)';
+      document.getElementById('resultsWrap').style.display = 'none';
+    });
+  });
+
+  const presetRow = document.getElementById('presetRow');
+  const rateInput = document.getElementById('rateInput');
+  presetRow.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      rateInput.value = btn.dataset.rate;
+    });
+  });
+  rateInput.addEventListener('input', () => {
+    presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.rate === rateInput.value));
+  });
+
+  function fmtMoney(n){ return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function drawDonut(el, netPct){
+    const p = Math.max(0, Math.min(100, netPct));
+    el.style.background = `conic-gradient(var(--c-net) 0% ${p}%, var(--c-tax) ${p}% 100%)`;
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const amount = parseFloat(document.getElementById('amountInput').value) || 0;
+    const rate = parseFloat(rateInput.value) || 0;
+
+    let net, tax, gross;
+    if(mode === 'add'){
+      net = amount;
+      gross = net * (1 + rate/100);
+      tax = gross - net;
+      document.getElementById('heroLabel').textContent = 'Price including tax';
+      document.getElementById('heroValue').textContent = fmtMoney(gross);
+    } else {
+      gross = amount;
+      net = gross / (1 + rate/100);
+      tax = gross - net;
+      document.getElementById('heroLabel').textContent = 'Price excluding tax';
+      document.getElementById('heroValue').textContent = fmtMoney(net);
+    }
+
+    document.getElementById('rNet').textContent = fmtMoney(net);
+    document.getElementById('rTax').textContent = fmtMoney(tax);
+    document.getElementById('rGross').textContent = fmtMoney(gross);
+
+    const netPct = gross > 0 ? (net / gross) * 100 : 0;
+    document.getElementById('netPct').textContent = netPct.toFixed(1) + '%';
+    document.getElementById('taxPct').textContent = (100 - netPct).toFixed(1) + '%';
+    drawDonut(document.getElementById('vatDonut'), netPct);
+
+    document.getElementById('resultsWrap').style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
