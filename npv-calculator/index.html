@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPV Calculator - Net Present Value, IRR & Payback Period | Docutoolbox</title>
+<meta name="description" content="Free NPV calculator. Find the net present value, internal rate of return (IRR), payback period, and profitability index of an investment's cash flows.">
+<link rel="canonical" href="https://docutoolbox.com/npv-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework);}
+  .field-row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+  .cashflow-title{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--linework); margin:22px 0 14px; display:flex; justify-content:space-between; align-items:center; }
+  .add-year-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:11.5px; font-weight:600; padding:6px 12px; border-radius:7px; cursor:pointer; text-transform:none; letter-spacing:0; }
+  .add-year-btn:hover{ border-color:var(--linework); }
+
+  .cashflow-row{ display:grid; grid-template-columns:70px 1fr 36px; gap:10px; align-items:center; margin-bottom:8px; }
+  .cashflow-row .cf-year{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-muted); text-align:center; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:8px; padding:11px 4px; }
+  .cashflow-row input{ width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:14px; padding:10px 10px; border-radius:8px; }
+  .cashflow-row input:focus{ outline:none; border-color:var(--linework); }
+  .cf-remove{ background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; }
+  .cf-remove:hover{ color:#E39A9A; }
+
+  button.calc{
+    width:100%; margin-top:16px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:34px; }
+  .result-hero .m-value.pos{ color:#8FCB9E; }
+  .result-hero .m-value.neg{ color:#E39A9A; }
+  .result-hero .m-sub{ font-size:12.5px; color:var(--text-muted); margin-top:8px; font-family:'Inter',sans-serif; }
+
+  .metric-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+  @media (max-width:520px){ .metric-grid{ grid-template-columns:1fr 1fr; } }
+  .metric-box{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:14px; text-align:center; }
+  .metric-box .mb-label{ font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .metric-box .mb-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+
+  .schedule-wrap{ margin-top:8px; max-height:340px; overflow-y:auto; border:1px solid var(--grid-line); border-radius:10px; }
+  table.schedule{ width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12px; }
+  table.schedule th{ position:sticky; top:0; background:var(--blue-card-2); color:var(--linework); padding:10px 8px; text-align:right; font-weight:600; border-bottom:1px solid var(--grid-line); }
+  table.schedule th:first-child, table.schedule td:first-child{ text-align:left; }
+  table.schedule td{ padding:8px; text-align:right; border-bottom:1px solid var(--grid-line); color:var(--ink); }
+  table.schedule tr:last-child td{ border-bottom:none; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>NPV calculator</h1>
+  <p class="intro">Find the net present value, internal rate of return, and payback period of an investment from its expected cash flows.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="field"><label>Initial investment ($)</label><input type="number" id="initialInvestment" value="50000" min="0"></div>
+        <div class="field"><label>Discount rate (annual %)</label><input type="number" id="discountRate" value="10" step="0.1" min="0"></div>
+
+        <div class="cashflow-title">
+          <span>Expected cash flows per year</span>
+          <button class="add-year-btn" id="addYearBtn">+ Add year</button>
+        </div>
+        <div id="cashflowRows"></div>
+
+        <button class="calc" id="calcBtn">Calculate NPV</button>
+        <div id="errorMsg">Please enter a valid discount rate and at least one cash flow.</div>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label">Net present value (NPV)</div>
+            <div class="m-value" id="npvValue">$0.00</div>
+            <div class="m-sub" id="npvSub">This investment looks favorable</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-box"><div class="mb-label">IRR</div><div class="mb-value" id="irrValue">0%</div></div>
+            <div class="metric-box"><div class="mb-label">Payback period</div><div class="mb-value" id="paybackValue">0 yrs</div></div>
+            <div class="metric-box"><div class="mb-label">Profitability index</div><div class="mb-value" id="piValue">0.00</div></div>
+          </div>
+
+          <div class="schedule-wrap">
+            <table class="schedule">
+              <thead><tr><th>Year</th><th>Cash flow</th><th>Discount factor</th><th>Present value</th><th>Cumulative PV</th></tr></thead>
+              <tbody id="scheduleBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/simple-interest-calculator/">Simple Interest Calculator</a>
+      <a href="/vat-gst-calculator/">VAT / GST Calculator</a>
+      <a href="/inflation-calculator/">Inflation Calculator</a>
+      <a href="/profit-margin-calculator/">Profit Margin & Markup Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/freelance-rate-calculator/">Freelance Hourly Rate Calculator</a>
+      <a href="/savings-goal-calculator/">Savings Goal Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is Net Present Value (NPV)?</h2>
+      <p>Net present value is the sum of all of an investment's future cash flows, each discounted back to today's value, minus the initial investment. It answers a simple but important question: is this investment worth more today, in present-value terms, than what it costs to make? A positive NPV means the investment is expected to add value; a negative NPV means it's expected to destroy value, even if the raw, undiscounted cash flows look large.</p>
+      <p>This calculator finds NPV from your initial investment, a discount rate, and the cash flows you expect in each future year, along with three other standard metrics used alongside it: IRR, payback period, and profitability index.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Enter your <strong>initial investment</strong>, the upfront cost paid at the start (year 0).</li>
+        <li>Enter your <strong>discount rate</strong>, usually your cost of capital or a required rate of return.</li>
+        <li>Enter the expected <strong>cash flow for each year</strong>, click "+ Add year" to add more years as needed.</li>
+        <li>Click <strong>Calculate NPV</strong> to see the full breakdown, including IRR, payback period, and a year-by-year present value table.</li>
+      </ol>
+
+      <h2>Why discount future cash flows at all?</h2>
+      <p>Money available today is worth more than the same amount received in the future, because today's money can be invested and start earning a return immediately, and because future cash flows carry risk and uncertainty. Discounting converts each future cash flow into its equivalent value in today's dollars, using the formula <strong>Present Value = Cash Flow ÷ (1 + rate)^year</strong>, so that cash flows from different years can be fairly compared and summed together.</p>
+
+      <h2>The four metrics explained</h2>
+      <ul>
+        <li><strong>NPV</strong> - the total value added (or lost) by the investment in today's dollars, after accounting for the time value of money</li>
+        <li><strong>IRR (Internal Rate of Return)</strong> - the discount rate at which NPV would equal exactly zero, if your actual discount rate is lower than the IRR, the investment has a positive NPV and looks favorable</li>
+        <li><strong>Payback period</strong> - how many years it takes for the cumulative (undiscounted) cash flows to recover the initial investment, a simple measure of how quickly you get your money back</li>
+        <li><strong>Profitability index</strong> - the ratio of the present value of future cash flows to the initial investment, a value above 1.0 indicates a favorable investment on the same basis as a positive NPV</li>
+      </ul>
+
+      <h2>Choosing a discount rate</h2>
+      <p>The discount rate should reflect the return you could reasonably expect from an alternative investment of similar risk, often called the cost of capital or required rate of return. A higher discount rate makes future cash flows worth less today, which lowers NPV, reflecting greater risk or a higher bar for what counts as a worthwhile investment. There's no universally correct rate, it depends on your specific situation, risk tolerance, and alternative opportunities.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Deciding whether a business investment, project, or piece of equipment is worth the upfront cost</li>
+        <li>Comparing two or more investment opportunities with different cash flow patterns</li>
+        <li>Evaluating whether to accept a business deal with payments spread over several years</li>
+        <li>Academic and professional finance coursework involving capital budgeting</li>
+        <li>Real estate or business acquisition analysis involving multi-year projected returns</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>What does a negative NPV mean?</h3>
+      <p>It means the investment is expected to return less than your required rate of return, in present-value terms, you'd generally be better off putting your money into an alternative with at least that rate of return instead.</p>
+      <h3>Why might NPV and IRR disagree when comparing two investments?</h3>
+      <p>NPV and IRR can occasionally rank two different investments differently, especially when they have very different cash flow sizes or timing. In most textbook guidance, NPV is considered the more reliable metric for decision-making when the two disagree, since it directly measures value added in dollar terms rather than a percentage rate.</p>
+      <h3>Can cash flows be negative in a later year?</h3>
+      <p>Yes, enter a negative number for any year where you expect a net cash outflow rather than inflow, the calculator handles negative yearly cash flows correctly in both the NPV and IRR calculations.</p>
+      <h3>Is a higher IRR always better?</h3>
+      <p>Generally yes, when comparing similar-sized investments, but IRR alone doesn't account for the total scale of value created, a small investment with a very high IRR might still create less total value than a larger investment with a more modest IRR, which is one reason NPV is often preferred for final decisions.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const cashflowRows = document.getElementById('cashflowRows');
+  let cashflows = [5000, 15000, 20000, 20000, 15000]; // default 5 years
+
+  function renderCashflowRows(){
+    cashflowRows.innerHTML = '';
+    cashflows.forEach((val, idx) => {
+      const row = document.createElement('div');
+      row.className = 'cashflow-row';
+      row.innerHTML = `
+        <div class="cf-year">Year ${idx + 1}</div>
+        <input type="number" class="cf-input" data-idx="${idx}" value="${val}">
+        <button class="cf-remove" data-idx="${idx}">×</button>
+      `;
+      row.querySelector('.cf-input').addEventListener('input', (e) => {
+        cashflows[idx] = parseFloat(e.target.value) || 0;
+      });
+      row.querySelector('.cf-remove').addEventListener('click', () => {
+        cashflows.splice(idx, 1);
+        renderCashflowRows();
+      });
+      cashflowRows.appendChild(row);
+    });
+  }
+  renderCashflowRows();
+
+  document.getElementById('addYearBtn').addEventListener('click', () => {
+    cashflows.push(0);
+    renderCashflowRows();
+  });
+
+  function fmtMoney(n){
+    const sign = n < 0 ? '-' : '';
+    return sign + '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calcNPV(rate, initial, flows){
+    let npv = -initial;
+    flows.forEach((cf, i) => { npv += cf / Math.pow(1 + rate, i + 1); });
+    return npv;
+  }
+
+  function calcIRR(initial, flows){
+    // Bisection method between -0.99 and 5 (i.e. -99% to 500%)
+    let low = -0.99, high = 5;
+    let npvLow = calcNPV(low, initial, flows);
+    let npvHigh = calcNPV(high, initial, flows);
+    if(npvLow * npvHigh > 0) return null; // no sign change, IRR not found in range
+    for(let i = 0; i < 100; i++){
+      const mid = (low + high) / 2;
+      const npvMid = calcNPV(mid, initial, flows);
+      if(Math.abs(npvMid) < 0.01) return mid;
+      if((npvMid > 0) === (npvLow > 0)){ low = mid; npvLow = npvMid; } else { high = mid; }
+    }
+    return (low + high) / 2;
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const initial = parseFloat(document.getElementById('initialInvestment').value) || 0;
+    const rate = parseFloat(document.getElementById('discountRate').value);
+    const errorMsg = document.getElementById('errorMsg');
+    const resultsWrap = document.getElementById('resultsWrap');
+
+    if(isNaN(rate) || rate < 0 || cashflows.length === 0){
+      errorMsg.style.display = 'block';
+      resultsWrap.style.display = 'none';
+      return;
+    }
+    errorMsg.style.display = 'none';
+
+    const r = rate / 100;
+    const npv = calcNPV(r, initial, cashflows);
+
+    const npvValueEl = document.getElementById('npvValue');
+    const npvSubEl = document.getElementById('npvSub');
+    npvValueEl.textContent = fmtMoney(npv);
+    npvValueEl.className = 'm-value ' + (npv >= 0 ? 'pos' : 'neg');
+    npvSubEl.textContent = npv >= 0
+      ? 'Positive NPV, this investment looks favorable at this discount rate'
+      : 'Negative NPV, this investment falls short of your required rate of return';
+
+    const irr = calcIRR(initial, cashflows);
+    document.getElementById('irrValue').textContent = irr === null ? 'N/A' : (irr * 100).toFixed(2) + '%';
+
+    // Payback period (undiscounted cumulative)
+    let cumulative = 0, paybackYear = null;
+    for(let i = 0; i < cashflows.length; i++){
+      const prevCumulative = cumulative;
+      cumulative += cashflows[i];
+      if(paybackYear === null && cumulative >= initial){
+        const fraction = cashflows[i] !== 0 ? (initial - prevCumulative) / cashflows[i] : 0;
+        paybackYear = i + fraction;
+      }
+    }
+    document.getElementById('paybackValue').textContent = paybackYear === null ? 'Never' : paybackYear.toFixed(2) + ' yrs';
+
+    // Profitability index
+    let totalPV = 0;
+    cashflows.forEach((cf, i) => { totalPV += cf / Math.pow(1 + r, i + 1); });
+    const pi = initial > 0 ? totalPV / initial : 0;
+    document.getElementById('piValue').textContent = pi.toFixed(2);
+
+    // Schedule table
+    let runningCumulative = 0;
+    let bodyHtml = `<tr><td>0</td><td>${fmtMoney(-initial)}</td><td>1.0000</td><td>${fmtMoney(-initial)}</td><td>${fmtMoney(-initial)}</td></tr>`;
+    runningCumulative = -initial;
+    cashflows.forEach((cf, i) => {
+      const factor = 1 / Math.pow(1 + r, i + 1);
+      const pv = cf * factor;
+      runningCumulative += pv;
+      bodyHtml += `<tr><td>${i+1}</td><td>${fmtMoney(cf)}</td><td>${factor.toFixed(4)}</td><td>${fmtMoney(pv)}</td><td>${fmtMoney(runningCumulative)}</td></tr>`;
+    });
+    document.getElementById('scheduleBody').innerHTML = bodyHtml;
+
+    resultsWrap.style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
