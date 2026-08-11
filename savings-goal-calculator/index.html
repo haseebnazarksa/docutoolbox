@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savings Goal Calculator | Docutoolbox</title>
+<meta name="description" content="Free savings goal calculator. Find out how much to save each month to hit your target, or how long it will take at a contribution amount you choose.">
+<link rel="canonical" href="https://docutoolbox.com/savings-goal-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+    --c-start:#5FA8D3; --c-contrib:#C9A227; --c-interest:#6FBF8B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .tabs{ display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+  .tab-btn{ flex:1; min-width:180px; padding:12px 8px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; }
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework);}
+  .field-row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  .result-msg{ font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+  .result-msg.error{ color:#E39A9A; }
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:34px; color:var(--accent); }
+  .result-hero .m-sub{ font-size:12px; color:var(--text-muted); margin-top:6px; font-family:'JetBrains Mono',monospace; }
+
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--grid-line); }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row .r-label{ font-size:13px; color:var(--text-muted); }
+  .result-row .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+
+  .chart-row{ display:flex; align-items:center; gap:24px; margin-top:20px; flex-wrap:wrap; justify-content:center; }
+  .donut{ width:140px; height:140px; border-radius:50%; flex:0 0 auto; }
+  .legend{ display:flex; flex-direction:column; gap:9px; }
+  .legend-item{ display:flex; align-items:center; gap:10px; font-size:12.5px; }
+  .legend-dot{ width:11px; height:11px; border-radius:3px; flex:0 0 auto; }
+  .legend-pct{ font-family:'JetBrains Mono',monospace; color:var(--linework); margin-left:4px; }
+
+  .progress-bar-wrap{ margin-top:20px; }
+  .progress-label-row{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:8px; font-family:'JetBrains Mono',monospace; }
+  .progress-track{ height:14px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:20px; overflow:hidden; }
+  .progress-fill{ height:100%; background:linear-gradient(90deg, var(--accent), var(--accent-soft)); border-radius:20px; }
+
+  .schedule-toggle{ width:100%; margin-top:20px; padding:12px; border:1px solid var(--grid-line); border-radius:9px; background:transparent; color:var(--linework); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer; }
+  .schedule-toggle:hover{ border-color:var(--linework); }
+  .schedule-wrap{ display:none; margin-top:16px; max-height:360px; overflow-y:auto; border:1px solid var(--grid-line); border-radius:10px; }
+  table.schedule{ width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12px; }
+  table.schedule th{ position:sticky; top:0; background:var(--blue-card-2); color:var(--linework); padding:10px 8px; text-align:right; font-weight:600; border-bottom:1px solid var(--grid-line); }
+  table.schedule th:first-child, table.schedule td:first-child{ text-align:left; }
+  table.schedule td{ padding:8px; text-align:right; border-bottom:1px solid var(--grid-line); color:var(--ink); }
+  table.schedule tr:last-child td{ border-bottom:none; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Savings goal calculator</h1>
+  <p class="intro">Find out how much to save each month to hit your target, or how long it will take at a contribution amount you choose.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="tabs" id="modeTabs">
+          <button class="tab-btn active" data-mode="contribution">How much should I save?</button>
+          <button class="tab-btn" data-mode="time">How long will it take?</button>
+        </div>
+
+        <div class="field"><label>Savings goal ($)</label><input type="number" id="goalAmount" value="20000" min="0"></div>
+        <div class="field"><label>Current savings ($)</label><input type="number" id="currentSavings" value="2000" min="0"></div>
+        <div class="field"><label>Annual interest rate (%)</label><input type="number" id="interestRate" value="4" step="0.01" min="0"></div>
+
+        <div class="tab-panel active" id="panelContribution">
+          <div class="field-row2">
+            <div class="field"><label>Time to reach goal (years)</label><input type="number" id="ct_years" value="3" min="0"></div>
+            <div class="field"><label>Time to reach goal (months)</label><input type="number" id="ct_months" value="0" min="0" max="11"></div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panelTime">
+          <div class="field"><label>Monthly contribution ($)</label><input type="number" id="tm_contribution" value="400" min="0"></div>
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate</button>
+        <div class="result-msg error" id="errorMsg">Please check your numbers, at this rate the goal may not be reachable within a reasonable time.</div>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label" id="heroLabel">Monthly contribution needed</div>
+            <div class="m-value" id="heroValue">$0.00</div>
+            <div class="m-sub" id="heroSub"></div>
+          </div>
+
+          <div class="result-row"><span class="r-label">Starting savings</span><span class="r-value" id="rStart">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Total contributed</span><span class="r-value" id="rContrib">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Total interest earned</span><span class="r-value" id="rInterest">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Final balance</span><span class="r-value" id="rFinal">$0.00</span></div>
+
+          <div class="chart-row">
+            <div class="donut" id="sgDonut"></div>
+            <div class="legend" id="sgLegend"></div>
+          </div>
+
+          <button class="schedule-toggle" id="scheduleBtn">View year-by-year breakdown</button>
+          <div class="schedule-wrap" id="scheduleWrap">
+            <table class="schedule">
+              <thead><tr><th>Year</th><th>Contributed</th><th>Interest</th><th>Balance</th></tr></thead>
+              <tbody id="scheduleBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/simple-interest-calculator/">Simple Interest Calculator</a>
+      <a href="/vat-gst-calculator/">VAT / GST Calculator</a>
+      <a href="/inflation-calculator/">Inflation Calculator</a>
+      <a href="/profit-margin-calculator/">Profit Margin & Markup Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/npv-calculator/">Net Present Value (NPV) Calculator</a>
+      <a href="/freelance-rate-calculator/">Freelance Hourly Rate Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Savings Goal Calculator?</h2>
+      <p>This calculator works out the numbers behind reaching a specific savings target, whether that's an emergency fund, a down payment, a vacation, or any other goal. It can solve two different questions: how much you need to save each month to hit your goal by a certain date, or, if you already know how much you can save each month, how long it will take to get there.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Choose which question you're asking: <strong>"How much should I save?"</strong> or <strong>"How long will it take?"</strong></li>
+        <li>Enter your <strong>savings goal</strong> and any <strong>current savings</strong> you're starting with.</li>
+        <li>Enter an expected <strong>annual interest rate</strong> for wherever you're keeping the money (a high-yield savings account, for example).</li>
+        <li>Depending on the mode, enter either your <strong>timeframe</strong> or your planned <strong>monthly contribution</strong>.</li>
+        <li>Click <strong>Calculate</strong> to see your result, along with a year-by-year breakdown of how your balance grows.</li>
+      </ol>
+
+      <h2>How the calculation works</h2>
+      <p>Your final balance comes from two sources growing together: your current savings compounding on its own, and your regular monthly contributions, each of which also earns interest for whatever time remains until your goal date. When solving for the required contribution, the calculator works backward from your goal to find the exact monthly amount that, combined with your starting balance and interest earned, lands you exactly at your target. When solving for time, it searches forward month by month until your growing balance reaches the goal.</p>
+
+      <h2>Why interest rate matters, even for short-term goals</h2>
+      <p>For short timeframes or modest amounts, interest earned might seem like a rounding error, but it adds up more than people expect, especially with today's higher-yield savings accounts. Keeping goal money in a high-yield savings account instead of a checking account earning close to 0% can meaningfully reduce how much you need to contribute each month, or shorten how long it takes to reach your goal, for essentially no extra effort.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Planning a monthly savings amount for an emergency fund</li>
+        <li>Working out how much to set aside each month for a house down payment</li>
+        <li>Figuring out how long it'll take to save for a big purchase like a car or vacation</li>
+        <li>Checking whether a savings goal is realistic given your current budget</li>
+        <li>Comparing how a higher-yield account changes your required monthly contribution</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>What if my current savings already exceed my goal?</h3>
+      <p>If your current savings, even before any further contributions or interest, already meet or exceed your goal, you've effectively already reached it, no further monthly contribution is needed.</p>
+      <h3>Does this assume I add money at the same time every month?</h3>
+       <p>Yes, it assumes a consistent monthly contribution added at the end of each month, which is the typical pattern for automated savings transfers.</p>
+      <h3>What interest rate should I use?</h3>
+      <p>Use the actual rate offered by wherever you're keeping the savings, high-yield savings accounts and money market accounts typically offer higher rates than standard checking or basic savings accounts, check your specific account's current rate for the most accurate projection.</p>
+      <h3>Why does "how long will it take" sometimes show a very long time or an error?</h3>
+      <p>If your monthly contribution and interest rate are too low relative to the size of your goal, it may take an unreasonably long time (or effectively never, in extreme cases) to reach it. Try increasing your monthly contribution or double-checking your goal amount.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const modeTabs = document.getElementById('modeTabs');
+  const panelContribution = document.getElementById('panelContribution');
+  const panelTime = document.getElementById('panelTime');
+  let mode = 'contribution';
+
+  modeTabs.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      panelContribution.classList.toggle('active', mode === 'contribution');
+      panelTime.classList.toggle('active', mode === 'time');
+      document.getElementById('resultsWrap').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+    });
+  });
+
+  function fmtMoney(n){ return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function monthlyRate(annualPct){ return annualPct / 100 / 12; }
+
+  function buildSchedule(P0, monthlyContrib, r, totalMonths){
+    let balance = P0;
+    let totalContrib = 0, totalInterest = 0;
+    const yearlyRows = [];
+    let yearContrib = 0, yearInterestStart = 0;
+
+    for(let m = 1; m <= totalMonths; m++){
+      const interestThisMonth = balance * r;
+      balance += interestThisMonth;
+      totalInterest += interestThisMonth;
+      balance += monthlyContrib;
+      totalContrib += monthlyContrib;
+      yearContrib += monthlyContrib;
+
+      if(m % 12 === 0 || m === totalMonths){
+        yearlyRows.push({ year: Math.ceil(m/12), contrib: yearContrib, interest: totalInterest - yearInterestStart, balance });
+        yearContrib = 0;
+        yearInterestStart = totalInterest;
+      }
+    }
+    return { balance, totalContrib, totalInterest, yearlyRows };
+  }
+
+  function drawDonut(el, segments){
+    let cumulative = 0;
+    const parts = [];
+    segments.forEach(seg => { parts.push(`${seg.color} ${cumulative}% ${cumulative + seg.pct}%`); cumulative += seg.pct; });
+    el.style.background = `conic-gradient(${parts.join(', ')})`;
+  }
+
+  function renderResults(P0, totalContrib, totalInterest, finalBalance, heroLabel, heroValue, heroSub, yearlyRows){
+    document.getElementById('heroLabel').textContent = heroLabel;
+    document.getElementById('heroValue').textContent = heroValue;
+    document.getElementById('heroSub').textContent = heroSub;
+
+    document.getElementById('rStart').textContent = fmtMoney(P0);
+    document.getElementById('rContrib').textContent = fmtMoney(totalContrib);
+    document.getElementById('rInterest').textContent = fmtMoney(totalInterest);
+    document.getElementById('rFinal').textContent = fmtMoney(finalBalance);
+
+    const segments = [
+      { label: 'Starting savings', value: P0, color: 'var(--c-start)' },
+      { label: 'Contributions', value: totalContrib, color: 'var(--c-contrib)' },
+      { label: 'Interest earned', value: totalInterest, color: 'var(--c-interest)' },
+    ].filter(s => s.value > 0);
+
+    const total = finalBalance;
+    segments.forEach(s => s.pct = total > 0 ? (s.value / total) * 100 : 0);
+    drawDonut(document.getElementById('sgDonut'), segments);
+    document.getElementById('sgLegend').innerHTML = segments.map(s =>
+      `<div class="legend-item"><span class="legend-dot" style="background:${s.color};"></span>${s.label} <span class="legend-pct">${s.pct.toFixed(0)}%</span></div>`
+    ).join('');
+
+    document.getElementById('scheduleBody').innerHTML = yearlyRows.map(row =>
+      `<tr><td>${row.year}</td><td>${fmtMoney(row.contrib)}</td><td>${fmtMoney(row.interest)}</td><td>${fmtMoney(row.balance)}</td></tr>`
+    ).join('');
+
+    document.getElementById('resultsWrap').style.display = 'block';
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const goal = parseFloat(document.getElementById('goalAmount').value) || 0;
+    const P0 = parseFloat(document.getElementById('currentSavings').value) || 0;
+    const annualRate = parseFloat(document.getElementById('interestRate').value) || 0;
+    const r = monthlyRate(annualRate);
+    const errorMsg = document.getElementById('errorMsg');
+    errorMsg.style.display = 'none';
+
+    if(mode === 'contribution'){
+      const years = parseFloat(document.getElementById('ct_years').value) || 0;
+      const months = parseFloat(document.getElementById('ct_months').value) || 0;
+      const n = Math.round(years * 12 + months);
+
+      if(n <= 0 || goal <= 0){ errorMsg.style.display = 'block'; document.getElementById('resultsWrap').style.display = 'none'; return; }
+
+      const fvStart = P0 * Math.pow(1 + r, n);
+      let requiredContrib;
+      if(fvStart >= goal){
+        requiredContrib = 0;
+      } else if(r === 0){
+        requiredContrib = (goal - fvStart) / n;
+      } else {
+        const annuityFactor = (Math.pow(1 + r, n) - 1) / r;
+        requiredContrib = (goal - fvStart) / annuityFactor;
+      }
+
+      const sched = buildSchedule(P0, requiredContrib, r, n);
+      renderResults(P0, sched.totalContrib, sched.totalInterest, sched.balance,
+        'Monthly contribution needed', fmtMoney(requiredContrib), `to reach ${fmtMoney(goal)} in ${years} yr ${months} mo`, sched.yearlyRows);
+
+    } else {
+      const monthlyContrib = parseFloat(document.getElementById('tm_contribution').value) || 0;
+
+      if(goal <= 0){ errorMsg.style.display = 'block'; document.getElementById('resultsWrap').style.display = 'none'; return; }
+      if(P0 >= goal){
+        renderResults(P0, 0, 0, P0, 'Time needed', '0 months', 'Your current savings already meet this goal', []);
+        return;
+      }
+      if(monthlyContrib <= 0 && r <= 0){ errorMsg.style.display = 'block'; document.getElementById('resultsWrap').style.display = 'none'; return; }
+
+      const cap = 600; // 50 years max search
+      let balance = P0, months = 0;
+      while(balance < goal && months < cap){
+        balance += balance * r;
+        balance += monthlyContrib;
+        months++;
+      }
+
+      if(balance < goal){ errorMsg.style.display = 'block'; document.getElementById('resultsWrap').style.display = 'none'; return; }
+
+      const sched = buildSchedule(P0, monthlyContrib, r, months);
+      const yrs = Math.floor(months / 12), mos = months % 12;
+      renderResults(P0, sched.totalContrib, sched.totalInterest, sched.balance,
+        'Time needed', `${yrs} yr ${mos} mo`, `to reach ${fmtMoney(goal)} at ${fmtMoney(monthlyContrib)}/month`, sched.yearlyRows);
+    }
+  });
+
+  document.getElementById('scheduleBtn').addEventListener('click', () => {
+    const wrap = document.getElementById('scheduleWrap');
+    const btn = document.getElementById('scheduleBtn');
+    const showing = wrap.style.display === 'block';
+    wrap.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? 'View year-by-year breakdown' : 'Hide year-by-year breakdown';
+  });
+</script>
+
+</body>
+</html>
