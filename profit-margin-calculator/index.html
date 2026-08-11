@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profit Margin & Markup Calculator | Docutoolbox</title>
+<meta name="description" content="Free profit margin and markup calculator. Find your selling price, margin, markup, or cost from any two known values, with a clear profit breakdown.">
+<link rel="canonical" href="https://docutoolbox.com/profit-margin-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+    --c-cost:#5FA8D3; --c-profit:#6FBF8B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .solve-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--linework); margin-bottom:12px; }
+  .solve-tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:22px; }
+  @media (max-width:480px){ .solve-tabs{ grid-template-columns:1fr; } }
+  .solve-btn{ padding:11px 6px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px; cursor:pointer; transition:all 0.15s ease;}
+  .solve-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework);}
+
+  .margin-markup-toggle{ display:flex; gap:8px; margin-bottom:16px; }
+  .mm-btn{ flex:1; padding:9px 6px; border-radius:7px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px; cursor:pointer; transition:all 0.15s ease;}
+  .mm-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:34px; color:var(--accent); }
+
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--grid-line); }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row .r-label{ font-size:13px; color:var(--text-muted); }
+  .result-row .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+
+  .chart-row{ display:flex; align-items:center; gap:24px; margin-top:20px; flex-wrap:wrap; justify-content:center; }
+  .donut{ width:130px; height:130px; border-radius:50%; flex:0 0 auto; }
+  .legend{ display:flex; flex-direction:column; gap:10px; }
+  .legend-item{ display:flex; align-items:center; gap:10px; font-size:13px; }
+  .legend-dot{ width:11px; height:11px; border-radius:3px; flex:0 0 auto; }
+  .legend-pct{ font-family:'JetBrains Mono',monospace; color:var(--linework); margin-left:4px; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+  .desc-block table{ width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13.5px;}
+  .desc-block th, .desc-block td{ padding:8px 10px; border-bottom:1px solid var(--grid-line); text-align:left;}
+  .desc-block th{ color:var(--linework); font-family:'Inter',sans-serif; font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Profit margin & markup calculator</h1>
+  <p class="intro">Find your selling price, margin, markup, or cost from any two known values, with a full profit breakdown.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="solve-label">Solve for</div>
+        <div class="solve-tabs" id="solveTabs">
+          <button class="solve-btn active" data-solve="price">Selling price</button>
+          <button class="solve-btn" data-solve="margin">Margin & markup</button>
+          <button class="solve-btn" data-solve="cost">Cost</button>
+        </div>
+
+        <!-- FIND SELLING PRICE: needs Cost + (Margin or Markup) -->
+        <div id="panelPrice">
+          <div class="field"><label>Cost ($)</label><input type="number" id="p_cost" value="40" min="0"></div>
+          <div class="margin-markup-toggle" id="p_toggle">
+            <button class="mm-btn active" data-type="margin">Use margin %</button>
+            <button class="mm-btn" data-type="markup">Use markup %</button>
+          </div>
+          <div class="field"><label id="p_pctLabel">Margin (%)</label><input type="number" id="p_pct" value="25" step="0.1"></div>
+        </div>
+
+        <!-- FIND MARGIN & MARKUP: needs Cost + Selling Price -->
+        <div id="panelMargin" style="display:none;">
+          <div class="field"><label>Cost ($)</label><input type="number" id="m_cost" value="40" min="0"></div>
+          <div class="field"><label>Selling price ($)</label><input type="number" id="m_price" value="60" min="0"></div>
+        </div>
+
+        <!-- FIND COST: needs Selling Price + (Margin or Markup) -->
+        <div id="panelCost" style="display:none;">
+          <div class="field"><label>Selling price ($)</label><input type="number" id="c_price" value="60" min="0"></div>
+          <div class="margin-markup-toggle" id="c_toggle">
+            <button class="mm-btn active" data-type="margin">Use margin %</button>
+            <button class="mm-btn" data-type="markup">Use markup %</button>
+          </div>
+          <div class="field"><label id="c_pctLabel">Margin (%)</label><input type="number" id="c_pct" value="25" step="0.1"></div>
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate</button>
+        <div id="errorMsg">Please enter valid, positive numbers (margin must be less than 100%).</div>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label" id="heroLabel">Profit</div>
+            <div class="m-value" id="heroValue">$0.00</div>
+          </div>
+
+          <div class="result-row"><span class="r-label">Cost</span><span class="r-value" id="rCost">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Selling price</span><span class="r-value" id="rPrice">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Profit</span><span class="r-value" id="rProfit">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Margin</span><span class="r-value" id="rMargin">0%</span></div>
+          <div class="result-row"><span class="r-label">Markup</span><span class="r-value" id="rMarkup">0%</span></div>
+
+          <div class="chart-row">
+            <div class="donut" id="pmDonut"></div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-dot" style="background:var(--c-cost);"></span>Cost <span class="legend-pct" id="costPct">0%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--c-profit);"></span>Profit <span class="legend-pct" id="profitPct">0%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/simple-interest-calculator/">Simple Interest Calculator</a>
+      <a href="/vat-gst-calculator/">VAT / GST Calculator</a>
+      <a href="/inflation-calculator/">Inflation Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/npv-calculator/">Net Present Value (NPV) Calculator</a>
+      <a href="/freelance-rate-calculator/">Freelance Hourly Rate Calculator</a>
+      <a href="/savings-goal-calculator/">Savings Goal Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Profit Margin & Markup Calculator?</h2>
+      <p>Margin and markup both describe the relationship between what something costs you and what you sell it for, but they're calculated differently and easy to mix up. This calculator handles both, letting you solve for whichever value you're missing, your selling price, your cost, or your margin and markup percentages, from whatever numbers you already know.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Choose what you want to <strong>solve for</strong>: Selling price, Margin & markup, or Cost.</li>
+        <li>Fill in the fields shown. When solving for selling price or cost, choose whether you're working from a <strong>margin %</strong> or a <strong>markup %</strong>, they give different results from the same percentage number.</li>
+        <li>Click <strong>Calculate</strong> to see your full breakdown: cost, selling price, profit, margin, and markup, all together.</li>
+      </ol>
+
+      <h2>Margin vs. markup, the key difference</h2>
+      <table>
+        <tr><th>Term</th><th>Formula</th><th>Based on</th></tr>
+        <tr><td>Margin</td><td>Profit ÷ Selling Price × 100</td><td>Selling price</td></tr>
+        <tr><td>Markup</td><td>Profit ÷ Cost × 100</td><td>Cost</td></tr>
+      </table>
+      <p>Both describe the same profit, just as a percentage of two different base numbers. A markup of 50% is not the same as a margin of 50%, since they're measuring the profit against different amounts (cost vs. selling price). For example, an item that costs $40 and sells for $60 has $20 profit, a 33.3% margin (20 ÷ 60), but a 50% markup (20 ÷ 40).</p>
+
+      <h2>Why the difference matters</h2>
+      <p>Confusing margin and markup is a common and costly mistake in pricing. If you want a 30% margin but mistakenly apply a 30% markup instead, your actual margin will be lower than intended, roughly 23% in this example, not the 30% you were aiming for. Always be clear about which one you're working with when setting prices or targets.</p>
+
+      <h2>Formulas used</h2>
+      <ul>
+        <li><strong>Selling price from cost and margin:</strong> Selling Price = Cost ÷ (1 − Margin%)</li>
+        <li><strong>Selling price from cost and markup:</strong> Selling Price = Cost × (1 + Markup%)</li>
+        <li><strong>Cost from selling price and margin:</strong> Cost = Selling Price × (1 − Margin%)</li>
+        <li><strong>Cost from selling price and markup:</strong> Cost = Selling Price ÷ (1 + Markup%)</li>
+        <li><strong>Margin from cost and price:</strong> Margin% = (Selling Price − Cost) ÷ Selling Price × 100</li>
+        <li><strong>Markup from cost and price:</strong> Markup% = (Selling Price − Cost) ÷ Cost × 100</li>
+      </ul>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Setting a selling price that hits a target profit margin</li>
+        <li>Checking what markup to apply to reach a desired margin</li>
+        <li>Working backward from a competitor's price to estimate their likely cost or margin</li>
+        <li>Comparing profitability across different products with different cost structures</li>
+        <li>Verifying that a proposed discount still leaves an acceptable margin</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Can margin ever be higher than markup for the same item?</h3>
+      <p>No, for any profitable item (cost less than selling price), markup is always mathematically higher than margin, since markup is measured against the smaller cost figure while margin is measured against the larger selling price.</p>
+      <h3>What happens if I enter a margin of 100% or more?</h3>
+      <p>A 100% margin is mathematically undefined (it would require an infinite selling price), since margin can never reach or exceed 100% for a finite, positive cost. Keep margin inputs below 100%.</p>
+      <h3>Does this account for taxes or other expenses?</h3>
+      <p>No, this calculates gross profit margin and markup based on cost and selling price only. Other business expenses (overhead, taxes, shipping) would need to be factored in separately for a full net profitability picture.</p>
+      <h3>Which should I use when setting prices, margin or markup?</h3>
+      <p>Margin is generally more useful for understanding overall business profitability (since it's a percentage of revenue, which ties directly to your income statement), while markup is often more convenient for quickly pricing individual items from their cost. Many businesses use both depending on the context.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const solveTabs = document.getElementById('solveTabs');
+  const panels = { price: document.getElementById('panelPrice'), margin: document.getElementById('panelMargin'), cost: document.getElementById('panelCost') };
+  let solveFor = 'price';
+
+  solveTabs.querySelectorAll('.solve-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      solveTabs.querySelectorAll('.solve-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      solveFor = btn.dataset.solve;
+      Object.keys(panels).forEach(key => { panels[key].style.display = key === solveFor ? 'block' : 'none'; });
+      document.getElementById('resultsWrap').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+    });
+  });
+
+  function setupToggle(toggleId, labelId, pctInputDefault){
+    const toggle = document.getElementById(toggleId);
+    const label = document.getElementById(labelId);
+    let type = 'margin';
+    toggle.querySelectorAll('.mm-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggle.querySelectorAll('.mm-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        type = btn.dataset.type;
+        label.textContent = (type === 'margin' ? 'Margin' : 'Markup') + ' (%)';
+      });
+    });
+    return () => type;
+  }
+  const getPriceType = setupToggle('p_toggle', 'p_pctLabel');
+  const getCostType = setupToggle('c_toggle', 'c_pctLabel');
+
+  function fmtMoney(n){ return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function drawDonut(el, costPct){
+    const p = Math.max(0, Math.min(100, costPct));
+    el.style.background = `conic-gradient(var(--c-cost) 0% ${p}%, var(--c-profit) ${p}% 100%)`;
+  }
+
+  function showResults(cost, price, profit){
+    const margin = price > 0 ? (profit / price) * 100 : 0;
+    const markup = cost > 0 ? (profit / cost) * 100 : 0;
+
+    document.getElementById('heroLabel').textContent = 'Profit';
+    document.getElementById('heroValue').textContent = fmtMoney(profit);
+    document.getElementById('rCost').textContent = fmtMoney(cost);
+    document.getElementById('rPrice').textContent = fmtMoney(price);
+    document.getElementById('rProfit').textContent = fmtMoney(profit);
+    document.getElementById('rMargin').textContent = margin.toFixed(2) + '%';
+    document.getElementById('rMarkup').textContent = markup.toFixed(2) + '%';
+
+    const costPct = price > 0 ? (cost / price) * 100 : 0;
+    document.getElementById('costPct').textContent = costPct.toFixed(0) + '%';
+    document.getElementById('profitPct').textContent = (100 - costPct).toFixed(0) + '%';
+    drawDonut(document.getElementById('pmDonut'), costPct);
+
+    document.getElementById('resultsWrap').style.display = 'block';
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const errorMsg = document.getElementById('errorMsg');
+    errorMsg.style.display = 'none';
+
+    try{
+      if(solveFor === 'price'){
+        const cost = parseFloat(document.getElementById('p_cost').value);
+        const pct = parseFloat(document.getElementById('p_pct').value);
+        if(isNaN(cost) || cost < 0 || isNaN(pct)) throw 0;
+        const type = getPriceType();
+        let price;
+        if(type === 'margin'){
+          if(pct >= 100) throw 0;
+          price = cost / (1 - pct/100);
+        } else {
+          price = cost * (1 + pct/100);
+        }
+        showResults(cost, price, price - cost);
+      } else if(solveFor === 'margin'){
+        const cost = parseFloat(document.getElementById('m_cost').value);
+        const price = parseFloat(document.getElementById('m_price').value);
+        if(isNaN(cost) || isNaN(price) || cost < 0 || price < 0) throw 0;
+        showResults(cost, price, price - cost);
+      } else if(solveFor === 'cost'){
+        const price = parseFloat(document.getElementById('c_price').value);
+        const pct = parseFloat(document.getElementById('c_pct').value);
+        if(isNaN(price) || price < 0 || isNaN(pct)) throw 0;
+        const type = getCostType();
+        let cost;
+        if(type === 'margin'){
+          if(pct >= 100) throw 0;
+          cost = price * (1 - pct/100);
+        } else {
+          cost = price / (1 + pct/100);
+        }
+        showResults(cost, price, price - cost);
+      }
+    }catch(e){
+      errorMsg.style.display = 'block';
+      document.getElementById('resultsWrap').style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
