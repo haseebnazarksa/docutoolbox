@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Interest Calculator - Solve for Interest, Principal, Rate or Time | Docutoolbox</title>
+<meta name="description" content="Free simple interest calculator. Solve for interest, principal, rate, or time using the simple interest formula, with a clear breakdown of your results.">
+<link rel="canonical" href="https://docutoolbox.com/simple-interest-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+    --c-principal:#C9A227; --c-interest:#6FBF8B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .solve-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--linework); margin-bottom:12px; }
+  .solve-tabs{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:22px; }
+  @media (max-width:520px){ .solve-tabs{ grid-template-columns:1fr 1fr; } }
+  .solve-btn{ padding:11px 6px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px; cursor:pointer; transition:all 0.15s ease;}
+  .solve-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field select{
+    appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--linework);}
+  .field-with-unit{ display:grid; grid-template-columns:1fr 120px; gap:10px; }
+  .field.disabled input{ opacity:0.35; cursor:not-allowed; }
+  .solving-for-badge{ display:inline-block; background:rgba(201,162,39,0.12); border:1px solid var(--linework-soft); color:var(--linework); font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 9px; border-radius:20px; margin-left:8px; vertical-align:middle; }
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .divider{ display:flex; align-items:center; gap:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; margin:26px 0 18px;}
+  .divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--grid-line);}
+
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:34px; color:var(--accent); }
+
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--grid-line); }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row .r-label{ font-size:13px; color:var(--text-muted); }
+  .result-row .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+
+  .chart-row{ display:flex; align-items:center; gap:24px; margin-top:20px; flex-wrap:wrap; justify-content:center; }
+  .donut{ width:130px; height:130px; border-radius:50%; flex:0 0 auto; }
+  .legend{ display:flex; flex-direction:column; gap:10px; }
+  .legend-item{ display:flex; align-items:center; gap:10px; font-size:13px; }
+  .legend-dot{ width:11px; height:11px; border-radius:3px; flex:0 0 auto; }
+  .legend-pct{ font-family:'JetBrains Mono',monospace; color:var(--linework); margin-left:4px; }
+
+  .formula-box{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:16px; margin-top:20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); }
+  .formula-box strong{ color:var(--accent); }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Simple interest calculator</h1>
+  <p class="intro">Solve for interest, principal, rate, or time using the simple interest formula. Pick what you need to find, fill in the rest.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="solve-label">Solve for</div>
+        <div class="solve-tabs" id="solveTabs">
+          <button class="solve-btn active" data-solve="interest">Interest</button>
+          <button class="solve-btn" data-solve="principal">Principal</button>
+          <button class="solve-btn" data-solve="rate">Rate</button>
+          <button class="solve-btn" data-solve="time">Time</button>
+        </div>
+
+        <div class="field" id="fieldPrincipal">
+          <label>Principal ($)</label>
+          <input type="number" id="principalInput" value="10000" min="0">
+        </div>
+        <div class="field" id="fieldRate">
+          <label>Annual interest rate (%)</label>
+          <input type="number" id="rateInput" value="5" step="0.01" min="0">
+        </div>
+        <div class="field" id="fieldTime">
+          <label>Time</label>
+          <div class="field-with-unit">
+            <input type="number" id="timeInput" value="3" step="0.01" min="0">
+            <select id="timeUnit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+              <option value="days">Days</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" id="fieldInterest">
+          <label>Interest ($)</label>
+          <input type="number" id="interestInput" value="1500" min="0">
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate</button>
+        <div id="errorMsg">Please fill in the required fields with valid numbers.</div>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label" id="heroLabel">Interest earned</div>
+            <div class="m-value" id="heroValue">$0.00</div>
+          </div>
+
+          <div class="result-row"><span class="r-label">Principal</span><span class="r-value" id="rPrincipal">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Annual rate</span><span class="r-value" id="rRate">0%</span></div>
+          <div class="result-row"><span class="r-label">Time</span><span class="r-value" id="rTime">0 years</span></div>
+          <div class="result-row"><span class="r-label">Interest</span><span class="r-value" id="rInterest">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Total amount (principal + interest)</span><span class="r-value" id="rTotal">$0.00</span></div>
+
+          <div class="chart-row">
+            <div class="donut" id="siDonut"></div>
+            <div class="legend">
+              <div class="legend-item"><span class="legend-dot" style="background:var(--c-principal);"></span>Principal <span class="legend-pct" id="principalPct">0%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--c-interest);"></span>Interest <span class="legend-pct" id="interestPct">0%</span></div>
+            </div>
+          </div>
+
+          <div class="formula-box" id="formulaBox">I = P × R × T ÷ 100</div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/vat-gst-calculator/">VAT / GST Calculator</a>
+      <a href="/inflation-calculator/">Inflation Calculator</a>
+      <a href="/profit-margin-calculator/">Profit Margin & Markup Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/npv-calculator/">Net Present Value (NPV) Calculator</a>
+      <a href="/freelance-rate-calculator/">Freelance Hourly Rate Calculator</a>
+      <a href="/savings-goal-calculator/">Savings Goal Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is simple interest?</h2>
+      <p>Simple interest is calculated only on the original principal amount, for the entire time period, without any interest being added to that principal along the way. This makes it grow at a steady, linear rate, unlike compound interest, which grows faster over time because it also earns interest on previously accumulated interest.</p>
+      <p>This calculator can solve for any one of the four values in the simple interest formula, interest, principal, rate, or time, as long as you know the other three.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Choose what you want to <strong>solve for</strong>: Interest, Principal, Rate, or Time.</li>
+        <li>The field for whatever you're solving for is hidden, fill in the remaining three fields with your known values.</li>
+        <li>For time, choose whether you're entering years, months, or days.</li>
+        <li>Click <strong>Calculate</strong> to see the full breakdown, including the total amount and a principal-versus-interest split.</li>
+      </ol>
+
+      <h2>The simple interest formula</h2>
+      <p>Simple interest is calculated as: <strong>I = P × R × T ÷ 100</strong>, where I is the interest earned or owed, P is the principal, R is the annual interest rate as a percentage, and T is the time in years.</p>
+      <p>Rearranging this formula lets you solve for any of the other three variables:</p>
+      <ul>
+        <li><strong>Principal:</strong> P = I × 100 ÷ (R × T)</li>
+        <li><strong>Rate:</strong> R = I × 100 ÷ (P × T)</li>
+        <li><strong>Time:</strong> T = I × 100 ÷ (P × R)</li>
+      </ul>
+
+      <h2>A worked example</h2>
+      <p>If you invest $10,000 at a 5% annual simple interest rate for 3 years: I = 10,000 × 5 × 3 ÷ 100 = $1,500 in interest, for a total amount of $11,500 at the end of the term. Notice that this is a fixed dollar amount added each year (here, $500 per year), unlike compound interest where the interest amount itself grows over time.</p>
+
+      <h2>Where simple interest is commonly used</h2>
+      <ul>
+        <li>Short-term loans and some personal loans</li>
+        <li>Certain types of bonds and fixed-term deposits</li>
+        <li>Auto loans in some cases, depending on the lender</li>
+        <li>Basic finance and math education, since it's the simplest interest model to understand</li>
+      </ul>
+      <p>Most long-term savings accounts, mortgages, and credit cards actually use compound interest instead, since it's the more common structure for those product types. If you're modeling one of those, the <a href="/compound-interest-calculator/" style="color:var(--linework);">Compound Interest Calculator</a> will give a more accurate picture.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Does the time unit (days, months, years) affect the result?</h3>
+      <p>Yes, the formula requires time in years, so entering months or days automatically converts to the equivalent number of years behind the scenes (using 12 months or 365 days per year) before calculating.</p>
+      <h3>Can the rate or time be solved if I don't know the interest amount?</h3>
+      <p>No, all four values are mathematically linked, you need to know any three of the four (principal, rate, time, interest) to solve for the missing one.</p>
+      <h3>Is simple interest better or worse than compound interest?</h3>
+      <p>Neither is inherently better, it depends on which side of the transaction you're on. As a borrower, simple interest usually costs less over time than compound interest at the same rate, since interest doesn't compound on itself. As a saver or investor, compound interest works in your favor, growing your balance faster than simple interest would.</p>
+      <h3>Does this calculator handle negative or zero values?</h3>
+      <p>The calculator expects positive values for the fields you provide, entering zero or negative numbers may produce results that aren't practically meaningful (such as an infinite or undefined time or rate).</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const solveTabs = document.getElementById('solveTabs');
+  const fields = {
+    principal: document.getElementById('fieldPrincipal'),
+    rate: document.getElementById('fieldRate'),
+    time: document.getElementById('fieldTime'),
+    interest: document.getElementById('fieldInterest'),
+  };
+  let solveFor = 'interest';
+
+  function updateFieldVisibility(){
+    Object.keys(fields).forEach(key => {
+      fields[key].style.display = key === solveFor ? 'none' : 'block';
+    });
+  }
+  updateFieldVisibility();
+
+  solveTabs.querySelectorAll('.solve-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      solveTabs.querySelectorAll('.solve-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      solveFor = btn.dataset.solve;
+      updateFieldVisibility();
+      document.getElementById('resultsWrap').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+    });
+  });
+
+  function fmtMoney(n){
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function timeToYears(val, unit){
+    if(unit === 'months') return val / 12;
+    if(unit === 'days') return val / 365;
+    return val;
+  }
+  function yearsToDisplay(years){
+    if(years < 1/12) return (years*365).toFixed(1) + ' days';
+    if(years < 1) return (years*12).toFixed(1) + ' months';
+    return years.toFixed(2) + ' years';
+  }
+
+  function drawDonut(el, principalPct){
+    const p = Math.max(0, Math.min(100, principalPct));
+    el.style.background = `conic-gradient(var(--c-principal) 0% ${p}%, var(--c-interest) ${p}% 100%)`;
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const errorMsg = document.getElementById('errorMsg');
+    errorMsg.style.display = 'none';
+
+    let P = parseFloat(document.getElementById('principalInput').value);
+    let R = parseFloat(document.getElementById('rateInput').value);
+    let Tunit = document.getElementById('timeUnit').value;
+    let Traw = parseFloat(document.getElementById('timeInput').value);
+    let T = timeToYears(Traw, Tunit);
+    let I = parseFloat(document.getElementById('interestInput').value);
+
+    try{
+      if(solveFor === 'interest'){
+        if(isNaN(P) || isNaN(R) || isNaN(T)) throw 0;
+        I = P * R * T / 100;
+      } else if(solveFor === 'principal'){
+        if(isNaN(I) || isNaN(R) || isNaN(T) || R === 0 || T === 0) throw 0;
+        P = I * 100 / (R * T);
+      } else if(solveFor === 'rate'){
+        if(isNaN(I) || isNaN(P) || isNaN(T) || P === 0 || T === 0) throw 0;
+        R = I * 100 / (P * T);
+      } else if(solveFor === 'time'){
+        if(isNaN(I) || isNaN(P) || isNaN(R) || P === 0 || R === 0) throw 0;
+        T = I * 100 / (P * R);
+      }
+    }catch(e){
+      errorMsg.style.display = 'block';
+      document.getElementById('resultsWrap').style.display = 'none';
+      return;
+    }
+
+    const total = P + I;
+    const heroLabels = { interest:'Interest earned', principal:'Principal needed', rate:'Required annual rate', time:'Time required' };
+    const heroValues = { interest: fmtMoney(I), principal: fmtMoney(P), rate: R.toFixed(2) + '%', time: yearsToDisplay(T) };
+
+    document.getElementById('heroLabel').textContent = heroLabels[solveFor];
+    document.getElementById('heroValue').textContent = heroValues[solveFor];
+
+    document.getElementById('rPrincipal').textContent = fmtMoney(P);
+    document.getElementById('rRate').textContent = R.toFixed(2) + '%';
+    document.getElementById('rTime').textContent = yearsToDisplay(T);
+    document.getElementById('rInterest').textContent = fmtMoney(I);
+    document.getElementById('rTotal').textContent = fmtMoney(total);
+
+    const principalPct = total > 0 ? (P / total) * 100 : 0;
+    document.getElementById('principalPct').textContent = principalPct.toFixed(0) + '%';
+    document.getElementById('interestPct').textContent = (100 - principalPct).toFixed(0) + '%';
+    drawDonut(document.getElementById('siDonut'), principalPct);
+
+    document.getElementById('resultsWrap').style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
