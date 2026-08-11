@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial & Business Calculators - Free Online Tools | Docutoolbox</title>
+<meta name="description" content="Free financial and business calculators for loans, mortgages, interest, taxes, profit margins, and more, all free, in your browser, with no sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/financial-calculators/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1280px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:44px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1280px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,42px); line-height:1.1; margin-bottom:14px;
+    letter-spacing:-0.01em; display:flex; align-items:center; gap:14px;
+  }
+  h1 svg{ width:36px; height:36px; stroke:var(--linework); fill:none; stroke-width:1.5; flex-shrink:0;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:38px; max-width:640px;}
+
+  .filter-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px; }
+  .filter-chip{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.04em; padding:8px 16px; border-radius:20px;
+    border:1px solid var(--grid-line); color:var(--text-muted); background:var(--blue-card); cursor:pointer; transition:all 0.15s ease;
+  }
+  .filter-chip:hover{ border-color:var(--linework-soft); color:var(--ink); }
+  .filter-chip.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent); font-weight:600;}
+
+  .tool-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px;
+  }
+  .tool-card{
+    position:relative; display:flex; flex-direction:column; gap:14px; background:var(--blue-card); border:1px solid var(--grid-line);
+    border-radius:var(--radius); padding:24px; text-decoration:none; color:var(--ink);
+    transition:border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+  }
+  .tool-card.live:hover{ border-color:var(--linework); transform:translateY(-3px); background:var(--blue-card-2); }
+  .tool-card.soon{ opacity:0.5; cursor:default; }
+  .tool-icon{
+    width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    background:rgba(201,162,39,0.1); border:1px solid var(--linework-soft);
+  }
+  .tool-icon svg{ width:22px; height:22px; stroke:var(--linework); fill:none; stroke-width:1.6; }
+  .tool-title{ font-family:'Fraunces',serif; font-weight:600; font-size:16.5px; display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .tool-desc{ color:var(--text-muted); font-size:13px; line-height:1.6; flex:1;}
+  .tool-tag{
+    font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; padding:4px 9px;
+    border-radius:20px; flex:0 0 auto;
+  }
+  .tag-live{ color:var(--accent); border:1px solid var(--accent); }
+  .tag-soon{ color:var(--text-muted); border:1px solid var(--grid-line); }
+  .tool-arrow{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--linework); opacity:0; transition:opacity 0.15s ease; }
+  .tool-card.live:hover .tool-arrow{ opacity:1; }
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:32px; margin-top:44px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin:28px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:52px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox · 15 tools</div>
+  <h1><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="8" cy="15" r="1.4" fill="var(--linework)" stroke="none"/><path d="M13 15h5"/></svg>Financial & Business Calculators</h1>
+  <p class="intro">Loans, mortgages, interest, taxes, profit margins, and more, all free, all in your browser, with no sign-up.</p>
+
+  <div class="filter-row">
+    <button class="filter-chip" data-filter="all">All tools</button>
+    <button class="filter-chip active" data-filter="live">Available now</button>
+    <button class="filter-chip" data-filter="soon">Coming soon</button>
+  </div>
+
+  <div class="tool-grid" id="toolGrid">
+
+    <a href="/loan-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="tool-title">Loan Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Payment, interest, and full schedule for amortized loans, deferred loans, or bonds.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/emi-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6M7 17h4"/></svg></div>
+      <div class="tool-title">EMI Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find your equated monthly installment for a home, car, or personal loan.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/mortgage-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+      <div class="tool-title">Mortgage Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Total monthly home payment including tax, insurance, PMI, and HOA fees.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/compound-interest-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 9-10"/><path d="M3 21h18"/></svg></div>
+      <div class="tool-title">Compound Interest Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">See how savings grow over time, with optional regular contributions.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/simple-interest-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg></div>
+      <div class="tool-title">Simple Interest Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Solve for interest, principal, rate, or time using the simple interest formula.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <div class="tool-card soon" data-status="soon">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8h4a2.5 2.5 0 0 1 0 5H9m0 0h4.5a2.5 2.5 0 0 1 0 5H9M11 6v12"/></svg></div>
+      <div class="tool-title">Currency Converter <span class="tool-tag tag-soon">Soon</span></div>
+      <div class="tool-desc">Convert between world currencies using live exchange rates.</div>
+    </div>
+
+    <div class="tool-card soon" data-status="soon">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 15l4-8 4 8M9.5 12h5"/></svg></div>
+      <div class="tool-title">Crypto Profit / Loss Calculator <span class="tool-tag tag-soon">Soon</span></div>
+      <div class="tool-desc">Work out your profit or loss from a cryptocurrency buy and sell price.</div>
+    </div>
+
+    <a href="/vat-gst-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M20.59 13.41L12 22l-9-9V4h9z"/><circle cx="7" cy="8" r="1.5"/></svg></div>
+      <div class="tool-title">VAT / GST Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Add tax to a net price, or pull the tax back out of a gross price.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/inflation-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M3 15l5 4 5-8 4 3 4-9"/></svg></div>
+      <div class="tool-title">Inflation Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find what an amount from one year is worth in another year.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/profit-margin-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 16L16 8M9 9h.01M15 15h.01" stroke-width="2"/></svg></div>
+      <div class="tool-title">Profit Margin & Markup Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find your selling price, margin, markup, or cost from any two values.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/break-even-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M3 20V6"/><path d="M3 14h18"/><path d="M3 20L21 8"/></svg></div>
+      <div class="tool-title">Break-Even Point Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find how many units you need to sell to cover your costs.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/npv-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 15l3-5 3 3 4-7"/></svg></div>
+      <div class="tool-title">Net Present Value (NPV) Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find the present value, IRR, and payback period of an investment.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <div class="tool-card soon" data-status="soon">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>
+      <div class="tool-title">Paycheck Tax Deductions Calculator <span class="tool-tag tag-soon">Soon</span></div>
+      <div class="tool-desc">Estimate take-home pay after tax deductions from a paycheck.</div>
+    </div>
+
+    <a href="/freelance-rate-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg></div>
+      <div class="tool-title">Freelance Hourly Rate Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find what to charge per hour based on your income goal and expenses.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/savings-goal-calculator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/><circle cx="12" cy="12" r="3" opacity="0"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2" stroke-width="1.3" opacity="0.5"/></svg></div>
+      <div class="tool-title">Savings Goal Calculator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Find how much to save each month to hit a target, or how long it will take.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+  </div>
+
+  <div class="desc-block">
+    <h2>What are Docutoolbox's Financial & Business Calculators?</h2>
+    <p>This is a growing collection of free, browser-based calculators for the money decisions people and small businesses run into most often: taking out a loan, understanding an investment, pricing a product, planning savings, or checking whether a business idea breaks even. Every calculator here runs instantly and entirely on your own device.</p>
+    <p>There's no software to install, no account to create, and no limit on how many times you can use any tool.</p>
+
+    <h2>What each calculator does</h2>
+    <ul>
+      <li><strong>Loan Calculator</strong> - payment, interest, and schedule for amortized loans, deferred loans, or bonds</li>
+      <li><strong>EMI Calculator</strong> - monthly installment for a home, car, or personal loan</li>
+      <li><strong>Mortgage Calculator</strong> - total monthly home payment including tax, insurance, PMI, and HOA fees</li>
+      <li><strong>Compound Interest Calculator</strong> - how savings grow over time, with optional regular contributions</li>
+      <li><strong>Simple Interest Calculator</strong> - solve for interest, principal, rate, or time</li>
+      <li><strong>Currency Converter</strong> - convert between world currencies</li>
+      <li><strong>Crypto Profit / Loss Calculator</strong> - profit or loss from a buy and sell price</li>
+      <li><strong>VAT / GST Calculator</strong> - add or remove tax from a price</li>
+      <li><strong>Inflation Calculator</strong> - what an amount from one year is worth in another</li>
+      <li><strong>Profit Margin & Markup Calculator</strong> - selling price, margin, markup, or cost</li>
+      <li><strong>Break-Even Point Calculator</strong> - units needed to sell to cover your costs</li>
+      <li><strong>NPV Calculator</strong> - present value, IRR, and payback period of an investment</li>
+      <li><strong>Paycheck Tax Deductions Calculator</strong> - estimated take-home pay after tax</li>
+      <li><strong>Freelance Hourly Rate Calculator</strong> - what to charge per hour based on your income goal</li>
+      <li><strong>Savings Goal Calculator</strong> - monthly contribution or time needed to hit a savings target</li>
+    </ul>
+    <p>More tools, including a live currency converter and crypto calculator, are in active development and will appear here as they're finished.</p>
+
+    <h2>How to choose the right calculator</h2>
+    <p>If you're borrowing money, the <strong>Loan</strong>, <strong>EMI</strong>, or <strong>Mortgage</strong> calculators cover the most common structures. For growing savings or understanding interest, the <strong>Compound</strong> and <strong>Simple Interest</strong> calculators handle both directions. For running a business, the <strong>Profit Margin</strong>, <strong>Break-Even</strong>, and <strong>NPV</strong> calculators cover pricing and investment decisions, while the <strong>Freelance Rate</strong> calculator is built specifically for setting an hourly rate. For everyday money questions, <strong>VAT/GST</strong>, <strong>Inflation</strong>, and <strong>Savings Goal</strong> cover common personal finance calculations.</p>
+
+    <h2>Is it really free?</h2>
+    <p>Yes, every tool on this page is completely free, with no usage limits and no account required.</p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Do I need to install anything?</h3>
+    <p>No, every calculator runs directly in your web browser.</p>
+    <h3>Is my financial data stored or sent anywhere?</h3>
+    <p>No. All calculations happen locally in your browser using JavaScript. Nothing you enter is transmitted to a server or saved anywhere.</p>
+    <h3>Are these calculators a substitute for professional financial advice?</h3>
+    <p>No, they're designed to help you understand and estimate common financial calculations, but for decisions involving significant money, taxes, or legal commitments, it's always worth consulting a qualified financial advisor, accountant, or lender for guidance specific to your situation.</p>
+    <h3>Can I use these calculators on my phone?</h3>
+    <p>Yes, every calculator is fully responsive and works on any modern phone, tablet, or desktop browser.</p>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a></footer>
+</div>
+
+<script>
+  const chips = document.querySelectorAll('.filter-chip');
+  const cards = document.querySelectorAll('.tool-card');
+  function applyFilter(filter){
+    cards.forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+    });
+  }
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      applyFilter(chip.dataset.filter);
+    });
+  });
+  applyFilter(document.querySelector('.filter-chip.active').dataset.filter);
+</script>
+
+</body>
+</html>
