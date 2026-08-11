@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflation Calculator - Compare Purchasing Power Over Time | Docutoolbox</title>
+<meta name="description" content="Free inflation calculator. Find what an amount of money in one year is equivalent to in another year, based on an average annual inflation rate.">
+<link rel="canonical" href="https://docutoolbox.com/inflation-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .info-banner{
+    display:flex; gap:10px; background:rgba(201,162,39,0.08); border:1px solid var(--linework-soft); border-radius:10px;
+    padding:14px 16px; margin-bottom:22px; font-size:12.5px; line-height:1.6; color:var(--ink);
+  }
+  .info-banner .icon{ flex:0 0 auto; font-size:15px; }
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework);}
+  .field-row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field-row3{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:end; }
+  .year-arrow{ text-align:center; font-family:'Fraunces',serif; font-size:20px; color:var(--linework); padding-bottom:10px;}
+
+  .preset-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .preset-btn{ background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:12px; padding:8px 14px; border-radius:20px; cursor:pointer; transition:all 0.15s ease;}
+  .preset-btn:hover{ border-color:var(--linework-soft); color:var(--ink); }
+  .preset-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent); font-weight:600;}
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:34px; color:var(--accent); }
+  .result-hero .m-sub{ font-size:12px; color:var(--text-muted); margin-top:6px; font-family:'JetBrains Mono',monospace; }
+
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--grid-line); }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row .r-label{ font-size:13px; color:var(--text-muted); }
+  .result-row .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+  .result-row .r-value.pos{ color:#8FCB9E; }
+  .result-row .r-value.neg{ color:#E39A9A; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Inflation calculator</h1>
+  <p class="intro">Find what an amount of money in one year is equivalent to in another year, based on an average annual inflation rate.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="info-banner">
+          <span class="icon">ℹ️</span>
+          <span>This calculator projects value using the average annual rate you enter, it does not pull live historical price index data. For the most accurate rate for your country and time period, check your national statistics office (like the CPI from the U.S. Bureau of Labor Statistics).</span>
+        </div>
+
+        <div class="field"><label>Amount ($)</label><input type="number" id="amountInput" value="1000" min="0"></div>
+
+        <div class="field-row3">
+          <div class="field"><label>From year</label><input type="number" id="fromYear" value="2015" min="1900" max="2100"></div>
+          <div class="year-arrow">→</div>
+          <div class="field"><label>To year</label><input type="number" id="toYear" value="2026" min="1900" max="2100"></div>
+        </div>
+
+        <div class="field">
+          <label>Average annual inflation rate (%)</label>
+          <div class="preset-row" id="presetRow">
+            <button class="preset-btn" data-rate="2">2% (Low)</button>
+            <button class="preset-btn active" data-rate="3">3% (Historical avg.)</button>
+            <button class="preset-btn" data-rate="5">5% (High)</button>
+            <button class="preset-btn" data-rate="8">8% (Very high)</button>
+          </div>
+          <input type="number" id="rateInput" value="3" step="0.1" min="0">
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate</button>
+        <div id="errorMsg">Please enter a valid amount, with the "to year" after the "from year".</div>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label" id="heroLabel">Equivalent value</div>
+            <div class="m-value" id="heroValue">$0.00</div>
+            <div class="m-sub" id="heroSub"></div>
+          </div>
+
+          <div class="result-row"><span class="r-label">Original amount</span><span class="r-value" id="rOriginal">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Cumulative inflation</span><span class="r-value" id="rCumulative">0%</span></div>
+          <div class="result-row"><span class="r-label">Change in value</span><span class="r-value" id="rChange">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Purchasing power of original amount today</span><span class="r-value" id="rPurchasingPower">0%</span></div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/simple-interest-calculator/">Simple Interest Calculator</a>
+      <a href="/vat-gst-calculator/">VAT / GST Calculator</a>
+      <a href="/profit-margin-calculator/">Profit Margin & Markup Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/npv-calculator/">Net Present Value (NPV) Calculator</a>
+      <a href="/freelance-rate-calculator/">Freelance Hourly Rate Calculator</a>
+      <a href="/savings-goal-calculator/">Savings Goal Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Inflation Calculator?</h2>
+      <p>Inflation is the gradual rise in prices over time, which means the same amount of money buys a little less each year. This calculator shows what an amount from one year is equivalent to in another year, based on a chosen average annual inflation rate, either projecting a past amount forward or looking at how much buying power an amount has lost or would need to keep up.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Enter the <strong>amount</strong> you want to adjust.</li>
+        <li>Enter the <strong>from year</strong> and <strong>to year</strong>, the calculator works in either direction, forward or backward in time.</li>
+        <li>Enter an <strong>average annual inflation rate</strong>, or use one of the quick presets as a starting point.</li>
+        <li>Click <strong>Calculate</strong> to see the equivalent value, the cumulative inflation over the period, and how much purchasing power has changed.</li>
+      </ol>
+
+      <h2>Why this calculator uses a rate you provide</h2>
+      <p>Real-world inflation isn't a constant, smooth rate, it fluctuates year to year based on economic conditions, and official measures like the Consumer Price Index (CPI) are published by government statistical agencies and updated regularly. Since this calculator runs entirely in your browser without pulling in a live historical database, it works from an average annual rate that you provide, which gives a reasonable projection or estimate but won't precisely match official historical inflation figures for a specific country and period.</p>
+      <p>For a rough starting point, many economists cite roughly 2 to 3% as a typical long-run average in stable, developed economies over recent decades, though actual rates have varied significantly higher and lower in different periods and countries.</p>
+
+      <h2>Understanding the results</h2>
+      <ul>
+        <li><strong>Equivalent value</strong> - what your original amount corresponds to in the target year's money, at the rate you specified</li>
+        <li><strong>Cumulative inflation</strong> - the total percentage increase in prices over the entire period between your two years</li>
+        <li><strong>Change in value</strong> - the dollar difference between the original amount and the equivalent value</li>
+        <li><strong>Purchasing power of original amount today</strong> - if moving forward in time, this shows what percentage of its original buying power your amount retains by the later year</li>
+      </ul>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Understanding how much a past salary, price, or savings goal would be worth in today's money</li>
+        <li>Estimating what a future expense might realistically cost after years of inflation</li>
+        <li>Comparing prices or wages across different time periods on a like-for-like basis</li>
+        <li>Building intuition for how inflation erodes the value of cash held over long periods</li>
+        <li>Setting a more realistic long-term savings or retirement target that accounts for rising prices</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Can I calculate backward in time, like what $1,000 today was worth in 2000?</h3>
+      <p>Yes, enter the earlier year as the "to year" and the later year as the "from year," the calculator automatically detects the direction and adjusts the amount accordingly, discounting it back rather than growing it forward.</p>
+      <h3>Why does my result differ from an official inflation calculator?</h3>
+      <p>Official calculators (like the one from the U.S. Bureau of Labor Statistics) use actual historical CPI data with real, non-constant year-to-year rates, while this tool applies one constant average rate across the whole period you choose, small differences are expected, especially over periods with unusually high or low inflation years.</p>
+      <h3>What inflation rate should I use for the most accurate estimate?</h3>
+      <p>Look up your country's actual historical average inflation rate for the specific period you're interested in from an official statistics source, then enter that figure here for a more accurate projection than a generic default.</p>
+      <h3>Does this work for any currency?</h3>
+      <p>Yes, the calculation is currency-agnostic since it's just working with a percentage rate applied to a number, use whatever currency your amount and rate assumption are based in.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const presetRow = document.getElementById('presetRow');
+  const rateInput = document.getElementById('rateInput');
+
+  presetRow.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      rateInput.value = btn.dataset.rate;
+    });
+  });
+  rateInput.addEventListener('input', () => {
+    presetRow.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.rate === rateInput.value));
+  });
+
+  function fmtMoney(n){
+    const sign = n < 0 ? '-' : '';
+    return sign + '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const amount = parseFloat(document.getElementById('amountInput').value);
+    const fromYear = parseInt(document.getElementById('fromYear').value, 10);
+    const toYear = parseInt(document.getElementById('toYear').value, 10);
+    const rate = parseFloat(rateInput.value);
+    const errorMsg = document.getElementById('errorMsg');
+    const resultsWrap = document.getElementById('resultsWrap');
+
+    if(isNaN(amount) || amount < 0 || isNaN(fromYear) || isNaN(toYear) || isNaN(rate) || fromYear === toYear){
+      errorMsg.style.display = 'block';
+      resultsWrap.style.display = 'none';
+      return;
+    }
+    errorMsg.style.display = 'none';
+
+    const n = toYear - fromYear;
+    const r = rate / 100;
+    const equivalent = amount * Math.pow(1 + r, n);
+    const cumulativePct = (Math.pow(1 + r, Math.abs(n)) - 1) * 100;
+    const change = equivalent - amount;
+    const forward = n > 0;
+
+    document.getElementById('heroLabel').textContent = `Value of $${amount.toLocaleString('en-US')} from ${fromYear} in ${toYear}`;
+    document.getElementById('heroValue').textContent = fmtMoney(equivalent);
+    document.getElementById('heroSub').textContent = forward
+      ? `That's ${cumulativePct.toFixed(1)}% more than the original amount`
+      : `That's ${cumulativePct.toFixed(1)}% less than the original amount`;
+
+    document.getElementById('rOriginal').textContent = fmtMoney(amount);
+    document.getElementById('rCumulative').textContent = (forward ? '+' : '-') + cumulativePct.toFixed(1) + '%';
+    const changeEl = document.getElementById('rChange');
+    changeEl.textContent = fmtMoney(change);
+    changeEl.className = 'r-value ' + (change >= 0 ? 'pos' : 'neg');
+
+    // purchasing power retained (only meaningful moving forward)
+    const purchasingPower = forward ? (amount / equivalent) * 100 : (equivalent / amount) * 100;
+    document.getElementById('rPurchasingPower').textContent = purchasingPower.toFixed(1) + '%';
+
+    resultsWrap.style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
