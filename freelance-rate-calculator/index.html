@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Hourly Rate Calculator | Docutoolbox</title>
+<meta name="description" content="Free freelance hourly rate calculator. Find what to charge per hour based on your income goal, business expenses, taxes, time off, and billable hours.">
+<link rel="canonical" href="https://docutoolbox.com/freelance-rate-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .section-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--linework); margin:22px 0 14px; }
+  .section-label:first-child{ margin-top:0; }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:15px; padding:11px 12px; border-radius:8px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework);}
+  .field-row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field-row3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  @media (max-width:520px){ .field-row3{ grid-template-columns:1fr 1fr; } }
+  .field-hint{ font-size:11.5px; color:var(--text-muted); margin-top:-8px; margin-bottom:16px; font-family:'JetBrains Mono',monospace; }
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+
+  .results-wrap{ display:none; margin-top:26px; }
+  .divider{ display:flex; align-items:center; gap:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; margin:26px 0 18px;}
+  .divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--grid-line);}
+
+  .result-hero{ text-align:center; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:22px; margin-bottom:16px; }
+  .result-hero .m-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .result-hero .m-value{ font-family:'Fraunces',serif; font-weight:700; font-size:36px; color:var(--accent); }
+  .result-hero .m-sub{ font-size:12px; color:var(--text-muted); margin-top:6px; font-family:'JetBrains Mono',monospace; }
+
+  .rate-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+  @media (max-width:520px){ .rate-grid{ grid-template-columns:1fr 1fr; } }
+  .rate-box{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:14px; text-align:center; }
+  .rate-box .rb-label{ font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .rate-box .rb-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink); }
+
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--grid-line); }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row .r-label{ font-size:13px; color:var(--text-muted); }
+  .result-row .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:15.5px; color:var(--ink); }
+
+  .hours-bar-wrap{ margin-top:18px; }
+  .hours-bar{ display:flex; height:28px; border-radius:8px; overflow:hidden; border:1px solid var(--grid-line); }
+  .hours-bar .seg-billable{ background:var(--accent); }
+  .hours-bar .seg-nonbillable{ background:var(--blue-card-2); }
+  .hours-legend{ display:flex; gap:20px; justify-content:center; margin-top:10px; font-size:12px; }
+  .hours-legend-item{ display:flex; align-items:center; gap:8px; }
+  .hl-dot{ width:11px; height:11px; border-radius:3px; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Freelance hourly rate calculator</h1>
+  <p class="intro">Find what to charge per hour based on your income goal, expenses, taxes, time off, and how much of your time is actually billable.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="section-label">Income goal</div>
+        <div class="field"><label>Desired annual take-home income ($)</label><input type="number" id="desiredIncome" value="60000" min="0"></div>
+        <div class="field"><label>Annual business expenses ($)</label><input type="number" id="expenses" value="6000" min="0"></div>
+        <div class="field-hint">Software, equipment, insurance, marketing, coworking space, and other costs of running your business.</div>
+        <div class="field"><label>Estimated tax rate (%)</label><input type="number" id="taxRate" value="25" min="0" max="90"></div>
+        <div class="field-hint">A rough estimate covering income tax and self-employment tax, check with an accountant for your exact rate.</div>
+
+        <div class="section-label">Time & availability</div>
+        <div class="field-row3">
+          <div class="field"><label>Weeks worked / year</label><input type="number" id="weeksPerYear" value="48" min="1" max="52"></div>
+          <div class="field"><label>Days / week</label><input type="number" id="daysPerWeek" value="5" min="1" max="7"></div>
+          <div class="field"><label>Hours / day</label><input type="number" id="hoursPerDay" value="8" min="1" max="24"></div>
+        </div>
+        <div class="field"><label>Billable percentage of your time (%)</label><input type="number" id="billablePct" value="70" min="1" max="100"></div>
+        <div class="field-hint">Time actually spent on paid client work, the rest goes to admin, marketing, proposals, and finding clients.</div>
+
+        <button class="calc" id="calcBtn">Calculate my rate</button>
+
+        <div class="results-wrap" id="resultsWrap">
+          <div class="result-hero">
+            <div class="m-label">Suggested hourly rate</div>
+            <div class="m-value" id="hourlyRate">$0.00</div>
+            <div class="m-sub">to hit your income goal</div>
+          </div>
+
+          <div class="rate-grid">
+            <div class="rate-box"><div class="rb-label">Day rate</div><div class="rb-value" id="dayRate">$0</div></div>
+            <div class="rate-box"><div class="rb-label">Weekly target</div><div class="rb-value" id="weeklyTarget">$0</div></div>
+            <div class="rate-box"><div class="rb-label">Monthly target</div><div class="rb-value" id="monthlyTarget">$0</div></div>
+          </div>
+
+          <div class="result-row"><span class="r-label">Total annual revenue needed</span><span class="r-value" id="totalRevenue">$0.00</span></div>
+          <div class="result-row"><span class="r-label">Total working hours / year</span><span class="r-value" id="totalHours">0</span></div>
+          <div class="result-row"><span class="r-label">Billable hours / year</span><span class="r-value" id="billableHours">0</span></div>
+          <div class="result-row"><span class="r-label">Non-billable hours / year</span><span class="r-value" id="nonBillableHours">0</span></div>
+
+          <div class="hours-bar-wrap">
+            <div class="hours-bar">
+              <div class="seg-billable" id="segBillable" style="width:70%;"></div>
+              <div class="seg-nonbillable" id="segNonbillable" style="width:30%;"></div>
+            </div>
+            <div class="hours-legend">
+              <div class="hours-legend-item"><span class="hl-dot" style="background:var(--accent);"></span>Billable <span id="billablePctLabel">70%</span></div>
+              <div class="hours-legend-item"><span class="hl-dot" style="background:var(--blue-card-2); border:1px solid var(--grid-line);"></span>Non-billable <span id="nonBillablePctLabel">30%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Financial Calculators</h4>
+      <a href="/loan-calculator/">Loan Calculator</a>
+      <a href="/emi-calculator/">EMI Calculator</a>
+      <a href="/mortgage-calculator/">Mortgage Calculator</a>
+      <a href="/compound-interest-calculator/">Compound Interest Calculator</a>
+      <a href="/simple-interest-calculator/">Simple Interest Calculator</a>
+      <a href="/vat-gst-calculator/">VAT / GST Calculator</a>
+      <a href="/inflation-calculator/">Inflation Calculator</a>
+      <a href="/profit-margin-calculator/">Profit Margin & Markup Calculator</a>
+      <a href="/break-even-calculator/">Break-Even Point Calculator</a>
+      <a href="/npv-calculator/">Net Present Value (NPV) Calculator</a>
+      <a href="/savings-goal-calculator/">Savings Goal Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Freelance Hourly Rate Calculator?</h2>
+      <p>Many freelancers set their hourly rate by guessing or copying what others charge, without actually working out whether that rate covers their expenses, taxes, and time off, and still leaves the income they need. This calculator works backward from your income goal to a concrete hourly rate, accounting for the reality that not every working hour is billable to a client.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Enter your <strong>desired annual take-home income</strong>, what you actually want to keep after expenses and taxes.</li>
+        <li>Enter your estimated annual <strong>business expenses</strong> and a rough <strong>tax rate</strong>.</li>
+        <li>Enter how many <strong>weeks, days, and hours</strong> you plan to work.</li>
+        <li>Enter your <strong>billable percentage</strong>, realistically, how much of your working time is spent on paid client work versus admin, marketing, and finding clients.</li>
+        <li>Click <strong>Calculate my rate</strong> to see your suggested hourly rate, day rate, and weekly and monthly revenue targets.</li>
+      </ol>
+
+      <h2>Why billable percentage matters so much</h2>
+      <p>This is the number freelancers most often underestimate. Running a freelance business involves plenty of unpaid time: writing proposals, invoicing, marketing, learning new skills, and general admin. If you assume 100% of your hours are billable, your rate will be set too low, and you'll fall short of your income goal even while working full days. Most freelancers find somewhere between 50% and 80% of their total working time actually ends up billable to clients, the rest is the overhead of running a business.</p>
+
+      <h2>How the calculation works</h2>
+      <p>The calculator works backward in three steps. First, it grosses up your desired take-home income by your tax rate to find the pre-tax profit needed. Second, it adds your business expenses on top, since revenue has to cover both taxes and running costs before what's left becomes your take-home income. Third, it divides that total revenue target by your billable hours per year (not your total working hours) to arrive at the hourly rate that actually gets you there.</p>
+
+      <h2>Using the day, weekly, and monthly targets</h2>
+      <p>The <strong>day rate</strong> is useful for quoting fixed-price day-long engagements instead of hourly billing. The <strong>weekly and monthly targets</strong> give you a concrete revenue number to track against as you go, if you're consistently falling short of the monthly target, it's an early signal to either raise your rate, find more clients, or reduce your non-billable time.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Setting a starting hourly rate as a new freelancer</li>
+        <li>Checking whether a current rate is actually sustainable given real expenses and non-billable time</li>
+        <li>Deciding how a rate needs to change if take-home goals or expenses shift</li>
+        <li>Comparing freelancing income potential against a salaried job offer</li>
+        <li>Setting realistic weekly or monthly revenue targets to track progress against</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Should I use my target take-home pay or my current salary as a benchmark?</h3>
+      <p>Either works as a starting point, but remember that as a freelancer you're also covering costs a traditional employer would otherwise pay for, like benefits, equipment, and paid time off, so many freelancers aim somewhat higher than their previous salary to account for this.</p>
+      <h3>What's a realistic billable percentage to use?</h3>
+      <p>It varies by freelancer and field, but many experienced freelancers report somewhere between 60-75% as a sustainable target once their business is established, newer freelancers spending more time on marketing and client acquisition often see a lower percentage.</p>
+      <h3>Does this account for client negotiations or market rates?</h3>
+      <p>No, this calculates what you need to charge to hit your financial goals, not what the market will necessarily bear. Use this as your floor, the minimum you'd need, and compare it against what similar freelancers in your field and region typically charge.</p>
+      <h3>Should I include health insurance or retirement savings in my expenses?</h3>
+      <p>Yes, if you're paying for these yourself as a freelancer, include them as business expenses (or add them to your desired take-home income), since an employer would typically otherwise cover part of these costs.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  function fmtMoney(n){ return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function fmtMoneyRound(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const desiredIncome = parseFloat(document.getElementById('desiredIncome').value) || 0;
+    const expenses = parseFloat(document.getElementById('expenses').value) || 0;
+    const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+    const weeksPerYear = parseFloat(document.getElementById('weeksPerYear').value) || 0;
+    const daysPerWeek = parseFloat(document.getElementById('daysPerWeek').value) || 0;
+    const hoursPerDay = parseFloat(document.getElementById('hoursPerDay').value) || 0;
+    const billablePct = parseFloat(document.getElementById('billablePct').value) || 0;
+
+    if(taxRate >= 100 || billablePct <= 0 || weeksPerYear <= 0 || daysPerWeek <= 0 || hoursPerDay <= 0){ return; }
+
+    const preTaxProfitNeeded = desiredIncome / (1 - taxRate/100);
+    const totalRevenueNeeded = preTaxProfitNeeded + expenses;
+
+    const totalHours = weeksPerYear * daysPerWeek * hoursPerDay;
+    const billableHours = totalHours * (billablePct / 100);
+    const nonBillableHours = totalHours - billableHours;
+
+    const hourlyRate = billableHours > 0 ? totalRevenueNeeded / billableHours : 0;
+    const dayRate = hourlyRate * hoursPerDay;
+    const weeklyTarget = totalRevenueNeeded / weeksPerYear;
+    const monthlyTarget = totalRevenueNeeded / 12;
+
+    document.getElementById('hourlyRate').textContent = fmtMoney(hourlyRate);
+    document.getElementById('dayRate').textContent = fmtMoneyRound(dayRate);
+    document.getElementById('weeklyTarget').textContent = fmtMoneyRound(weeklyTarget);
+    document.getElementById('monthlyTarget').textContent = fmtMoneyRound(monthlyTarget);
+
+    document.getElementById('totalRevenue').textContent = fmtMoney(totalRevenueNeeded);
+    document.getElementById('totalHours').textContent = Math.round(totalHours).toLocaleString('en-US');
+    document.getElementById('billableHours').textContent = Math.round(billableHours).toLocaleString('en-US');
+    document.getElementById('nonBillableHours').textContent = Math.round(nonBillableHours).toLocaleString('en-US');
+
+    document.getElementById('segBillable').style.width = billablePct + '%';
+    document.getElementById('segNonbillable').style.width = (100 - billablePct) + '%';
+    document.getElementById('billablePctLabel').textContent = billablePct + '%';
+    document.getElementById('nonBillablePctLabel').textContent = (100 - billablePct) + '%';
+
+    document.getElementById('resultsWrap').style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
