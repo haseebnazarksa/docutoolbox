@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG to PNG Converter Online Free | Docutoolbox</title>
+<meta name="description" content="Free online SVG to PNG converter. Upload an SVG file or paste SVG code, choose your resolution and background, and download a PNG. No upload, works in your browser.">
+<link rel="canonical" href="https://docutoolbox.com/svg-to-png/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .tabs{ display:flex; gap:8px; margin-bottom:20px; }
+  .tab-btn{ flex:1; padding:11px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; }
+
+  .dropzone{
+    border:2px dashed var(--grid-line); border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.dragover{ border-color:var(--linework); background:rgba(201,162,39,0.05); }
+  .dropzone .dz-icon{ font-size:30px; margin-bottom:10px; }
+  .dropzone .dz-title{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+  .dropzone .dz-sub{ color:var(--text-muted); font-size:13px; }
+  input#fileInput{ display:none; }
+
+  textarea{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:12px; border-radius:8px; min-height:160px; resize:vertical; line-height:1.5;
+  }
+  textarea:focus{ outline:none; border-color:var(--linework); }
+  .paste-btn-row{ margin-top:12px; }
+
+  .convert-settings{ display:none; margin-top:20px; }
+  .preview-wrap{
+    position:relative; background:
+      linear-gradient(45deg, #2a3444 25%, transparent 25%), linear-gradient(-45deg, #2a3444 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #2a3444 75%), linear-gradient(-45deg, transparent 75%, #2a3444 75%);
+    background-size:16px 16px; background-position:0 0, 0 8px, 8px -8px, -8px 0px;
+    background-color:var(--blue-deep);
+    border:1px solid var(--grid-line); border-radius:10px; padding:16px;
+    display:flex; align-items:center; justify-content:center; min-height:200px; margin-bottom:18px; overflow:hidden;
+  }
+  .preview-wrap img{ max-width:100%; max-height:280px; object-fit:contain; }
+
+  .settings-row{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:20px; }
+  .setting{ flex:1; min-width:150px; }
+  .setting label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .setting select, .setting input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:14px; padding:10px 12px; border-radius:8px;
+  }
+  .setting select{
+    appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+  .setting select:focus, .setting input:focus{ outline:none; border-color:var(--linework); }
+
+  .dims-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); margin-bottom:18px;}
+  .dims-line strong{ color:var(--accent); }
+
+  button.calc{
+    width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
+    color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  button.calc:hover{ background:var(--accent-soft); }
+  .change-img-btn{ width:100%; margin-top:10px; padding:11px; border:1px solid var(--grid-line); border-radius:9px; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer;}
+  .change-img-btn:hover{ border-color:var(--linework); color:var(--linework); }
+  #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
+  #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
+  #downloadBtn:hover{ background:var(--accent-soft); }
+  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
+  .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>SVG to PNG converter</h1>
+  <p class="intro">Upload an SVG file or paste SVG code, choose your resolution and background, and download a PNG.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="tabs">
+          <button class="tab-btn active" id="tabUpload">Upload SVG file</button>
+          <button class="tab-btn" id="tabPaste">Paste SVG code</button>
+        </div>
+
+        <div class="tab-panel active" id="panelUpload">
+          <div class="dropzone" id="dropzone">
+            <div class="dz-icon">🖼️</div>
+            <div class="dz-title">Drop an SVG file here, or click to browse</div>
+            <div class="dz-sub">.svg files · Max 5MB</div>
+            <input type="file" id="fileInput" accept="image/svg+xml,.svg">
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panelPaste">
+          <textarea id="svgCodeInput" placeholder="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;&gt;...&lt;/svg&gt;"></textarea>
+          <div class="paste-btn-row"><button class="calc" id="loadPastedBtn">Load SVG</button></div>
+        </div>
+
+        <div class="convert-settings" id="convertSettings">
+          <div class="preview-wrap"><img id="previewImg" alt="SVG preview"></div>
+
+          <div class="settings-row">
+            <div class="setting">
+              <label>Scale</label>
+              <select id="scaleSelect">
+                <option value="1">1x (original size)</option>
+                <option value="2" selected>2x</option>
+                <option value="4">4x</option>
+                <option value="8">8x</option>
+              </select>
+            </div>
+            <div class="setting">
+              <label>Background</label>
+              <select id="bgSelect">
+                <option value="transparent" selected>Transparent</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dims-line">Output size: <strong id="dimsLine">0 × 0 px</strong></div>
+
+          <button class="calc" id="convertBtn">Convert to PNG</button>
+          <button class="change-img-btn" id="changeBtn">Choose a different SVG</button>
+          <div id="errorMsg"></div>
+          <div id="successBox">
+            <div class="s-title">✓ Your PNG is ready</div>
+            <a id="downloadBtn" href="#" download="converted.png">Download</a>
+          </div>
+        </div>
+        <div class="privacy-note"><span class="dot"></span> Your file is processed entirely in your browser - nothing is uploaded to a server.</div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Image Tools</h4>
+      <a href="/image-compressor/">Image Compressor</a>
+      <a href="/image-resizer/">Image Resizer</a>
+      <a href="/image-cropper/">Image Cropper</a>
+      <a href="/image-format-converter/">Image Format Converter</a>
+      <a href="/image-flip-rotate/">Flip / Rotate Image</a>
+      <a href="/image-color-inverter/">Image Color Inverter</a>
+      <a href="/image-blur/">Blur Image</a>
+      <a href="/image-color-picker/">Color Picker from Image</a>
+      <a href="/base64-image-converter/">Base64 ↔ Image</a>
+      <a href="/exif-viewer/">EXIF Viewer & Remover</a>
+      <a href="/favicon-generator/">Favicon Generator</a>
+      <a href="/passport-photo-resizer/">Passport Photo Resizer</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the SVG to PNG Converter?</h2>
+      <p>This tool converts a vector SVG image into a standard raster PNG file at any resolution you choose. Upload an SVG file or paste its code directly, pick a scale and background, and download a PNG that's ready to use anywhere SVG isn't supported.</p>
+      <p>Everything happens locally in your browser. Your file is never uploaded to a server.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Either drop an <strong>.svg file</strong> onto the upload area, or switch to <strong>"Paste SVG code"</strong> and paste the raw SVG markup directly.</li>
+        <li>A preview of your SVG appears, shown against a checkerboard pattern so you can see any transparency.</li>
+        <li>Choose a <strong>scale</strong> (1x, 2x, 4x, or 8x) to control the output resolution.</li>
+        <li>Choose a <strong>background</strong>, transparent, white, or black, depending on where you'll use the PNG.</li>
+        <li>Click <strong>Convert to PNG</strong> and download your result.</li>
+      </ol>
+
+      <h2>Why SVG needs converting to PNG</h2>
+      <p>SVG is a vector format, meaning it's built from mathematical shapes and paths rather than a fixed grid of pixels, which lets it scale to any size without losing sharpness. PNG is a raster format, a fixed grid of pixels, that's supported virtually everywhere, including places that don't accept SVG, like many image upload forms, older software, or specific print and design workflows. Converting to PNG trades away infinite scalability for that universal compatibility.</p>
+
+      <h2>Choosing a scale</h2>
+      <p>Because SVG has no fixed pixel size of its own, the scale setting determines how large your PNG comes out. <strong>1x</strong> renders at the SVG's defined viewBox dimensions, while <strong>2x</strong>, <strong>4x</strong>, and <strong>8x</strong> render at multiples of that size, useful for producing a sharp, high-resolution PNG suitable for retina displays or printing, since you can always scale a large PNG down without quality loss, but scaling a small one up will look blurry.</p>
+
+      <h2>Choosing a background</h2>
+      <p><strong>Transparent</strong> keeps any areas outside the SVG's shapes see-through, ideal for logos or icons that will sit on top of another background. <strong>White</strong> or <strong>black</strong> fill in a solid background color, useful when the destination doesn't support transparency or when you specifically want a solid-colored image.</p>
+
+      <h2>How it works technically</h2>
+      <p>The tool renders your SVG onto an in-browser canvas at your chosen scale, using the browser's own native SVG rendering engine, the same one used to display SVGs on any webpage, then exports that canvas as a PNG file.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Will my SVG's colors and details be preserved exactly?</h3>
+      <p>Yes, since the browser renders your SVG using the same engine it uses to display SVGs normally, the PNG output matches exactly what you'd see if the SVG were displayed on a webpage.</p>
+      <h3>Can I convert an SVG with embedded fonts or images?</h3>
+      <p>Yes, as long as the SVG is self-contained (fonts and images embedded or referenced with data URIs), it will render and convert correctly. SVGs referencing external files that aren't accessible may not render those parts correctly.</p>
+      <h3>What if my SVG doesn't have a defined size?</h3>
+      <p>If the SVG doesn't specify explicit width and height, the tool falls back to its viewBox dimensions, or a reasonable default size, to determine the base resolution before applying your chosen scale.</p>
+      <h3>Can I convert multiple SVGs at once?</h3>
+      <p>This tool handles one SVG at a time, for a batch of files, repeat the process for each one.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const tabUpload = document.getElementById('tabUpload');
+  const tabPaste = document.getElementById('tabPaste');
+  const panelUpload = document.getElementById('panelUpload');
+  const panelPaste = document.getElementById('panelPaste');
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const svgCodeInput = document.getElementById('svgCodeInput');
+  const loadPastedBtn = document.getElementById('loadPastedBtn');
+  const convertSettings = document.getElementById('convertSettings');
+  const previewImg = document.getElementById('previewImg');
+  const scaleSelect = document.getElementById('scaleSelect');
+  const bgSelect = document.getElementById('bgSelect');
+  const dimsLine = document.getElementById('dimsLine');
+  const convertBtn = document.getElementById('convertBtn');
+  const changeBtn = document.getElementById('changeBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const successBox = document.getElementById('successBox');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let svgText = null;
+  let baseW = 300, baseH = 150;
+
+  tabUpload.addEventListener('click', () => {
+    tabUpload.classList.add('active'); tabPaste.classList.remove('active');
+    panelUpload.classList.add('active'); panelPaste.classList.remove('active');
+  });
+  tabPaste.addEventListener('click', () => {
+    tabPaste.classList.add('active'); tabUpload.classList.remove('active');
+    panelPaste.classList.add('active'); panelUpload.classList.remove('active');
+  });
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if(e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if(fileInput.files.length) loadFile(fileInput.files[0]); fileInput.value=''; });
+
+  function loadFile(file){
+    if(!(file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg'))) return;
+    const reader = new FileReader();
+    reader.onload = (e) => loadSvgText(e.target.result);
+    reader.readAsText(file);
+  }
+
+  loadPastedBtn.addEventListener('click', () => {
+    if(svgCodeInput.value.trim()) loadSvgText(svgCodeInput.value.trim());
+  });
+
+  function loadSvgText(text){
+    svgText = text;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'image/svg+xml');
+    const svgEl = doc.querySelector('svg');
+    if(!svgEl || doc.querySelector('parsererror')){
+      errorMsg.textContent = "Couldn't parse this SVG. Please check the file or code and try again.";
+      errorMsg.style.display = 'block';
+      return;
+    }
+    errorMsg.style.display = 'none';
+
+    let w = parseFloat(svgEl.getAttribute('width'));
+    let h = parseFloat(svgEl.getAttribute('height'));
+    if(!w || !h){
+      const viewBox = svgEl.getAttribute('viewBox');
+      if(viewBox){
+        const parts = viewBox.trim().split(/\s+/).map(Number);
+        w = w || parts[2];
+        h = h || parts[3];
+      }
+    }
+    baseW = w || 300;
+    baseH = h || 300;
+
+    const blob = new Blob([svgText], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    previewImg.src = url;
+    convertSettings.style.display = 'block';
+    successBox.style.display = 'none';
+    updateDimsLine();
+  }
+
+  function updateDimsLine(){
+    const scale = parseInt(scaleSelect.value, 10);
+    dimsLine.innerHTML = `<strong>${Math.round(baseW*scale)} × ${Math.round(baseH*scale)} px</strong>`;
+  }
+  scaleSelect.addEventListener('change', updateDimsLine);
+
+  changeBtn.addEventListener('click', () => {
+    convertSettings.style.display = 'none';
+    svgCodeInput.value = '';
+    svgText = null;
+  });
+
+  convertBtn.addEventListener('click', () => {
+    if(!svgText) return;
+    errorMsg.style.display = 'none';
+    convertBtn.disabled = true;
+    convertBtn.textContent = 'Converting…';
+
+    const scale = parseInt(scaleSelect.value, 10);
+    const outW = Math.round(baseW * scale);
+    const outH = Math.round(baseH * scale);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = outW;
+    canvas.height = outH;
+    const ctx = canvas.getContext('2d');
+
+    if(bgSelect.value !== 'transparent'){
+      ctx.fillStyle = bgSelect.value;
+      ctx.fillRect(0, 0, outW, outH);
+    }
+
+    const blob = new Blob([svgText], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, outW, outH);
+      URL.revokeObjectURL(url);
+      const dataUrl = canvas.toDataURL('image/png');
+      downloadBtn.href = dataUrl;
+      downloadBtn.download = `converted-${outW}x${outH}.png`;
+      successBox.style.display = 'block';
+      convertBtn.disabled = false;
+      convertBtn.textContent = 'Convert to PNG';
+    };
+    img.onerror = () => {
+      errorMsg.textContent = "Couldn't render this SVG. Please check the file or code and try again.";
+      errorMsg.style.display = 'block';
+      convertBtn.disabled = false;
+      convertBtn.textContent = 'Convert to PNG';
+    };
+    img.src = url;
+  });
+</script>
+
+</body>
+</html>
