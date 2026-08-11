@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Tools & Editing - Free Online Image Editor | Docutoolbox</title>
+<meta name="description" content="Compress, resize, crop, and convert images, all free, in your browser, with no sign-up. 15 image tools for everything you need to do with a photo.">
+<link rel="canonical" href="https://docutoolbox.com/image-tools/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1280px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:44px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1280px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,42px); line-height:1.1; margin-bottom:14px;
+    letter-spacing:-0.01em; display:flex; align-items:center; gap:14px;
+  }
+  h1 svg{ width:36px; height:36px; stroke:var(--linework); fill:none; stroke-width:1.5; flex-shrink:0;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:38px; max-width:640px;}
+
+  .filter-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px; }
+  .filter-chip{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.04em; padding:8px 16px; border-radius:20px;
+    border:1px solid var(--grid-line); color:var(--text-muted); background:var(--blue-card); cursor:pointer; transition:all 0.15s ease;
+  }
+  .filter-chip:hover{ border-color:var(--linework-soft); color:var(--ink); }
+  .filter-chip.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent); font-weight:600;}
+
+  .tool-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px;
+  }
+  .tool-card{
+    position:relative; display:flex; flex-direction:column; gap:14px; background:var(--blue-card); border:1px solid var(--grid-line);
+    border-radius:var(--radius); padding:24px; text-decoration:none; color:var(--ink);
+    transition:border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+  }
+  .tool-card.live:hover{ border-color:var(--linework); transform:translateY(-3px); background:var(--blue-card-2); }
+  .tool-card.soon{ opacity:0.5; cursor:default; }
+  .tool-icon{
+    width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    background:rgba(201,162,39,0.1); border:1px solid var(--linework-soft);
+  }
+  .tool-icon svg{ width:22px; height:22px; stroke:var(--linework); fill:none; stroke-width:1.6; }
+  .tool-title{ font-family:'Fraunces',serif; font-weight:600; font-size:16.5px; display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .tool-desc{ color:var(--text-muted); font-size:13px; line-height:1.6; flex:1;}
+  .tool-tag{
+    font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; padding:4px 9px;
+    border-radius:20px; flex:0 0 auto;
+  }
+  .tag-live{ color:var(--accent); border:1px solid var(--accent); }
+  .tag-soon{ color:var(--text-muted); border:1px solid var(--grid-line); }
+  .tool-arrow{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--linework); opacity:0; transition:opacity 0.15s ease; }
+  .tool-card.live:hover .tool-arrow{ opacity:1; }
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:32px; margin-top:44px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin:28px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:52px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox · 15 tools</div>
+  <h1><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg>Image Tools & Editing</h1>
+  <p class="intro">Compress, resize, crop, and convert images, all free, all in your browser, with no sign-up.</p>
+
+  <div class="filter-row">
+    <button class="filter-chip" data-filter="all">All tools</button>
+    <button class="filter-chip active" data-filter="live">Available now</button>
+    <button class="filter-chip" data-filter="soon">Coming soon</button>
+  </div>
+
+  <div class="tool-grid" id="toolGrid">
+
+    <a href="/image-compressor/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-4 4-2-2-5 5"/><path d="M17 3l-3 3M14 3h3v3" stroke-width="1.4" opacity="0.7"/></svg></div>
+      <div class="tool-title">Image Compressor <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Shrink JPG and PNG file sizes while keeping the image looking sharp.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-resizer/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 15v5h-5M4 4l7 7M20 20l-7-7"/></svg></div>
+      <div class="tool-title">Image Resizer <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Resize any image to exact dimensions or a percentage, aspect ratio locked.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-cropper/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M6 2v16a2 2 0 0 0 2 2h14"/><path d="M2 6h16a2 2 0 0 1 2 2v14"/></svg></div>
+      <div class="tool-title">Image Cropper <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Drag to select the exact area of a photo you want to keep.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-format-converter/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 9l3 3-3 3M15 9l-3 3 3 3" stroke-width="1.5"/></svg></div>
+      <div class="tool-title">Image Format Converter <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Convert between JPG, PNG, and WEBP in a couple of clicks.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <div class="tool-card soon" data-status="soon">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><path d="M4 4l16 16" stroke-width="1.3" opacity="0.6"/></svg></div>
+      <div class="tool-title">Background Remover <span class="tool-tag tag-soon">Soon</span></div>
+      <div class="tool-desc">Remove the background from a photo automatically, powered by AI.</div>
+    </div>
+
+    <a href="/favicon-generator/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.3" fill="var(--linework)" stroke="none"/><path d="M15 15h.01" stroke-width="2.4"/></svg></div>
+      <div class="tool-title">Favicon Generator <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Turn an image into a full set of favicon sizes for your website.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-color-picker/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a6 6 0 0 0 0 18 6 6 0 0 1 0-12 6 6 0 0 0 0-6z" stroke-width="1.3"/></svg></div>
+      <div class="tool-title">Color Picker from Image <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Click any pixel in a photo to get its exact hex and RGB color.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <div class="tool-card soon" data-status="soon">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-4 4-2-2-5 5"/><text x="16" y="8" font-size="6" fill="var(--linework)" stroke="none" font-family="monospace">H</text></svg></div>
+      <div class="tool-title">HEIC to JPG Converter <span class="tool-tag tag-soon">Soon</span></div>
+      <div class="tool-desc">Convert iPhone HEIC photos into universally-supported JPG files.</div>
+    </div>
+
+    <a href="/svg-to-png/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><polygon points="12,3 21,20 3,20"/><rect x="3" y="4" width="18" height="16" rx="2" stroke-width="1.2" opacity="0.5"/></svg></div>
+      <div class="tool-title">SVG to PNG Converter <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Turn a vector SVG file into a standard PNG image at any resolution.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/base64-image-converter/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-4 4-2-2-5 5"/><path d="M4 2h2M4 2v2" stroke-width="2"/></svg></div>
+      <div class="tool-title">Base64 ↔ Image <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Convert an image to Base64 text, or turn Base64 back into an image.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-blur/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2" opacity="0.3"/><path d="M21 16l-5-5-4 4-2-2-5 5" opacity="0.3"/></svg></div>
+      <div class="tool-title">Blur Image Online <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Apply an adjustable blur across a whole photo or a chosen area.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-flip-rotate/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 12h18M12 4v16" stroke-width="1.2" opacity="0.5"/><path d="M21 12a9 9 0 1 1-3-6.7" stroke-width="1.4"/></svg></div>
+      <div class="tool-title">Flip / Rotate Image <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Flip an image horizontally or vertically, or rotate it any angle.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/image-color-inverter/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18" fill="var(--linework)" stroke="none" opacity="0.3"/></svg></div>
+      <div class="tool-title">Image Color Inverter <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Invert every color in a photo for a quick negative-style effect.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/exif-viewer/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 12h5M8 15h6" stroke-width="1.4"/></svg></div>
+      <div class="tool-title">EXIF Viewer & Remover <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">See a photo's hidden camera and location data, or strip it out.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+    <a href="/passport-photo-resizer/" class="tool-card live" data-status="live">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="1.5"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c0-2 2-3 4-3s4 1 4 3"/></svg></div>
+      <div class="tool-title">Passport Photo Resizer <span class="tool-tag tag-live">Live</span></div>
+      <div class="tool-desc">Crop and resize a photo to standard passport and ID sizes.</div>
+      <div class="tool-arrow">Open tool →</div>
+    </a>
+
+  </div>
+
+  <div class="desc-block">
+    <h2>What are Docutoolbox's Image Tools?</h2>
+    <p>This is a growing collection of free, browser-based tools for everything people commonly need to do with a photo or graphic: shrinking a file for upload, resizing it to exact dimensions, cropping it, converting between formats, or pulling out its hidden metadata. Every tool listed here runs entirely on your own device using the Canvas API built into modern browsers.</p>
+    <p>There's no software to install, no account to create, and no watermark added to your output. Open the tool you need, do the task, and download the result.</p>
+
+    <h2>Why browser-based image tools?</h2>
+    <p>Most image websites work by uploading your photo to a remote server, processing it there, and sending a result back down, which means your image briefly sits on someone else's servers. Docutoolbox's tools are built differently: the resizing, cropping, and format conversion all happen directly inside your browser using JavaScript's Canvas API, so your photo never leaves your device. This also tends to be faster, since there's no upload or download wait over a network connection.</p>
+
+    <h2>What each tool does</h2>
+    <ul>
+      <li><strong>Image Compressor</strong> - shrink a JPG or PNG's file size while keeping it looking sharp</li>
+      <li><strong>Image Resizer</strong> - resize an image to exact dimensions or a percentage, with aspect ratio lock</li>
+      <li><strong>Image Cropper</strong> - drag to select and keep just part of a photo</li>
+      <li><strong>Image Format Converter</strong> - convert between JPG, PNG, and WEBP</li>
+      <li><strong>Background Remover</strong> - automatically remove a photo's background using AI</li>
+      <li><strong>Favicon Generator</strong> - generate a full set of favicon sizes from one image</li>
+      <li><strong>Color Picker from Image</strong> - click any pixel to get its exact hex and RGB value</li>
+      <li><strong>HEIC to JPG Converter</strong> - convert iPhone HEIC photos into standard JPG files</li>
+      <li><strong>SVG to PNG Converter</strong> - turn a vector SVG into a raster PNG image</li>
+      <li><strong>Base64 ↔ Image</strong> - convert an image to Base64 text, or back into an image</li>
+      <li><strong>Blur Image Online</strong> - apply an adjustable blur across a photo</li>
+      <li><strong>Flip / Rotate Image</strong> - flip horizontally or vertically, or rotate to any angle</li>
+      <li><strong>Image Color Inverter</strong> - invert every color for a quick negative effect</li>
+      <li><strong>EXIF Viewer & Remover</strong> - view or strip a photo's hidden camera and location metadata</li>
+      <li><strong>Passport Photo Resizer</strong> - crop and resize a photo to standard ID and passport sizes</li>
+    </ul>
+    <p>More tools, including HEIC conversion and AI background removal, are in active development and will appear here as they're finished.</p>
+
+    <h2>How to choose the right tool</h2>
+    <p>If your image's file is too large, reach for the <strong>Image Compressor</strong>. If you need different pixel dimensions, that's the <strong>Image Resizer</strong>, while trimming away part of a photo is the <strong>Image Cropper</strong>. Converting between file types, including from an iPhone's HEIC format, uses the <strong>Format Converter</strong> or <strong>HEIC to JPG</strong> tool. For visual effects, the <strong>Blur</strong>, <strong>Flip/Rotate</strong>, and <strong>Color Inverter</strong> tools cover the most common quick edits. And for anything technical, from reading a pixel's exact color to checking hidden EXIF metadata, the <strong>Color Picker</strong> and <strong>EXIF Viewer</strong> are purpose-built for those tasks.</p>
+
+    <h2>Is it really free?</h2>
+    <p>Yes, every tool on this page is free to use, with no page limits, no watermarked output, and no account required. Because processing happens on your own device rather than paid server infrastructure, there's no per-file cost to offset with a subscription.</p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Do I need to install anything?</h3>
+    <p>No, every tool runs directly in your web browser. There's nothing to download or install beyond the page itself.</p>
+    <h3>Is my photo uploaded anywhere?</h3>
+    <p>No. All processing happens locally in your browser using JavaScript. Your images are never transmitted to a server.</p>
+    <h3>Is there a file size limit?</h3>
+    <p>Each tool notes a practical size guideline, mainly because very large images take longer to process on your own device rather than a powerful remote server. There's no hard cap enforced beyond what your device's memory can comfortably handle.</p>
+    <h3>Which browsers are supported?</h3>
+    <p>Any modern browser, Chrome, Firefox, Edge, or Safari, on desktop or mobile will work, since these tools rely on standard JavaScript features built into all current browsers.</p>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a></footer>
+</div>
+
+<script>
+  const chips = document.querySelectorAll('.filter-chip');
+  const cards = document.querySelectorAll('.tool-card');
+  function applyFilter(filter){
+    cards.forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+    });
+  }
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      applyFilter(chip.dataset.filter);
+    });
+  });
+  applyFilter(document.querySelector('.filter-chip.active').dataset.filter);
+</script>
+
+</body>
+</html>
