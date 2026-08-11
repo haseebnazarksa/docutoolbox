@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Compressor Online - Reduce JPG/PNG File Size Free | Docutoolbox</title>
+<meta name="description" content="Free online image compressor. Reduce the file size of a JPG or PNG with a live quality slider and before/after preview. No upload, works in your browser.">
+<link rel="canonical" href="https://docutoolbox.com/image-compressor/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    grid-template-areas: "calc side" "desc side";
+    gap:36px;
+    align-items:start;
+  }
+  .calc-block{ grid-area:calc; }
+  .desc-block{ grid-area:desc; }
+  .sidebar{ grid-area:side; }
+  @media (max-width:860px){
+    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+
+  .dropzone{
+    border:2px dashed var(--grid-line); border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropzone:hover, .dropzone.dragover{ border-color:var(--linework); background:rgba(201,162,39,0.05); }
+  .dropzone .dz-icon{ font-size:30px; margin-bottom:10px; }
+  .dropzone .dz-title{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+  .dropzone .dz-sub{ color:var(--text-muted); font-size:13px; }
+  input#fileInput{ display:none; }
+
+  .controls{ display:none; margin-top:6px; }
+  .setting{ margin-bottom:20px; }
+  .setting label{ display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;}
+  .setting label .value{ color:var(--accent); }
+  input[type="range"]{ width:100%; accent-color:var(--accent); height:4px; cursor:pointer;}
+
+  .preview-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px;}
+  .preview-box{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:14px; text-align:center;}
+  .preview-box img{ max-width:100%; max-height:180px; border-radius:6px; margin-bottom:10px; }
+  .preview-label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px;}
+  .preview-size{ font-family:'Fraunces',serif; font-weight:700; font-size:17px; color:var(--ink);}
+  .preview-size.smaller{ color:var(--accent); }
+  .savings{ text-align:center; margin-top:16px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft);}
+  .savings span{ color:var(--accent); font-weight:600; }
+
+  .toolbar{ display:flex; gap:10px; margin-top:20px;}
+  .btn{ flex:1; background:transparent; border:1px solid var(--grid-line); color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; padding:12px 18px; border-radius:8px; cursor:pointer; transition:border-color 0.15s ease, color 0.15s ease;}
+  .btn:hover{ border-color:var(--linework); color:var(--linework);}
+  .btn.primary{ background:var(--accent); color:#0A2E45; border:none; font-weight:600;}
+  .btn.primary:hover{ background:var(--accent-soft); color:#0A2E45;}
+  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
+  .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);}
+  .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; }
+  .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
+      Docutoolbox
+    </a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Image compressor</h1>
+  <p class="intro">Shrink a JPG or PNG's file size with a live quality slider, and see the before/after side by side.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="dropzone" id="dropZone">
+          <div class="dz-icon">🖼️</div>
+          <div class="dz-title">Drop an image here, or click to browse</div>
+          <div class="dz-sub">JPG or PNG · Max 25MB</div>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+        </div>
+
+        <div class="controls" id="controls">
+          <div class="setting">
+            <label>Quality <span class="value" id="qualityValue">70%</span></label>
+            <input type="range" id="qualitySlider" min="10" max="100" value="70">
+          </div>
+          <div class="preview-grid">
+            <div class="preview-box">
+              <img id="originalPreview" src="" alt="Original image">
+              <div class="preview-label">Original</div>
+              <div class="preview-size" id="originalSize">-</div>
+            </div>
+            <div class="preview-box">
+              <img id="compressedPreview" src="" alt="Compressed image">
+              <div class="preview-label">Compressed</div>
+              <div class="preview-size smaller" id="compressedSize">-</div>
+            </div>
+          </div>
+          <div class="savings" id="savingsText"></div>
+          <div class="toolbar">
+            <button class="btn" id="resetBtn">Choose another image</button>
+            <button class="btn primary" id="downloadBtn">Download</button>
+          </div>
+        </div>
+        <div class="privacy-note"><span class="dot"></span> Your image is processed entirely in your browser - nothing is uploaded to a server.</div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Image Tools</h4>
+      <a href="/image-resizer/">Image Resizer</a>
+      <a href="/image-cropper/">Image Cropper</a>
+      <a href="/image-format-converter/">Image Format Converter</a>
+      <a href="/image-flip-rotate/">Flip / Rotate Image</a>
+      <a href="/image-color-inverter/">Image Color Inverter</a>
+      <a href="/image-blur/">Blur Image</a>
+      <a href="/image-color-picker/">Color Picker from Image</a>
+      <a href="/base64-image-converter/">Base64 ↔ Image</a>
+      <a href="/svg-to-png/">SVG to PNG Converter</a>
+      <a href="/exif-viewer/">EXIF Viewer & Remover</a>
+      <a href="/favicon-generator/">Favicon Generator</a>
+      <a href="/passport-photo-resizer/">Passport Photo Resizer</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Image Compressor?</h2>
+      <p>The Image Compressor reduces a JPG or PNG's file size by adjusting its compression quality, with a live before-and-after preview so you can find the sweet spot between file size and visual quality before downloading. It's built for anyone who needs a smaller file for a website, an email attachment, or a form upload with a size limit.</p>
+      <p>Everything happens locally in your browser using the Canvas API. Your image is never uploaded to a server, so it's fast and private, with no file size charged against a quota.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Drop your image onto the upload area, or click it to browse your device.</li>
+        <li>Drag the <strong>quality</strong> slider to adjust the compression level.</li>
+        <li>Watch the original and compressed previews update live, side by side, along with each one's exact file size.</li>
+        <li>Once you're happy with the balance of size and quality, click <strong>Download</strong>.</li>
+      </ol>
+
+      <h2>How the quality slider works</h2>
+      <p>Lowering the quality setting increases compression, shrinking the file size further but introducing more visible artifacts, especially in areas with fine detail or sharp edges. Raising the quality setting keeps more visual detail but results in a larger file. Because the preview updates live as you drag the slider, you can find the lowest quality setting that still looks acceptable for your use case, rather than guessing.</p>
+
+      <h2>JPG vs. PNG compression</h2>
+      <p>JPG compression is <strong>lossy</strong> and works especially well on photos, where small color variations are hard for the eye to notice even at fairly aggressive compression levels. PNG compression in this tool works similarly, re-encoding at your chosen quality level, though PNG is more commonly used for graphics, screenshots, and images that need sharp edges or transparency, where very aggressive compression is more likely to show visible artifacts.</p>
+
+      <h2>How it works technically</h2>
+      <p>The tool loads your image into an in-browser canvas, then uses the browser's built-in image encoder to re-export it at your chosen quality level. This is the same compression technology used by professional image editing software, running directly on your device instead of a remote server.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Shrinking a photo so it fits under a website's or form's upload size limit</li>
+        <li>Reducing image sizes to speed up how quickly a webpage loads</li>
+        <li>Making an email attachment small enough to send without hitting a size cap</li>
+        <li>Saving storage space for large batches of photos</li>
+        <li>Preparing images for a portfolio or gallery where fast loading matters</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How much smaller will my file get?</h3>
+      <p>It depends heavily on the original image and the quality level you choose, but many photos can shrink by 50 to 80 percent at a quality setting that still looks very close to the original.</p>
+      <h3>Will compression change the image's dimensions?</h3>
+      <p>No, this tool only changes the file's compression level, not its pixel dimensions. To also resize the image, use the <a href="/image-resizer/" style="color:var(--linework);">Image Resizer</a> tool.</p>
+      <h3>Does compressing lose quality permanently?</h3>
+      <p>Yes, JPG and aggressive PNG compression are lossy processes, meaning some image detail is discarded and can't be recovered. Keep your original file if you might need full quality again later.</p>
+      <h3>Can I compress a PNG with transparency?</h3>
+      <p>Yes, transparent areas are preserved through compression, since the transparency channel is kept intact during re-encoding.</p>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const controls = document.getElementById('controls');
+  const qualitySlider = document.getElementById('qualitySlider');
+  const qualityValue = document.getElementById('qualityValue');
+  const originalPreview = document.getElementById('originalPreview');
+  const compressedPreview = document.getElementById('compressedPreview');
+  const originalSize = document.getElementById('originalSize');
+  const compressedSize = document.getElementById('compressedSize');
+  const savingsText = document.getElementById('savingsText');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  let currentImage = null, originalFileSize = 0, originalFileType = 'image/jpeg', compressedBlob = null;
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault(); dropZone.classList.remove('dragover');
+    if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', (e) => { if(e.target.files.length) handleFile(e.target.files[0]); });
+
+  function formatBytes(bytes){
+    if(bytes < 1024) return bytes + ' B';
+    if(bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/(1024*1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFile(file){
+    if(!file.type.startsWith('image/')) return;
+    originalFileSize = file.size;
+    originalFileType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        currentImage = img;
+        originalPreview.src = e.target.result;
+        originalSize.textContent = formatBytes(originalFileSize);
+        controls.style.display = 'block';
+        dropZone.style.display = 'none';
+        compress();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function compress(){
+    if(!currentImage) return;
+    const canvas = document.createElement('canvas');
+    canvas.width = currentImage.naturalWidth; canvas.height = currentImage.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(currentImage, 0, 0);
+    const quality = parseInt(qualitySlider.value) / 100;
+    canvas.toBlob((blob) => {
+      compressedBlob = blob;
+      compressedPreview.src = URL.createObjectURL(blob);
+      compressedSize.textContent = formatBytes(blob.size);
+      const savedPercent = Math.max(0, Math.round((1 - blob.size / originalFileSize) * 100));
+      if(blob.size < originalFileSize){
+        savingsText.innerHTML = '<span>' + savedPercent + '% smaller</span> than the original file';
+      } else {
+        savingsText.innerHTML = 'This image is already efficiently compressed';
+      }
+    }, originalFileType, quality);
+  }
+
+  qualitySlider.addEventListener('input', () => { qualityValue.textContent = qualitySlider.value + '%'; compress(); });
+  downloadBtn.addEventListener('click', () => {
+    if(!compressedBlob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(compressedBlob);
+    a.download = 'compressed-image.' + (originalFileType === 'image/png' ? 'png' : 'jpg');
+    a.click();
+  });
+  resetBtn.addEventListener('click', () => {
+    currentImage = null; compressedBlob = null; fileInput.value = '';
+    controls.style.display = 'none'; dropZone.style.display = 'block';
+    originalPreview.src = ''; compressedPreview.src = '';
+  });
+</script>
+
+</body>
+</html>
