@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strong Password Generator - Free Secure Password Maker | Docutoolbox</title>
+<meta name="description" content="Free strong password generator. Create secure, random passwords with custom length and character options. Instant, private, no sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/password-generator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .password-display{ background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:20px; display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+  .password-text{ flex:1; font-family:'JetBrains Mono',monospace; font-size:19px; color:var(--accent); word-break:break-all; letter-spacing:0.02em;}
+  .icon-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'JetBrains Mono',monospace; font-size:11px; padding:8px 14px; border-radius:7px; cursor:pointer; flex:0 0 auto;}
+  .icon-btn:hover{ border-color:var(--linework); }
+
+  .strength-bar{ height:6px; border-radius:4px; background:var(--blue-card-2); overflow:hidden; margin-bottom:6px; }
+  .strength-fill{ height:100%; border-radius:4px; transition:width 0.2s ease, background 0.2s ease; }
+  .strength-label{ font-family:'JetBrains Mono',monospace; font-size:11px; text-align:right; margin-bottom:20px; }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field label span{ color:var(--accent); font-size:13px; }
+  input[type="range"]{ width:100%; accent-color:var(--accent); }
+
+  .options-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+  .opt{ display:flex; align-items:center; gap:8px; font-size:13px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:8px; padding:10px 12px; }
+  .opt input{ width:auto; accent-color:var(--accent); }
+
+  button.calc{ width:100%; padding:14px; border:none; border-radius:9px; background:var(--accent); color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;}
+  button.calc:hover{ background:var(--accent-soft); }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Strong password generator</h1>
+  <p class="intro">Generate a secure, random password with your choice of length and character types.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="password-display">
+          <span class="password-text" id="passwordOutput">--</span>
+          <button class="icon-btn" id="copyBtn">Copy</button>
+        </div>
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill" style="width:0%;"></div></div>
+        <div class="strength-label" id="strengthLabel">--</div>
+
+        <div class="field">
+          <label>Length <span id="lengthValue">16</span></label>
+          <input type="range" id="lengthSlider" min="6" max="64" value="16">
+        </div>
+
+        <div class="options-grid">
+          <div class="opt"><input type="checkbox" id="optUpper" checked><label for="optUpper">Uppercase (A-Z)</label></div>
+          <div class="opt"><input type="checkbox" id="optLower" checked><label for="optLower">Lowercase (a-z)</label></div>
+          <div class="opt"><input type="checkbox" id="optNumbers" checked><label for="optNumbers">Numbers (0-9)</label></div>
+          <div class="opt"><input type="checkbox" id="optSymbols" checked><label for="optSymbols">Symbols (!@#$)</label></div>
+        </div>
+
+        <button class="calc" id="generateBtn">Generate new password</button>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Dev Tools</h4>
+      <a href="/qr-code-generator/">QR Code Generator</a>
+      <a href="/barcode-generator/">Barcode Generator</a>
+      <a href="/json-formatter/">JSON Formatter & Validator</a>
+      <a href="/json-csv-converter/">JSON to CSV / CSV to JSON</a>
+      <a href="/css-minifier/">CSS Minifier / Unminifier</a>
+      <a href="/js-minifier/">JavaScript Minifier</a>
+      <a href="/hex-rgb-converter/">HEX / RGB Converter</a>
+      <a href="/user-agent-parser/">User Agent Parser</a>
+      <a href="/meta-tag-generator/">Meta Tag Generator</a>
+      <a href="/htaccess-generator/">Htaccess Redirect Generator</a>
+      <a href="/css-box-shadow-generator/">CSS Box Shadow Generator</a>
+      <a href="/css-gradient-generator/">CSS Gradient Generator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What makes a strong password?</h2>
+      <p>A strong password is long, random, and uses a mix of character types, uppercase, lowercase, numbers, and symbols, making it resistant to both guessing and brute-force attacks. This tool generates passwords using your browser's cryptographically secure random number generator, not a predictable pattern.</p>
+
+      <h2>How to use this generator</h2>
+      <ol>
+        <li>Set your desired <strong>length</strong> using the slider (longer is stronger).</li>
+        <li>Choose which <strong>character types</strong> to include.</li>
+        <li>Click <strong>Generate new password</strong>, or adjust any setting to auto-regenerate.</li>
+        <li>Click <strong>Copy</strong> to copy the password to your clipboard.</li>
+      </ol>
+
+      <h2>Password length guidance</h2>
+      <ul>
+        <li><strong>Under 8 characters</strong> - weak, crackable quickly with modern hardware</li>
+        <li><strong>12-16 characters</strong> - reasonable for most everyday accounts</li>
+        <li><strong>20+ characters</strong> - strongly recommended for sensitive accounts (banking, email, password managers)</li>
+      </ul>
+      <p>Using a unique password for every account, ideally stored in a password manager, matters as much as password strength itself.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is this password sent anywhere or logged?</h3>
+      <p>No, passwords are generated entirely in your browser using JavaScript's secure random number generator, nothing is transmitted to a server or stored.</p>
+      <h3>Why does the strength meter matter if I use all character types?</h3>
+      <p>Length has the biggest impact on password strength, a longer password with fewer character types is often still stronger than a short one with every type included.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const lengthSlider = document.getElementById('lengthSlider');
+  const lengthValue = document.getElementById('lengthValue');
+  lengthSlider.addEventListener('input', () => { lengthValue.textContent = lengthSlider.value; generate(); });
+
+  const charSets = {
+    upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    lower: 'abcdefghijklmnopqrstuvwxyz',
+    numbers: '0123456789',
+    symbols: '!@#$%^&*()_-+=[]{}|;:,.<>?'
+  };
+
+  function secureRandomInt(max){
+    const arr = new Uint32Array(1);
+    crypto.getRandomValues(arr);
+    return arr[0] % max;
+  }
+
+  function generate(){
+    let pool = '';
+    if(document.getElementById('optUpper').checked) pool += charSets.upper;
+    if(document.getElementById('optLower').checked) pool += charSets.lower;
+    if(document.getElementById('optNumbers').checked) pool += charSets.numbers;
+    if(document.getElementById('optSymbols').checked) pool += charSets.symbols;
+
+    if(!pool){
+      document.getElementById('passwordOutput').textContent = 'Select at least one option';
+      return;
+    }
+
+    const length = parseInt(lengthSlider.value, 10);
+    let password = '';
+    for(let i=0;i<length;i++){
+      password += pool[secureRandomInt(pool.length)];
+    }
+    document.getElementById('passwordOutput').textContent = password;
+    updateStrength(password, length);
+  }
+
+  function updateStrength(password, length){
+    let typesUsed = 0;
+    if(/[A-Z]/.test(password)) typesUsed++;
+    if(/[a-z]/.test(password)) typesUsed++;
+    if(/[0-9]/.test(password)) typesUsed++;
+    if(/[^A-Za-z0-9]/.test(password)) typesUsed++;
+
+    let score = (length >= 20 ? 3 : length >= 14 ? 2 : length >= 8 ? 1 : 0) + (typesUsed >= 3 ? 1 : 0);
+    const fill = document.getElementById('strengthFill');
+    const label = document.getElementById('strengthLabel');
+
+    const levels = [
+      {pct:25, color:'#E39A9A', text:'Weak'},
+      {pct:50, color:'#E3C25A', text:'Fair'},
+      {pct:75, color:'#6FBF8B', text:'Strong'},
+      {pct:100, color:'#4FA968', text:'Very Strong'}
+    ];
+    const lvl = levels[Math.min(score, 3)];
+    fill.style.width = lvl.pct + '%';
+    fill.style.background = lvl.color;
+    label.textContent = lvl.text;
+    label.style.color = lvl.color;
+  }
+
+  document.getElementById('generateBtn').addEventListener('click', generate);
+  document.querySelectorAll('.opt input').forEach(el => el.addEventListener('change', generate));
+  document.getElementById('copyBtn').addEventListener('click', () => navigator.clipboard.writeText(document.getElementById('passwordOutput').textContent));
+
+  generate();
+</script>
+
+</body>
+</html>
