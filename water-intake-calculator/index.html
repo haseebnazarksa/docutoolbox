@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Intake Calculator - How Much Water Should I Drink | Docutoolbox</title>
+<meta name="description" content="Free daily water intake calculator. Find how much water to drink based on your weight, activity level, and climate. Instant results, no sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/water-intake-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .tabs{ display:flex; gap:8px; margin-bottom:20px; }
+  .tab-btn{ flex:1; padding:11px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+
+  .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:12px 14px; border-radius:9px;
+  }
+  .field select{ appearance:none; cursor:pointer; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--linework); }
+
+  button.calc{ width:100%; padding:14px; border:none; border-radius:9px; background:var(--accent); color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;}
+  button.calc:hover{ background:var(--accent-soft); }
+
+  .result-wrap{ margin-top:22px; display:none; }
+  .result-wrap.show{ display:block; }
+  .water-visual{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:12px; padding:24px; text-align:center; }
+  .water-value{ font-family:'Fraunces',serif; font-weight:700; font-size:44px; color:#6FA9D8; line-height:1; }
+  .water-unit{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted); margin-top:6px; letter-spacing:0.06em; text-transform:uppercase;}
+  .glass-row{ display:flex; justify-content:center; gap:6px; margin-top:20px; flex-wrap:wrap; }
+  .glass{ width:22px; height:30px; border:2px solid #6FA9D8; border-radius:0 0 4px 4px; background:rgba(111,169,216,0.25); }
+  .glass-note{ font-size:12.5px; color:var(--text-muted); margin-top:10px; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+  .sidebar .soon{ color:var(--text-muted); cursor:default; }
+  .sidebar .soon:hover{ color:var(--text-muted); }
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+  .disclaimer{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.6; margin-top:8px;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Water intake calculator</h1>
+  <p class="intro">Find how much water to drink daily based on your weight, activity level, and climate.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="tabs" id="unitTabs">
+          <button class="tab-btn active" data-unit="metric">Metric (kg)</button>
+          <button class="tab-btn" data-unit="imperial">Imperial (lb)</button>
+        </div>
+
+        <div class="field-grid">
+          <div class="field" id="weightField"><label>Weight (kg)</label><input type="number" id="weight" value="70" step="0.1"></div>
+          <div class="field"><label>Activity level</label>
+            <select id="activitySelect">
+              <option value="0">Sedentary</option>
+              <option value="350" selected>Light exercise</option>
+              <option value="700">Moderate exercise</option>
+              <option value="1000">Intense exercise</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:16px;">
+          <label>Climate</label>
+          <select id="climateSelect">
+            <option value="0">Temperate</option>
+            <option value="350" selected>Warm</option>
+            <option value="700">Hot / humid</option>
+          </select>
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate water intake</button>
+
+        <div class="result-wrap" id="resultWrap">
+          <div class="water-visual">
+            <div class="water-value" id="waterValue">--</div>
+            <div class="water-unit" id="waterUnit">ml per day</div>
+            <div class="glass-row" id="glassRow"></div>
+            <div class="glass-note" id="glassNote"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Health Tools</h4>
+      <a href="/bmi-calculator/">BMI Calculator</a>
+      <a href="/bmr-tdee-calculator/">BMR / TDEE Calculator</a>
+      <a href="/calorie-deficit-calculator/">Calorie Deficit Calculator</a>
+      <a href="/water-intake-calculator/">Water Intake Calculator</a>
+      <a href="/body-fat-calculator/">Body Fat % Calculator</a>
+      <a href="/macro-calculator/">Macro Calculator</a>
+      <a href="/ideal-body-weight-calculator/">Ideal Body Weight Calculator</a>
+      <a href="/pregnancy-due-date-calculator/">Pregnancy Due Date Calculator</a>
+      <a href="/sleep-calculator/">Sleep Cycle Calculator</a>
+      <a href="/pace-calculator/">Pace & Running Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is this calculator?</h2>
+      <p>This tool estimates how much water you should drink per day based on your body weight, how much you exercise, and the climate you're in. It's built on a commonly used baseline of roughly 30-35ml of water per kilogram of body weight, adjusted upward for exercise and heat, both of which increase fluid loss through sweat.</p>
+
+      <h2>How to use this calculator</h2>
+      <ol>
+        <li>Choose <strong>Metric</strong> or <strong>Imperial</strong> units and enter your weight.</li>
+        <li>Select your typical <strong>activity level</strong> and the <strong>climate</strong> you live or exercise in.</li>
+        <li>Click <strong>Calculate</strong> to see your recommended daily water intake, shown in both a total amount and glasses.</li>
+      </ol>
+
+      <h2>Why water needs vary by person</h2>
+      <ul>
+        <li><strong>Body weight</strong> - larger bodies generally need more fluid to maintain normal function</li>
+        <li><strong>Exercise</strong> - sweating during physical activity increases fluid loss that needs replacing</li>
+        <li><strong>Climate</strong> - heat and humidity increase sweat loss even without exercise</li>
+        <li><strong>Diet</strong> - this estimate doesn't account for water from food, which typically provides roughly 20% of total fluid intake</li>
+      </ul>
+
+      <div class="disclaimer">This tool provides a general estimate for informational purposes and is not medical advice. Water needs vary by individual health conditions, pregnancy, and medications, consult a doctor for personalized guidance, especially if you have kidney, heart, or other conditions affecting fluid balance.</div>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Does the "8 glasses a day" rule apply to everyone?</h3>
+      <p>Not exactly, the 8-glasses guideline is a simplified rule of thumb, actual needs vary significantly based on body size, activity, and climate, which is why this calculator personalizes the estimate rather than giving one fixed number.</p>
+      <h3>Do other drinks and food count toward water intake?</h3>
+      <p>Yes, most beverages and water-rich foods (fruits, vegetables, soups) contribute to overall hydration, this calculator's number represents total fluid intake as a target, not strictly plain water.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const unitTabs = document.getElementById('unitTabs');
+  const weightField = document.getElementById('weightField');
+  let unit = 'metric';
+
+  unitTabs.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      unitTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      unit = btn.dataset.unit;
+      weightField.querySelector('label').textContent = unit === 'metric' ? 'Weight (kg)' : 'Weight (lb)';
+    });
+  });
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    let weightKg = parseFloat(document.getElementById('weight').value) || 0;
+    if(unit === 'imperial') weightKg = weightKg * 0.453592;
+
+    const activityMl = parseFloat(document.getElementById('activitySelect').value);
+    const climateMl = parseFloat(document.getElementById('climateSelect').value);
+
+    const baseMl = weightKg * 33;
+    const totalMl = baseMl + activityMl + climateMl;
+
+    document.getElementById('waterValue').textContent = unit === 'metric'
+      ? (totalMl/1000).toFixed(2)
+      : (totalMl/1000/3.785).toFixed(2);
+    document.getElementById('waterUnit').textContent = unit === 'metric' ? 'liters per day' : 'gallons per day';
+
+    const glasses = Math.round(totalMl / 250);
+    const glassRow = document.getElementById('glassRow');
+    glassRow.innerHTML = '';
+    for(let i=0;i<Math.min(glasses,16);i++){
+      const g = document.createElement('div');
+      g.className = 'glass';
+      glassRow.appendChild(g);
+    }
+    document.getElementById('glassNote').textContent = `≈ ${glasses} glasses (250ml each)`;
+
+    document.getElementById('resultWrap').classList.add('show');
+  });
+
+  document.getElementById('calcBtn').click();
+</script>
+
+</body>
+</html>
