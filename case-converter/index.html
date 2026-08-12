@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Converter Online Free - UPPER, lower, Title Case | Docutoolbox</title>
+<meta name="description" content="Free text case converter. Convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase, and more instantly in your browser.">
+<link rel="canonical" href="https://docutoolbox.com/case-converter/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  textarea{
+    width:100%; min-height:200px; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'Inter',sans-serif; font-size:15px; line-height:1.6; padding:16px; border-radius:10px; resize:vertical;
+  }
+  textarea:focus{ outline:none; border-color:var(--linework); }
+
+  .case-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:16px; }
+  @media (max-width:600px){ .case-grid{ grid-template-columns:repeat(2,1fr); } }
+  .case-btn{ background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink); font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px; padding:12px 6px; border-radius:8px; cursor:pointer; transition:all 0.15s ease; text-align:center;}
+  .case-btn:hover{ border-color:var(--linework); color:var(--linework); }
+
+  .toolbar{ display:flex; gap:8px; margin-top:16px; }
+  .tb-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:7px; cursor:pointer; }
+  .tb-btn:hover{ border-color:var(--linework); }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+  .desc-block code{ background:var(--blue-deep); padding:2px 6px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--linework);}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Case converter</h1>
+  <p class="intro">Convert text to UPPERCASE, lowercase, Title Case, Sentence case, and programming cases like camelCase and snake_case.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <textarea id="textInput" placeholder="Type or paste your text here...">the Quick Brown Fox Jumps Over the Lazy Dog</textarea>
+
+        <div class="case-grid">
+          <button class="case-btn" data-case="upper">UPPERCASE</button>
+          <button class="case-btn" data-case="lower">lowercase</button>
+          <button class="case-btn" data-case="title">Title Case</button>
+          <button class="case-btn" data-case="sentence">Sentence case</button>
+          <button class="case-btn" data-case="camel">camelCase</button>
+          <button class="case-btn" data-case="pascal">PascalCase</button>
+          <button class="case-btn" data-case="snake">snake_case</button>
+          <button class="case-btn" data-case="kebab">kebab-case</button>
+        </div>
+
+        <div class="toolbar">
+          <button class="tb-btn" id="copyBtn">Copy result</button>
+          <button class="tb-btn" id="clearBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Text Tools</h4>
+      <a href="/word-character-counter/">Word & Character Counter</a>
+      <a href="/remove-duplicate-lines/">Remove Duplicate Lines</a>
+      <a href="/lorem-ipsum-generator/">Lorem Ipsum Generator</a>
+      <a href="/text-diff-checker/">Text Differ / Compare</a>
+      <a href="/url-encoder-decoder/">URL Encoder / Decoder</a>
+      <a href="/base64-text-encoder/">Base64 Encoder / Decoder</a>
+      <a href="/fancy-font-generator/">Fancy Font Generator</a>
+      <a href="/remove-extra-spaces/">Space / Line Remover</a>
+      <a href="/line-break-remover/">Line Break Remover</a>
+      <a href="/alphabetical-sorter/">Alphabetical Order Sorter</a>
+      <a href="/markdown-to-html/">Markdown to HTML</a>
+      <a href="/html-to-text/">HTML to Text Stripper</a>
+      <a href="/slug-generator/">Slug Generator</a>
+      <a href="/word-frequency-counter/">Word Frequency Counter</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is the Case Converter?</h2>
+      <p>This tool converts text between eight common capitalization styles instantly, from everyday formats like UPPERCASE and Title Case to programming conventions like camelCase and snake_case.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Type or paste your text into the box.</li>
+        <li>Click any case button, the text updates instantly in that format.</li>
+        <li>Click <strong>Copy result</strong> to copy the converted text.</li>
+      </ol>
+
+      <h2>The eight case styles</h2>
+      <ul>
+        <li><strong>UPPERCASE</strong> - all letters capitalized</li>
+        <li><strong>lowercase</strong> - all letters lowercase</li>
+        <li><strong>Title Case</strong> - first letter of each word capitalized</li>
+        <li><strong>Sentence case</strong> - only the first letter of each sentence capitalized</li>
+        <li><strong>camelCase</strong> - <code>likeThis</code>, common in JavaScript variable names</li>
+        <li><strong>PascalCase</strong> - <code>LikeThis</code>, common for class names in code</li>
+        <li><strong>snake_case</strong> - <code>like_this</code>, common in Python and database fields</li>
+        <li><strong>kebab-case</strong> - <code>like-this</code>, common in URLs and CSS classes</li>
+      </ul>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Fixing text that was accidentally typed with Caps Lock on</li>
+        <li>Formatting headlines and titles correctly</li>
+        <li>Converting a phrase into a valid variable or file name for code</li>
+        <li>Preparing consistent capitalization for a spreadsheet or dataset</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Does Title Case capitalize small words like "the" and "of"?</h3>
+      <p>This converter capitalizes every word for simplicity and consistency. Some style guides lowercase minor words like "a," "the," and "of" in titles, check your specific style guide if that distinction matters for your use case.</p>
+      <h3>Is my text saved anywhere?</h3>
+      <p>No, all conversion happens locally in your browser. Nothing is sent to a server.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const textInput = document.getElementById('textInput');
+
+  function toTitle(s){ return s.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase()); }
+  function toSentence(s){ return s.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase()); }
+  function words(s){ return s.trim().split(/[\s_-]+/).filter(Boolean); }
+  function toCamel(s){ const w = words(s).map(x=>x.toLowerCase()); return w.map((x,i)=> i===0?x:x.charAt(0).toUpperCase()+x.slice(1)).join(''); }
+  function toPascal(s){ return words(s).map(x=>x.charAt(0).toUpperCase()+x.slice(1).toLowerCase()).join(''); }
+  function toSnake(s){ return words(s).map(x=>x.toLowerCase()).join('_'); }
+  function toKebab(s){ return words(s).map(x=>x.toLowerCase()).join('-'); }
+
+  document.querySelectorAll('.case-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = textInput.value;
+      let result = text;
+      switch(btn.dataset.case){
+        case 'upper': result = text.toUpperCase(); break;
+        case 'lower': result = text.toLowerCase(); break;
+        case 'title': result = toTitle(text); break;
+        case 'sentence': result = toSentence(text); break;
+        case 'camel': result = toCamel(text); break;
+        case 'pascal': result = toPascal(text); break;
+        case 'snake': result = toSnake(text); break;
+        case 'kebab': result = toKebab(text); break;
+      }
+      textInput.value = result;
+    });
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => navigator.clipboard.writeText(textInput.value));
+  document.getElementById('clearBtn').addEventListener('click', () => { textInput.value = ''; });
+</script>
+
+</body>
+</html>
