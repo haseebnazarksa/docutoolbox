@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Running Pace Calculator - Free Race Pace & Time Calculator | Docutoolbox</title>
+<meta name="description" content="Free running pace calculator. Find your pace, finish time, or race speed for 5K, 10K, half marathon, and marathon distances. No sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/pace-calculator/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .tabs{ display:flex; gap:8px; margin-bottom:20px; }
+  .tab-btn{ flex:1; padding:11px 8px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px; cursor:pointer; transition:all 0.15s ease;}
+  .tab-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent);}
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:12px 14px; border-radius:9px;
+  }
+  .field select{ appearance:none; cursor:pointer; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--linework); }
+  .time-inline{ display:flex; gap:8px; align-items:center; }
+  .time-inline input{ text-align:center; }
+  .time-inline span{ color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+  .dist-row{ display:flex; gap:8px; }
+  .dist-row select{ flex:1; }
+  .dist-row input{ flex:1; }
+
+  button.calc{ width:100%; padding:14px; border:none; border-radius:9px; background:var(--accent); color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;}
+  button.calc:hover{ background:var(--accent-soft); }
+
+  .result-wrap{ margin-top:22px; display:none; }
+  .result-wrap.show{ display:block; }
+  .result-box{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:12px; padding:22px; text-align:center; margin-bottom:16px; }
+  .result-val{ font-family:'Fraunces',serif; font-weight:700; font-size:36px; color:var(--accent); }
+  .result-label{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted); margin-top:8px; }
+
+  .race-table{ width:100%; border-collapse:collapse; }
+  .race-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--linework); padding:8px 6px; border-bottom:1px solid var(--grid-line); }
+  .race-table td{ padding:9px 6px; border-bottom:1px solid var(--grid-line); font-size:13.5px; }
+  .race-table td:last-child{ text-align:right; font-family:'Fraunces',serif; font-weight:700; color:var(--ink); }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+  .sidebar .soon{ color:var(--text-muted); cursor:default; }
+  .sidebar .soon:hover{ color:var(--text-muted); }
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Running pace calculator</h1>
+  <p class="intro">Calculate your pace, finish time, or race speed for any distance, with predicted times for common race distances.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="tabs" id="solveTabs">
+          <button class="tab-btn active" data-solve="pace">Find pace</button>
+          <button class="tab-btn" data-solve="time">Find finish time</button>
+          <button class="tab-btn" data-solve="distance">Find distance</button>
+        </div>
+
+        <div class="field" id="distField">
+          <label>Distance</label>
+          <div class="dist-row">
+            <input type="number" id="distanceInput" value="5" step="0.01">
+            <select id="distanceUnit">
+              <option value="km" selected>km</option>
+              <option value="mi">miles</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field" id="timeField">
+          <label>Time (hh:mm:ss)</label>
+          <div class="time-inline">
+            <input type="number" id="timeH" value="0" min="0" max="99" placeholder="hh">
+            <span>:</span>
+            <input type="number" id="timeM" value="25" min="0" max="59" placeholder="mm">
+            <span>:</span>
+            <input type="number" id="timeS" value="0" min="0" max="59" placeholder="ss">
+          </div>
+        </div>
+
+        <div class="field" id="paceField" style="display:none;">
+          <label>Pace (min:sec per km/mile)</label>
+          <div class="time-inline">
+            <input type="number" id="paceM" value="5" min="0" max="59" placeholder="min">
+            <span>:</span>
+            <input type="number" id="paceS" value="0" min="0" max="59" placeholder="sec">
+          </div>
+        </div>
+
+        <button class="calc" id="calcBtn">Calculate</button>
+
+        <div class="result-wrap" id="resultWrap">
+          <div class="result-box">
+            <div class="result-val" id="mainResult">--</div>
+            <div class="result-label" id="mainLabel">--</div>
+          </div>
+          <table class="race-table" id="raceTable">
+            <tr><th>Distance</th><th>Predicted finish time</th></tr>
+            <tr><td>5K</td><td id="race5k">--</td></tr>
+            <tr><td>10K</td><td id="race10k">--</td></tr>
+            <tr><td>Half Marathon (21.1K)</td><td id="raceHalf">--</td></tr>
+            <tr><td>Marathon (42.2K)</td><td id="raceFull">--</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Health Tools</h4>
+      <a href="/bmi-calculator/">BMI Calculator</a>
+      <a href="/bmr-tdee-calculator/">BMR / TDEE Calculator</a>
+      <a href="/calorie-deficit-calculator/">Calorie Deficit Calculator</a>
+      <a href="/water-intake-calculator/">Water Intake Calculator</a>
+      <a href="/body-fat-calculator/">Body Fat % Calculator</a>
+      <a href="/macro-calculator/">Macro Calculator</a>
+      <a href="/ideal-body-weight-calculator/">Ideal Body Weight Calculator</a>
+      <a href="/pregnancy-due-date-calculator/">Pregnancy Due Date Calculator</a>
+      <a href="/sleep-calculator/">Sleep Cycle Calculator</a>
+      <a href="/pace-calculator/">Pace & Running Calculator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is this calculator?</h2>
+      <p>This tool converts between running pace, time, and distance, useful for planning a race, checking training splits, or predicting your finish time for an upcoming event. Enter any two of the three values, distance, time, or pace, to solve for the third, and see predicted times for common race distances based on your current pace.</p>
+
+      <h2>How to use this calculator</h2>
+      <ol>
+        <li>Choose what you want to find: <strong>pace</strong>, <strong>finish time</strong>, or <strong>distance</strong>.</li>
+        <li>Fill in the two known values.</li>
+        <li>Click <strong>Calculate</strong> to see your result along with predicted finish times for 5K, 10K, half marathon, and marathon distances at that same pace.</li>
+      </ol>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Working out what pace you need to hit a target race finish time</li>
+        <li>Predicting your finish time for an upcoming race based on recent training paces</li>
+        <li>Converting between minutes-per-km and minutes-per-mile pace</li>
+        <li>Planning even, negative, or interval splits for a race strategy</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How accurate are the race distance predictions?</h3>
+      <p>They assume you maintain the exact same pace across the full distance, which becomes less realistic for longer races, most runners naturally slow slightly over a marathon compared to a 5K pace, so treat longer-distance predictions as an optimistic estimate rather than a guarantee.</p>
+      <h3>What's a good pace for a beginner?</h3>
+      <p>This varies enormously by individual fitness, age, and experience, rather than a universal number, focus on a pace where you can hold a conversation comfortably (often called "easy pace") for most training runs, and gradually build speed from there.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const solveTabs = document.getElementById('solveTabs');
+  const distField = document.getElementById('distField');
+  const timeField = document.getElementById('timeField');
+  const paceField = document.getElementById('paceField');
+  let solve = 'pace';
+
+  solveTabs.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      solveTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      solve = btn.dataset.solve;
+      distField.style.display = solve === 'distance' ? 'none' : 'block';
+      timeField.style.display = solve === 'time' ? 'none' : 'block';
+      paceField.style.display = solve === 'pace' ? 'none' : 'block';
+    });
+  });
+
+  function fmtTime(totalSeconds){
+    totalSeconds = Math.round(totalSeconds);
+    const h = Math.floor(totalSeconds/3600);
+    const m = Math.floor((totalSeconds%3600)/60);
+    const s = totalSeconds%60;
+    return h > 0
+      ? `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`
+      : `${m}:${String(s).padStart(2,'0')}`;
+  }
+  function fmtPace(secPerUnit){
+    const m = Math.floor(secPerUnit/60);
+    const s = Math.round(secPerUnit%60);
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const distUnit = document.getElementById('distanceUnit').value;
+    let paceSecPerUnit;
+
+    if(solve === 'pace'){
+      const dist = parseFloat(document.getElementById('distanceInput').value) || 0;
+      const totalSec = (parseInt(document.getElementById('timeH').value)||0)*3600 + (parseInt(document.getElementById('timeM').value)||0)*60 + (parseInt(document.getElementById('timeS').value)||0);
+      paceSecPerUnit = totalSec / dist;
+      document.getElementById('mainResult').textContent = fmtPace(paceSecPerUnit) + ' / ' + distUnit;
+      document.getElementById('mainLabel').textContent = 'Your pace';
+    } else if(solve === 'time'){
+      const dist = parseFloat(document.getElementById('distanceInput').value) || 0;
+      paceSecPerUnit = (parseInt(document.getElementById('paceM').value)||0)*60 + (parseInt(document.getElementById('paceS').value)||0);
+      const totalSec = paceSecPerUnit * dist;
+      document.getElementById('mainResult').textContent = fmtTime(totalSec);
+      document.getElementById('mainLabel').textContent = 'Estimated finish time';
+    } else {
+      const totalSec = (parseInt(document.getElementById('timeH').value)||0)*3600 + (parseInt(document.getElementById('timeM').value)||0)*60 + (parseInt(document.getElementById('timeS').value)||0);
+      paceSecPerUnit = (parseInt(document.getElementById('paceM').value)||0)*60 + (parseInt(document.getElementById('paceS').value)||0);
+      const dist = totalSec / paceSecPerUnit;
+      document.getElementById('mainResult').textContent = dist.toFixed(2) + ' ' + distUnit;
+      document.getElementById('mainLabel').textContent = 'Distance covered';
+    }
+
+    if(paceSecPerUnit && isFinite(paceSecPerUnit) && paceSecPerUnit > 0){
+      const km5 = distUnit === 'km' ? 5 : 5/1.60934;
+      const km10 = distUnit === 'km' ? 10 : 10/1.60934;
+      const kmHalf = distUnit === 'km' ? 21.0975 : 21.0975/1.60934;
+      const kmFull = distUnit === 'km' ? 42.195 : 42.195/1.60934;
+
+      document.getElementById('race5k').textContent = fmtTime(paceSecPerUnit * km5);
+      document.getElementById('race10k').textContent = fmtTime(paceSecPerUnit * km10);
+      document.getElementById('raceHalf').textContent = fmtTime(paceSecPerUnit * kmHalf);
+      document.getElementById('raceFull').textContent = fmtTime(paceSecPerUnit * kmFull);
+    }
+
+    document.getElementById('resultWrap').classList.add('show');
+  });
+
+  document.getElementById('calcBtn').click();
+</script>
+
+</body>
+</html>
