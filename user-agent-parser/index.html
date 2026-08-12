@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Agent Parser - Free Online UA String Analyzer | Docutoolbox</title>
+<meta name="description" content="Free user agent parser. Analyze any user agent string to identify browser, operating system, and device type instantly. No sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/user-agent-parser/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  textarea{
+    width:100%; min-height:90px; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.6; padding:14px; border-radius:10px; resize:vertical; margin-bottom:16px;
+  }
+  textarea:focus{ outline:none; border-color:var(--linework); }
+
+  button.calc{ width:100%; padding:14px; border:none; border-radius:9px; background:var(--accent); color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;}
+  button.calc:hover{ background:var(--accent-soft); }
+  .toolbar{ display:flex; gap:8px; margin-top:12px; }
+  .tb-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:7px; cursor:pointer; }
+  .tb-btn:hover{ border-color:var(--linework); }
+
+  .result-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:20px; }
+  @media (max-width:520px){ .result-grid{ grid-template-columns:1fr; } }
+  .result-box{ background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:16px; }
+  .result-box .r-label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;}
+  .result-box .r-value{ font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--accent);}
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>User agent parser</h1>
+  <p class="intro">Analyze a user agent string to identify the browser, operating system, and device type.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <textarea id="uaInput" spellcheck="false"></textarea>
+
+        <button class="calc" id="parseBtn">Parse user agent</button>
+        <div class="toolbar">
+          <button class="tb-btn" id="myUaBtn">Use my current browser's UA</button>
+        </div>
+
+        <div class="result-grid" id="results"></div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Other Dev Tools</h4>
+      <a href="/qr-code-generator/">QR Code Generator</a>
+      <a href="/barcode-generator/">Barcode Generator</a>
+      <a href="/password-generator/">Password Generator</a>
+      <a href="/json-formatter/">JSON Formatter & Validator</a>
+      <a href="/json-csv-converter/">JSON to CSV / CSV to JSON</a>
+      <a href="/css-minifier/">CSS Minifier / Unminifier</a>
+      <a href="/js-minifier/">JavaScript Minifier</a>
+      <a href="/hex-rgb-converter/">HEX / RGB Converter</a>
+      <a href="/meta-tag-generator/">Meta Tag Generator</a>
+      <a href="/htaccess-generator/">Htaccess Redirect Generator</a>
+      <a href="/css-box-shadow-generator/">CSS Box Shadow Generator</a>
+      <a href="/css-gradient-generator/">CSS Gradient Generator</a>
+    </aside>
+    <div class="desc-block">
+      <h2>What is a user agent string?</h2>
+      <p>A user agent string is a piece of text that every web browser sends with each request, identifying the browser, its version, the operating system, and device type. Websites and servers use this information for compatibility checks, analytics, and content adjustments. This tool parses any user agent string into readable, labeled information.</p>
+
+      <h2>How to use this tool</h2>
+      <ol>
+        <li>Paste a user agent string into the box, or click <strong>Use my current browser's UA</strong> to load your own.</li>
+        <li>Click <strong>Parse user agent</strong>.</li>
+        <li>Review the identified browser, OS, and device type.</li>
+      </ol>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Debugging a browser-specific bug by identifying exactly which browser and version a user reported it from</li>
+        <li>Checking what a server log's user agent string indicates about a visitor</li>
+        <li>Verifying how your own site's analytics or bot detection identifies a given browser</li>
+        <li>Understanding an unfamiliar user agent string found in logs or documentation</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Why does my browser's actual user agent look different from what I expect?</h3>
+      <p>Many modern browsers include legacy compatibility tokens (like "Mozilla/5.0") for historical reasons, and some browsers deliberately obscure or freeze parts of their user agent string for privacy, this is expected behavior, not an error.</p>
+      <h3>Is user agent parsing 100% reliable?</h3>
+      <p>Not perfectly, user agent strings can be spoofed or modified by the user or browser extensions, and detection relies on pattern matching against known formats, which may not catch every edge case or newer browser version.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  function parseUA(ua){
+    let browser = 'Unknown', browserVersion = '';
+    let os = 'Unknown';
+    let device = 'Desktop';
+
+    if(/Edg\//.test(ua)){ browser='Microsoft Edge'; browserVersion = (ua.match(/Edg\/([\d.]+)/)||[])[1] || ''; }
+    else if(/OPR\//.test(ua)){ browser='Opera'; browserVersion = (ua.match(/OPR\/([\d.]+)/)||[])[1] || ''; }
+    else if(/Chrome\//.test(ua) && !/Chromium/.test(ua)){ browser='Chrome'; browserVersion = (ua.match(/Chrome\/([\d.]+)/)||[])[1] || ''; }
+    else if(/Firefox\//.test(ua)){ browser='Firefox'; browserVersion = (ua.match(/Firefox\/([\d.]+)/)||[])[1] || ''; }
+    else if(/Safari\//.test(ua) && /Version\//.test(ua)){ browser='Safari'; browserVersion = (ua.match(/Version\/([\d.]+)/)||[])[1] || ''; }
+    else if(/MSIE|Trident/.test(ua)){ browser='Internet Explorer'; browserVersion = (ua.match(/(?:MSIE |rv:)([\d.]+)/)||[])[1] || ''; }
+
+    if(/Windows NT 10/.test(ua)) os = 'Windows 10/11';
+    else if(/Windows NT 6\.3/.test(ua)) os = 'Windows 8.1';
+    else if(/Windows NT 6\.1/.test(ua)) os = 'Windows 7';
+    else if(/Windows/.test(ua)) os = 'Windows';
+    else if(/Mac OS X/.test(ua)) os = 'macOS';
+    else if(/Android/.test(ua)) os = 'Android';
+    else if(/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
+    else if(/Linux/.test(ua)) os = 'Linux';
+
+    if(/Mobile|iPhone|Android.*Mobile/.test(ua)) device = 'Mobile';
+    else if(/iPad|Tablet/.test(ua)) device = 'Tablet';
+
+    return { browser, browserVersion, os, device };
+  }
+
+  function render(ua){
+    const { browser, browserVersion, os, device } = parseUA(ua);
+    const results = document.getElementById('results');
+    results.innerHTML = `
+      <div class="result-box"><div class="r-label">Browser</div><div class="r-value">${browser}</div></div>
+      <div class="result-box"><div class="r-label">Browser version</div><div class="r-value">${browserVersion || 'Unknown'}</div></div>
+      <div class="result-box"><div class="r-label">Operating system</div><div class="r-value">${os}</div></div>
+      <div class="result-box"><div class="r-label">Device type</div><div class="r-value">${device}</div></div>
+    `;
+  }
+
+  document.getElementById('parseBtn').addEventListener('click', () => render(document.getElementById('uaInput').value));
+  document.getElementById('myUaBtn').addEventListener('click', () => {
+    document.getElementById('uaInput').value = navigator.userAgent;
+    render(navigator.userAgent);
+  });
+
+  document.getElementById('uaInput').value = navigator.userAgent;
+  render(navigator.userAgent);
+</script>
+
+</body>
+</html>
