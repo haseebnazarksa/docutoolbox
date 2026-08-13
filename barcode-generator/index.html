@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Barcode Generator - Free Online Barcode Maker | Docutoolbox</title>
-<meta name="description" content="Free barcode generator. Create CODE128, EAN13, UPC, and other barcode formats instantly, and download as PNG. No sign-up, works in your browser.">
+<meta name="description" content="Free barcode generator. Create CODE128, EAN13, UPC, and other barcode formats instantly, and download as PNG, JPG, or SVG. No sign-up.">
 <link rel="canonical" href="https://docutoolbox.com/barcode-generator/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/JsBarcode/3.11.5/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/JsBarcode/3.11.5/JsBarcode.all.min.js" onerror="this.onerror=null; var s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js'; s.onload=function(){ if(window.renderBarcode) window.renderBarcode(); }; document.head.appendChild(s);"></script>
 <style>
   :root{
     --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
@@ -42,8 +42,12 @@
   h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
   .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
 
+  .steps-strip{ display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+  .step-pill{ display:flex; align-items:center; gap:8px; background:var(--blue-card); border:1px solid var(--grid-line); border-radius:20px; padding:8px 14px 8px 8px; font-size:12px; color:var(--text-muted); }
+  .step-pill .num{ background:var(--accent); color:#0A2E45; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:11px; flex-shrink:0; }
+
   .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
-  .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+  .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:8px; }
   .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
   .field input, .field select{
     width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
@@ -51,13 +55,17 @@
   }
   .field select{ appearance:none; cursor:pointer; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; }
   .field input:focus, .field select:focus{ outline:none; border-color:var(--linework); }
+  .limit-note{ font-size:11.5px; color:var(--text-muted); margin:8px 0 16px; }
+  .limit-note strong{ color:var(--linework-soft); }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:10px; display:none; font-family:'JetBrains Mono',monospace;}
 
   .barcode-preview-box{ background:#fff; border-radius:12px; padding:24px; display:flex; align-items:center; justify-content:center; min-height:160px; margin-top:6px; overflow-x:auto;}
 
-  .toolbar{ display:flex; gap:8px; margin-top:16px; }
-  .tb-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:7px; cursor:pointer; }
+  .toolbar{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+  .tb-btn{ background:none; border:1px solid var(--grid-line); color:var(--linework); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:9px 16px; border-radius:7px; cursor:pointer; }
   .tb-btn:hover{ border-color:var(--linework); }
+  .tb-btn.primary{ background:var(--accent); color:#0A2E45; border-color:var(--accent); }
+  .tb-btn.primary:hover{ background:var(--accent-soft); }
 
   .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
@@ -88,14 +96,20 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>Barcode generator</h1>
-  <p class="intro">Create a barcode in CODE128, EAN-13, UPC, and other common formats, and download it as a PNG image.</p>
+  <p class="intro">Create a barcode in CODE128, EAN-13, UPC-A, and other common formats, and download it as PNG, JPG, or SVG.</p>
+
+  <div class="steps-strip">
+    <div class="step-pill"><span class="num">1</span>Choose a format</div>
+    <div class="step-pill"><span class="num">2</span>Enter your data</div>
+    <div class="step-pill"><span class="num">3</span>Review the preview</div>
+    <div class="step-pill"><span class="num">4</span>Download</div>
+  </div>
 
   <div class="content-grid">
     <div class="calc-block">
       <div class="card">
         <div class="field-grid">
-          <div class="field"><label>Data</label><input type="text" id="dataInput" value="123456789012"></div>
-          <div class="field"><label>Format</label>
+          <div class="field"><label>Barcode type</label>
             <select id="formatSelect">
               <option value="CODE128" selected>CODE128</option>
               <option value="EAN13">EAN-13</option>
@@ -106,13 +120,18 @@
               <option value="pharmacode">Pharmacode</option>
             </select>
           </div>
+          <div class="field"><label>Data</label><input type="text" id="dataInput" value="123456789012"></div>
         </div>
+        <div class="limit-note" id="limitNote">CODE128 supports up to <strong>80 alphanumeric characters</strong>.</div>
+        <div class="limit-note" id="checkDigitNote" style="display:none; color:var(--linework-soft);"></div>
 
         <div class="barcode-preview-box"><svg id="barcodeSvg"></svg></div>
         <div id="errorMsg">Invalid data for this barcode format, check the required length and characters.</div>
 
         <div class="toolbar">
-          <button class="tb-btn" id="downloadBtn">Download PNG</button>
+          <button class="tb-btn primary" id="downloadPngBtn">Download PNG</button>
+          <button class="tb-btn" id="downloadJpgBtn">Download JPG</button>
+          <button class="tb-btn" id="downloadSvgBtn">Download SVG</button>
         </div>
       </div>
     </div>
@@ -132,15 +151,25 @@
       <a href="/css-gradient-generator/">CSS Gradient Generator</a>
     </aside>
     <div class="desc-block">
-      <h2>What is this tool?</h2>
-      <p>This tool generates scannable 1D barcodes in several common formats used for retail products, shipping, and inventory. Type your data, choose a format, and the barcode renders instantly, ready to download as a PNG.</p>
+      <h2>What is a barcode generator?</h2>
+      <p>A barcode generator is a digital tool that creates scannable barcode images from your data. It's used to manage inventory, track assets, streamline point-of-sale processes, and label products for shipping or retail.</p>
 
       <h2>How to use this generator</h2>
       <ol>
-        <li>Enter your data (numbers or text, depending on format).</li>
-        <li>Choose a <strong>format</strong> that matches your use case.</li>
-        <li>The barcode updates live, download it once it looks correct.</li>
+        <li><strong>Choose a barcode type</strong> from the dropdown, matching your use case.</li>
+        <li><strong>Enter your data</strong>, the text or numbers you want encoded.</li>
+        <li><strong>Review the live preview</strong> to make sure it looks correct.</li>
+        <li><strong>Download</strong> as PNG, JPG, or SVG for labels, packaging, or digital use.</li>
       </ol>
+
+      <h2>Character limits by format</h2>
+      <ul>
+        <li><strong>CODE128</strong> - up to 80 alphanumeric characters</li>
+        <li><strong>UPC-A</strong> - enter 11 digits, the 12th (check digit) is added automatically</li>
+        <li><strong>EAN-13</strong> - enter 12 digits, the 13th (check digit) is added automatically</li>
+        <li><strong>CODE39</strong> - up to 50 characters, uppercase letters, numbers, and select symbols</li>
+        <li><strong>ITF-14</strong> - enter 13 digits, the 14th (check digit) is added automatically</li>
+      </ul>
 
       <h2>Choosing a format</h2>
       <ul>
@@ -148,14 +177,17 @@
         <li><strong>EAN-13</strong> - standard 13-digit retail product barcode used internationally</li>
         <li><strong>UPC-A</strong> - standard 12-digit retail barcode used mainly in the US and Canada</li>
         <li><strong>CODE39</strong> - alphanumeric, common in inventory and ID badges</li>
-        <li><strong>ITF-14</strong> - used for shipping cartons and packaging</li>
       </ul>
 
       <h2>Frequently asked questions</h2>
+      <h3>Can I use barcodes generated here on Amazon or other marketplaces?</h3>
+      <p>Amazon and most major marketplaces require GS1-registered GTINs. Freely generated barcodes without a GS1 prefix may be rejected for retail distribution, for Amazon, Walmart, or similar platforms, purchase a registered GS1 barcode through GS1's official website.</p>
       <h3>Why does my barcode show an error?</h3>
-      <p>Formats like EAN-13 and UPC-A require an exact number of digits (13 and 12 respectively), and only accept numeric input, check that your data matches the selected format's requirements.</p>
-      <h3>Will this barcode work at retail checkout scanners?</h3>
-      <p>Standard formats like EAN-13 and UPC-A are technically scannable, but real retail use requires officially registered barcode numbers (through GS1) to avoid duplicating another product's code.</p>
+      <p>Formats like EAN-13 and UPC-A only accept numeric input and a specific number of data digits, check that your entry matches the selected format's requirements listed above. The check digit is calculated for you automatically, so you don't need to work it out by hand.</p>
+      <h3>Do I need to calculate the check digit myself?</h3>
+      <p>No, for EAN-13, UPC-A, and ITF-14, this tool automatically calculates the correct check digit from your data digits using the standard mod-10 algorithm and appends it for you, shown live below the input field.</p>
+      <h3>What's the difference between a 1D barcode and a QR code?</h3>
+      <p>1D barcodes (like CODE128, EAN-13, UPC-A) encode data in a single row of parallel lines and are read by laser scanners. QR codes are 2D barcodes that store data in a grid pattern and hold far more information, use our separate <a href="/qr-code-generator/" style="color:var(--linework);">QR Code Generator</a> for those.</p>
     </div>
   </div>
   <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
@@ -165,10 +197,62 @@
   const dataInput = document.getElementById('dataInput');
   const formatSelect = document.getElementById('formatSelect');
   const errorMsg = document.getElementById('errorMsg');
+  const limitNote = document.getElementById('limitNote');
+
+  const limitNotes = {
+    CODE128: 'CODE128 supports up to <strong>80 alphanumeric characters</strong>.',
+    EAN13: 'Enter <strong>12 digits</strong>, the check digit (13th) is calculated and added automatically.',
+    UPC: 'Enter <strong>11 digits</strong>, the check digit (12th) is calculated and added automatically.',
+    CODE39: 'CODE39 supports up to <strong>50 characters</strong>, uppercase letters, numbers, and select symbols.',
+    ITF14: 'Enter <strong>13 digits</strong>, the check digit (14th) is calculated and added automatically.',
+    MSI: 'MSI supports numeric data of variable length.',
+    pharmacode: 'Pharmacode encodes a single number between <strong>3 and 131070</strong>.'
+  };
+
+  // Standard mod-10 check digit algorithm used by EAN-13, UPC-A, and ITF-14.
+  // Weights alternate 3,1,3,1... starting from the rightmost data digit.
+  function calcCheckDigit(dataDigits){
+    let sum = 0;
+    const len = dataDigits.length;
+    for(let i=0;i<len;i++){
+      const digit = parseInt(dataDigits[len-1-i], 10);
+      const weight = (i % 2 === 0) ? 3 : 1;
+      sum += digit * weight;
+    }
+    return (10 - (sum % 10)) % 10;
+  }
+
+  const checkDigitFormats = { EAN13: 12, UPC: 11, ITF14: 13 };
+
+  function getBarcodeValue(){
+    const format = formatSelect.value;
+    const raw = dataInput.value.trim();
+    const checkDigitNote = document.getElementById('checkDigitNote');
+
+    if(checkDigitFormats[format] !== undefined && /^\d+$/.test(raw)){
+      const requiredDataLen = checkDigitFormats[format];
+      let dataDigits = raw;
+      // If user already typed the full length (including their own check digit), use only the data portion.
+      if(raw.length === requiredDataLen + 1) dataDigits = raw.slice(0, requiredDataLen);
+      if(dataDigits.length === requiredDataLen){
+        const check = calcCheckDigit(dataDigits);
+        checkDigitNote.style.display = 'block';
+        checkDigitNote.innerHTML = `Check digit calculated: <strong>${check}</strong> → full code <strong>${dataDigits}${check}</strong>`;
+        return dataDigits + check;
+      }
+    }
+    checkDigitNote.style.display = 'none';
+    return raw;
+  }
 
   function render(){
+    limitNote.innerHTML = limitNotes[formatSelect.value] || '';
     try{
-      JsBarcode('#barcodeSvg', dataInput.value, {
+      if(typeof JsBarcode === 'undefined'){
+        throw new Error('The barcode library failed to load. Check your internet connection and reload the page.');
+      }
+      const value = getBarcodeValue();
+      JsBarcode('#barcodeSvg', value, {
         format: formatSelect.value,
         lineColor: '#0E1620',
         width: 2,
@@ -178,6 +262,7 @@
       });
       errorMsg.style.display = 'none';
     }catch(e){
+      errorMsg.textContent = e.message || 'Invalid data for this barcode format, check the required length and characters.';
       errorMsg.style.display = 'block';
     }
   }
@@ -185,7 +270,7 @@
   dataInput.addEventListener('input', render);
   formatSelect.addEventListener('change', render);
 
-  document.getElementById('downloadBtn').addEventListener('click', () => {
+  function svgToCanvas(callback){
     const svg = document.getElementById('barcodeSvg');
     const svgData = new XMLSerializer().serializeToString(svg);
     const canvas = document.createElement('canvas');
@@ -200,14 +285,40 @@
       ctx.fillRect(0,0,canvas.width,canvas.height);
       ctx.drawImage(img, 0, 0);
       URL.revokeObjectURL(url);
+      callback(canvas);
+    };
+    img.src = url;
+  }
+
+  document.getElementById('downloadPngBtn').addEventListener('click', () => {
+    svgToCanvas(canvas => {
       const link = document.createElement('a');
       link.download = 'barcode.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
-    };
-    img.src = url;
+    });
   });
 
+  document.getElementById('downloadJpgBtn').addEventListener('click', () => {
+    svgToCanvas(canvas => {
+      const link = document.createElement('a');
+      link.download = 'barcode.jpg';
+      link.href = canvas.toDataURL('image/jpeg', 0.95);
+      link.click();
+    });
+  });
+
+  document.getElementById('downloadSvgBtn').addEventListener('click', () => {
+    const svg = document.getElementById('barcodeSvg');
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([svgData], {type:'image/svg+xml;charset=utf-8'});
+    const link = document.createElement('a');
+    link.download = 'barcode.svg';
+    link.href = URL.createObjectURL(blob);
+    link.click();
+  });
+
+  window.renderBarcode = render;
   window.addEventListener('load', render);
 </script>
 
