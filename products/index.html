@@ -3,68 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Products — Every Free Tool | Docutoolbox</title>
-<meta name="description" content="Browse every free tool on Docutoolbox, organized by category — PDF tools, calculators, image tools, text utilities, and more.">
+<title>All Products - Every Free Tool | Docutoolbox</title>
+<meta name="description" content="Browse every free tool on Docutoolbox, organized by category: PDF tools, calculators, image tools, text utilities, health tools, and developer tools.">
 <link rel="canonical" href="https://docutoolbox.com/products/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --blue-deep:#0E1620; --blue-card:#161F2B; --grid-line:rgba(243,239,231,0.09);
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
   }
   a{color:inherit;}
-  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
-  header.site{ background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
   .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
   .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
   .eyebrow::before{content:"◇ ";}
   h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
-  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:40px; max-width:600px;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:36px; max-width:640px;}
 
-  .cat-block{ margin-bottom:36px; }
+  .cat-block{ margin-bottom:40px; }
   .cat-block-title{
-    display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--linework);
-    font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--linework);
+    font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:14px;
   }
-  .cat-block-title svg{ width:24px; height:24px; stroke:var(--linework); fill:none; stroke-width:1.5; flex-shrink:0;}
-  .cat-block-title em{ font-style:normal; color:var(--text-muted); font-weight:400; font-size:13px;}
+  .cat-block-title svg{ width:20px; height:20px; stroke:var(--linework); fill:none; stroke-width:1.5; flex-shrink:0;}
+  .cat-block-title em{ font-style:normal; color:var(--text-muted); font-weight:400; font-size:12.5px;}
   .cat-block-title:hover{ text-decoration:underline; }
 
-  .tool-list{ display:flex; flex-direction:column; gap:8px;}
-  .tool-row{
-    display:flex; align-items:center; justify-content:space-between; padding:14px 18px;
-    background:var(--blue-card); border:1px solid var(--grid-line); border-radius:10px;
-    text-decoration:none; color:var(--ink); transition:border-color 0.15s ease, transform 0.15s ease;
+  .mini-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px; }
+  .mini-card{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    background:var(--blue-card); border:1px solid var(--grid-line); border-radius:9px;
+    padding:11px 13px; text-decoration:none; color:var(--ink); transition:border-color 0.15s ease, transform 0.15s ease;
   }
-  .tool-row.live:hover{ border-color:var(--linework); transform:translateX(4px);}
-  .tool-row.soon{ opacity:0.5; cursor:default;}
-  .tool-name{ font-family:'Inter',sans-serif; font-weight:500; font-size:14px;}
-  .tool-tag{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:4px 10px; border-radius:20px;}
-  .tag-live{ color:var(--accent); border:1px solid var(--accent);}
-  .tag-soon{ color:var(--text-muted); border:1px solid var(--grid-line);}
+  .mini-card.live:hover{ border-color:var(--linework); transform:translateY(-2px); }
+  .mini-card.soon{ opacity:0.45; cursor:default; }
+  .mini-card-name{ font-family:'Inter',sans-serif; font-weight:500; font-size:12.5px; line-height:1.3; }
+  .mini-dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .mini-dot.live{ background:var(--accent); }
+  .mini-dot.soon{ background:var(--text-muted); }
 
   footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
-  footer.site a{ color:var(--text-muted); text-decoration:underline;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
 </style>
 </head>
 <body>
 
 <header class="site">
   <div class="navbar">
-    <a href="/" class="logo">
-      <img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">
-      Docutoolbox
-    </a>
-    <a href="/" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8B96A3;text-decoration:none;">← Back to home</a>
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
   </div>
 </header>
 
@@ -72,152 +76,151 @@
   <div class="eyebrow">Docutoolbox</div>
   <h1>All products</h1>
   <p class="intro">Every free tool on Docutoolbox, organized by category. New tools are added here regularly.</p>
-  
-  <div class="cat-block">
-    <a href="/pdf-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><span>PDF & Document Tools <em>(15)</em></span></a>
-    <div class="tool-list">
-    <div class="tool-row soon"><span class="tool-name">PDF to Word Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Word to PDF Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Merge PDF</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Split PDF</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Compress PDF</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Protect / Lock PDF</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Unlock PDF</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">PDF Page Rotator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">PDF to JPG / PNG</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">JPG / Image to PDF</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">PDF Page Numbers Adder</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">PDF Watermark Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Extract Text from PDF (OCR)</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">PDF Digital Signer</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Excel to PDF / PDF to Excel</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    </div>
-  </div>
+
   <div class="cat-block">
     <a href="/math-calculators/" class="cat-block-title"><svg viewBox="0 0 24 24"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/><path d="M18 6L6 18"/></svg><span>Daily Life & Math Calculators <em>(15)</em></span></a>
-    <div class="tool-list">
-    <a href="/percentage-calculator/" class="tool-row live"><span class="tool-name">Percentage Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/date-calculator/" class="tool-row live"><span class="tool-name">Date Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/age-calculator/" class="tool-row live"><span class="tool-name">Age Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/time-calculator/" class="tool-row live"><span class="tool-name">Time / Duration Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/discount-calculator/" class="tool-row live"><span class="tool-name">Discount & Sales Tax Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/tip-calculator/" class="tool-row live"><span class="tool-name">Tip Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/gpa-calculator/" class="tool-row live"><span class="tool-name">GPA / Grade Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/average-calculator/" class="tool-row live"><span class="tool-name">Average / Mean Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/ratio-calculator/" class="tool-row live"><span class="tool-name">Ratio & Proportion Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/scientific-calculator/" class="tool-row live"><span class="tool-name">Scientific Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/day-counter/" class="tool-row live"><span class="tool-name">Day Counter / Countdown Generator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/day-of-week-calculator/" class="tool-row live"><span class="tool-name">Day of the Week Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/roman-numeral-converter/" class="tool-row live"><span class="tool-name">Roman Numerals Converter</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/binary-hex-decimal-converter/" class="tool-row live"><span class="tool-name">Binary / Hexadecimal / Decimal Converter</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/random-number-generator/" class="tool-row live"><span class="tool-name">Random Number Generator</span><span class="tool-tag tag-live">Open →</span></a>
-    </div>
-  </div>
-  <div class="cat-block">
-    <a href="/financial-calculators/" class="cat-block-title"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span>Financial & Business Calculators <em>(15)</em></span></a>
-    <div class="tool-list">
-    <div class="tool-row soon"><span class="tool-name">Overtime & Salary Wage Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <a href="/loan-emi-calculator/" class="tool-row live"><span class="tool-name">Loan / EMI / Mortgage Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <div class="tool-row soon"><span class="tool-name">Compound Interest Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Simple Interest Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Profit & Investment Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Currency Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Crypto Profit / Loss Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">VAT / GST Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Inflation Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Profit Margin & Markup Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Break-Even Point Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Net Present Value (NPV) Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Paycheck Tax Deductions Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Freelance Hourly Rate Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Savings Goal Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    </div>
-  </div>
-  <div class="cat-block">
-    <a href="/image-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 15l5-5 4 4 3-3 6 6" /><circle cx="8" cy="9" r="1.4"/></svg><span>Image Tools & Editing <em>(15)</em></span></a>
-    <div class="tool-list">
-    <a href="/image-compressor/" class="tool-row live"><span class="tool-name">Image Compressor (JPG/PNG)</span><span class="tool-tag tag-live">Open →</span></a>
-    <div class="tool-row soon"><span class="tool-name">Image Resizer</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Image Cropper</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Image Format Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Background Remover (AI)</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Favicon Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Color Picker from Image</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">HEIC to JPG Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">SVG to PNG Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Base64 to Image / Image to Base64</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Blur Image Online</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Flip / Rotate Image</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Image Color Inverter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">EXIF Data Viewer & Remover</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Passport Photo Resizer</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    </div>
-  </div>
-  <div class="cat-block">
-    <a href="/text-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M4 20h5l10-10-5-5L4 15z"/><path d="M13 6l5 5"/></svg><span>Text & Writing Utilities <em>(15)</em></span></a>
-    <div class="tool-list">
-    <a href="/word-counter/" class="tool-row live"><span class="tool-name">Word & Character Counter</span><span class="tool-tag tag-live">Open →</span></a>
-    <a href="/text-case-converter/" class="tool-row live"><span class="tool-name">Case Converter</span><span class="tool-tag tag-live">Open →</span></a>
-    <div class="tool-row soon"><span class="tool-name">Remove Duplicate Lines</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Lorem Ipsum Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Text Differ / Compare Text</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">URL Encoder / Decoder</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Base64 Encoder / Decoder</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Fancy Font & Symbol Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Space / Extra Line Remover</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Line Break Remover</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Alphabetical Order Sorter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Markdown to HTML Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">HTML to Text Stripper</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Slug Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Word Frequency Counter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    </div>
-  </div>
-  <div class="cat-block">
-    <a href="/health-calculators/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8 2.5 4 6.5 4c2 0 3.5 1.5 5.5 3.5C14 5.5 15.5 4 17.5 4c4 0 6 4 4 8.5C19 16.65 12 21 12 21z"/></svg><span>Health & Fitness Calculators <em>(10)</em></span></a>
-    <div class="tool-list">
-    <div class="tool-row soon"><span class="tool-name">BMI Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">BMR / TDEE Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Calorie Deficit / Weight Loss Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Water Intake Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Body Fat Percentage Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Macro Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Ideal Body Weight Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Pregnancy Due Date Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <a href="/sleep-calculator/" class="tool-row live"><span class="tool-name">Sleep Cycle Calculator</span><span class="tool-tag tag-live">Open →</span></a>
-    <div class="tool-row soon"><span class="tool-name">Pace & Running Calculator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    </div>
-  </div>
-  <div class="cat-block">
-    <a href="/dev-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M8 5l-6 7 6 7M16 5l6 7-6 7M13 3l-2 18"/></svg><span>Web Developer & Tech Tools <em>(15)</em></span></a>
-    <div class="tool-list">
-    <div class="tool-row soon"><span class="tool-name">QR Code Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Barcode Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Strong Password Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">JSON Formatter & Validator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">JSON to CSV / CSV to JSON</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">CSS Minifier / Unminifier</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">JavaScript Minifier</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">HEX to RGB / RGB to HEX Converter</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">IP Address & Location Finder</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">User Agent Parser</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Meta Tag Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Htaccess Redirect Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">CSS Box Shadow Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">CSS Gradient Generator</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">Ping / Port Tester Tool</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    </div>
-  </div>
-  <div class="cat-block">
-    <a href="/ai-utility-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg><span>AI & Utility Tools <em>(3)</em></span></a>
-    <div class="tool-list">
-    <div class="tool-row soon"><span class="tool-name">AI Background Remover</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">PDF Signer & Form Filler</span><span class="tool-tag tag-soon">Coming soon</span></div>
-    <div class="tool-row soon"><span class="tool-name">OCR Image to Text Extractor</span><span class="tool-tag tag-soon">Coming soon</span></div>
+    <div class="mini-grid">
+      <a href="/percentage-calculator/" class="mini-card live"><span class="mini-card-name">Percentage Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/date-calculator/" class="mini-card live"><span class="mini-card-name">Date Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/age-calculator/" class="mini-card live"><span class="mini-card-name">Age Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/time-calculator/" class="mini-card live"><span class="mini-card-name">Time / Duration Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/discount-calculator/" class="mini-card live"><span class="mini-card-name">Discount & Sales Tax</span><span class="mini-dot live"></span></a>
+      <a href="/tip-calculator/" class="mini-card live"><span class="mini-card-name">Tip Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/gpa-calculator/" class="mini-card live"><span class="mini-card-name">GPA Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/grade-calculator/" class="mini-card live"><span class="mini-card-name">Grade Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/average-calculator/" class="mini-card live"><span class="mini-card-name">Average / Mean Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/ratio-calculator/" class="mini-card live"><span class="mini-card-name">Ratio & Proportion</span><span class="mini-dot live"></span></a>
+      <a href="/scientific-calculator/" class="mini-card live"><span class="mini-card-name">Scientific Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/day-counter/" class="mini-card live"><span class="mini-card-name">Day Counter</span><span class="mini-dot live"></span></a>
+      <a href="/day-of-week-calculator/" class="mini-card live"><span class="mini-card-name">Day of the Week</span><span class="mini-dot live"></span></a>
+      <a href="/roman-numeral-converter/" class="mini-card live"><span class="mini-card-name">Roman Numeral Converter</span><span class="mini-dot live"></span></a>
+      <a href="/binary-hex-decimal-converter/" class="mini-card live"><span class="mini-card-name">Binary / Hex / Decimal</span><span class="mini-dot live"></span></a>
+      <a href="/random-number-generator/" class="mini-card live"><span class="mini-card-name">Random Number Generator</span><span class="mini-dot live"></span></a>
     </div>
   </div>
 
-  <footer class="site">MORE AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a></footer>
+  <div class="cat-block">
+    <a href="/pdf-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><span>PDF & Document Tools <em>(8 of 15)</em></span></a>
+    <div class="mini-grid">
+      <a href="/merge-pdf/" class="mini-card live"><span class="mini-card-name">Merge PDF</span><span class="mini-dot live"></span></a>
+      <a href="/split-pdf/" class="mini-card live"><span class="mini-card-name">Split PDF</span><span class="mini-dot live"></span></a>
+      <a href="/rotate-pdf/" class="mini-card live"><span class="mini-card-name">PDF Page Rotator</span><span class="mini-dot live"></span></a>
+      <a href="/pdf-to-jpg/" class="mini-card live"><span class="mini-card-name">PDF to JPG / PNG</span><span class="mini-dot live"></span></a>
+      <a href="/jpg-to-pdf/" class="mini-card live"><span class="mini-card-name">JPG / Image to PDF</span><span class="mini-dot live"></span></a>
+      <a href="/add-page-numbers/" class="mini-card live"><span class="mini-card-name">PDF Page Numbers Adder</span><span class="mini-dot live"></span></a>
+      <a href="/pdf-watermark/" class="mini-card live"><span class="mini-card-name">PDF Watermark Generator</span><span class="mini-dot live"></span></a>
+      <a href="/unlock-pdf/" class="mini-card live"><span class="mini-card-name">Unlock PDF</span><span class="mini-dot live"></span></a>
+      <div class="mini-card soon"><span class="mini-card-name">PDF to Word</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Word to PDF</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Compress PDF</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Protect / Lock PDF</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Extract Text (OCR)</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">PDF Digital Signer</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Excel to PDF / PDF to Excel</span><span class="mini-dot soon"></span></div>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <a href="/image-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg><span>Image Tools & Editing <em>(13 of 15)</em></span></a>
+    <div class="mini-grid">
+      <a href="/image-compressor/" class="mini-card live"><span class="mini-card-name">Image Compressor</span><span class="mini-dot live"></span></a>
+      <a href="/image-resizer/" class="mini-card live"><span class="mini-card-name">Image Resizer</span><span class="mini-dot live"></span></a>
+      <a href="/image-cropper/" class="mini-card live"><span class="mini-card-name">Image Cropper</span><span class="mini-dot live"></span></a>
+      <a href="/image-format-converter/" class="mini-card live"><span class="mini-card-name">Image Format Converter</span><span class="mini-dot live"></span></a>
+      <a href="/flip-rotate-image/" class="mini-card live"><span class="mini-card-name">Flip / Rotate Image</span><span class="mini-dot live"></span></a>
+      <a href="/color-inverter/" class="mini-card live"><span class="mini-card-name">Image Color Inverter</span><span class="mini-dot live"></span></a>
+      <a href="/blur-image/" class="mini-card live"><span class="mini-card-name">Blur Image Online</span><span class="mini-dot live"></span></a>
+      <a href="/color-picker/" class="mini-card live"><span class="mini-card-name">Color Picker from Image</span><span class="mini-dot live"></span></a>
+      <a href="/base64-image-converter/" class="mini-card live"><span class="mini-card-name">Base64 ↔ Image</span><span class="mini-dot live"></span></a>
+      <a href="/svg-to-png/" class="mini-card live"><span class="mini-card-name">SVG to PNG Converter</span><span class="mini-dot live"></span></a>
+      <a href="/exif-viewer/" class="mini-card live"><span class="mini-card-name">EXIF Viewer & Remover</span><span class="mini-dot live"></span></a>
+      <a href="/favicon-generator/" class="mini-card live"><span class="mini-card-name">Favicon Generator</span><span class="mini-dot live"></span></a>
+      <a href="/passport-photo-resizer/" class="mini-card live"><span class="mini-card-name">Passport Photo Resizer</span><span class="mini-dot live"></span></a>
+      <div class="mini-card soon"><span class="mini-card-name">HEIC to JPG</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Background Remover AI</span><span class="mini-dot soon"></span></div>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <a href="/financial-calculators/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M12 3v18M17 7H9.5a2.5 2.5 0 000 5H14.5a2.5 2.5 0 010 5H7"/></svg><span>Financial & Business Calculators <em>(12 of 15)</em></span></a>
+    <div class="mini-grid">
+      <a href="/loan-calculator/" class="mini-card live"><span class="mini-card-name">Loan Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/emi-calculator/" class="mini-card live"><span class="mini-card-name">EMI Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/mortgage-calculator/" class="mini-card live"><span class="mini-card-name">Mortgage Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/compound-interest-calculator/" class="mini-card live"><span class="mini-card-name">Compound Interest</span><span class="mini-dot live"></span></a>
+      <a href="/simple-interest-calculator/" class="mini-card live"><span class="mini-card-name">Simple Interest</span><span class="mini-dot live"></span></a>
+      <a href="/vat-gst-calculator/" class="mini-card live"><span class="mini-card-name">VAT / GST Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/inflation-calculator/" class="mini-card live"><span class="mini-card-name">Inflation Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/profit-margin-calculator/" class="mini-card live"><span class="mini-card-name">Profit Margin & Markup</span><span class="mini-dot live"></span></a>
+      <a href="/break-even-calculator/" class="mini-card live"><span class="mini-card-name">Break-Even Point</span><span class="mini-dot live"></span></a>
+      <a href="/npv-calculator/" class="mini-card live"><span class="mini-card-name">NPV Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/freelance-rate-calculator/" class="mini-card live"><span class="mini-card-name">Freelance Hourly Rate</span><span class="mini-dot live"></span></a>
+      <a href="/savings-goal-calculator/" class="mini-card live"><span class="mini-card-name">Savings Goal Calculator</span><span class="mini-dot live"></span></a>
+      <div class="mini-card soon"><span class="mini-card-name">Currency Converter</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Crypto Profit/Loss</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Paycheck Tax Deductions</span><span class="mini-dot soon"></span></div>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <a href="/text-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Text & Writing Utilities <em>(15)</em></span></a>
+    <div class="mini-grid">
+      <a href="/word-character-counter/" class="mini-card live"><span class="mini-card-name">Word & Character Counter</span><span class="mini-dot live"></span></a>
+      <a href="/case-converter/" class="mini-card live"><span class="mini-card-name">Case Converter</span><span class="mini-dot live"></span></a>
+      <a href="/remove-duplicate-lines/" class="mini-card live"><span class="mini-card-name">Remove Duplicate Lines</span><span class="mini-dot live"></span></a>
+      <a href="/lorem-ipsum-generator/" class="mini-card live"><span class="mini-card-name">Lorem Ipsum Generator</span><span class="mini-dot live"></span></a>
+      <a href="/text-diff-checker/" class="mini-card live"><span class="mini-card-name">Text Differ / Compare</span><span class="mini-dot live"></span></a>
+      <a href="/url-encoder-decoder/" class="mini-card live"><span class="mini-card-name">URL Encoder / Decoder</span><span class="mini-dot live"></span></a>
+      <a href="/base64-text-encoder/" class="mini-card live"><span class="mini-card-name">Base64 Encoder / Decoder</span><span class="mini-dot live"></span></a>
+      <a href="/fancy-font-generator/" class="mini-card live"><span class="mini-card-name">Fancy Font Generator</span><span class="mini-dot live"></span></a>
+      <a href="/remove-extra-spaces/" class="mini-card live"><span class="mini-card-name">Space / Line Remover</span><span class="mini-dot live"></span></a>
+      <a href="/line-break-remover/" class="mini-card live"><span class="mini-card-name">Line Break Remover</span><span class="mini-dot live"></span></a>
+      <a href="/alphabetical-sorter/" class="mini-card live"><span class="mini-card-name">Alphabetical Sorter</span><span class="mini-dot live"></span></a>
+      <a href="/markdown-to-html/" class="mini-card live"><span class="mini-card-name">Markdown to HTML</span><span class="mini-dot live"></span></a>
+      <a href="/html-to-text/" class="mini-card live"><span class="mini-card-name">HTML to Text Stripper</span><span class="mini-dot live"></span></a>
+      <a href="/slug-generator/" class="mini-card live"><span class="mini-card-name">Slug Generator</span><span class="mini-dot live"></span></a>
+      <a href="/word-frequency-counter/" class="mini-card live"><span class="mini-card-name">Word Frequency Counter</span><span class="mini-dot live"></span></a>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <a href="/health-calculators/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8 2.5 4 6.5 4c2 0 3.5 1.5 5.5 3.5C14 5.5 15.5 4 17.5 4c4 0 6 4 4 8.5C19 16.65 12 21 12 21z"/></svg><span>Health & Fitness Calculators <em>(10)</em></span></a>
+    <div class="mini-grid">
+      <a href="/bmi-calculator/" class="mini-card live"><span class="mini-card-name">BMI Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/bmr-tdee-calculator/" class="mini-card live"><span class="mini-card-name">BMR / TDEE Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/calorie-deficit-calculator/" class="mini-card live"><span class="mini-card-name">Calorie Deficit Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/water-intake-calculator/" class="mini-card live"><span class="mini-card-name">Water Intake Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/body-fat-calculator/" class="mini-card live"><span class="mini-card-name">Body Fat % Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/macro-calculator/" class="mini-card live"><span class="mini-card-name">Macro Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/ideal-body-weight-calculator/" class="mini-card live"><span class="mini-card-name">Ideal Body Weight</span><span class="mini-dot live"></span></a>
+      <a href="/pregnancy-due-date-calculator/" class="mini-card live"><span class="mini-card-name">Pregnancy Due Date</span><span class="mini-dot live"></span></a>
+      <a href="/sleep-calculator/" class="mini-card live"><span class="mini-card-name">Sleep Cycle Calculator</span><span class="mini-dot live"></span></a>
+      <a href="/pace-calculator/" class="mini-card live"><span class="mini-card-name">Pace & Running Calculator</span><span class="mini-dot live"></span></a>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <a href="/dev-tools/" class="cat-block-title"><svg viewBox="0 0 24 24"><path d="M8 5l-6 7 6 7M16 5l6 7-6 7M13 3l-2 18"/></svg><span>Web Developer & Tech Tools <em>(13 of 15)</em></span></a>
+    <div class="mini-grid">
+      <a href="/qr-code-generator/" class="mini-card live"><span class="mini-card-name">QR Code Generator</span><span class="mini-dot live"></span></a>
+      <a href="/barcode-generator/" class="mini-card live"><span class="mini-card-name">Barcode Generator</span><span class="mini-dot live"></span></a>
+      <a href="/password-generator/" class="mini-card live"><span class="mini-card-name">Password Generator</span><span class="mini-dot live"></span></a>
+      <a href="/json-formatter/" class="mini-card live"><span class="mini-card-name">JSON Formatter & Validator</span><span class="mini-dot live"></span></a>
+      <a href="/json-csv-converter/" class="mini-card live"><span class="mini-card-name">JSON to CSV / CSV to JSON</span><span class="mini-dot live"></span></a>
+      <a href="/css-minifier/" class="mini-card live"><span class="mini-card-name">CSS Minifier / Unminifier</span><span class="mini-dot live"></span></a>
+      <a href="/js-minifier/" class="mini-card live"><span class="mini-card-name">JavaScript Minifier</span><span class="mini-dot live"></span></a>
+      <a href="/hex-rgb-converter/" class="mini-card live"><span class="mini-card-name">HEX / RGB Converter</span><span class="mini-dot live"></span></a>
+      <a href="/user-agent-parser/" class="mini-card live"><span class="mini-card-name">User Agent Parser</span><span class="mini-dot live"></span></a>
+      <a href="/meta-tag-generator/" class="mini-card live"><span class="mini-card-name">Meta Tag Generator</span><span class="mini-dot live"></span></a>
+      <a href="/htaccess-generator/" class="mini-card live"><span class="mini-card-name">Htaccess Redirect Generator</span><span class="mini-dot live"></span></a>
+      <a href="/css-box-shadow-generator/" class="mini-card live"><span class="mini-card-name">CSS Box Shadow Generator</span><span class="mini-dot live"></span></a>
+      <a href="/css-gradient-generator/" class="mini-card live"><span class="mini-card-name">CSS Gradient Generator</span><span class="mini-dot live"></span></a>
+      <div class="mini-card soon"><span class="mini-card-name">IP Address & Location Finder</span><span class="mini-dot soon"></span></div>
+      <div class="mini-card soon"><span class="mini-card-name">Ping / Port Tester</span><span class="mini-dot soon"></span></div>
+    </div>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
 </div>
 
 </body>
