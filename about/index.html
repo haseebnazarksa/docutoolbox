@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Docutoolbox - Free Browser-Based Tools</title>
+<meta name="description" content="Learn about Docutoolbox, a growing collection of free, browser-based tools for PDF, image, text, and financial and health calculations.">
+<link rel="canonical" href="https://docutoolbox.com/about/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --accent:#C9A227; --accent-soft:#E4C766; --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-wrap{ max-width:680px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:16px; justify-content:center;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:700; font-size:clamp(28px,5.5vw,42px); line-height:1.1; text-align:center; margin-bottom:28px; letter-spacing:-0.01em;}
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:28px;}
+  .card p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin:0 0 16px;}
+  .card p:last-child{ margin-bottom:0;}
+  .card strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="content-wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>About this toolbox</h1>
+
+  <div class="card">
+    <p><strong>Docutoolbox</strong> is a free, growing collection of small browser-based tools, spanning PDF and document tools, image editing, text and writing utilities, financial and health calculators, and developer tools, with more added over time.</p>
+    <p>Every tool here is built around one idea: small everyday tasks shouldn't need an account, an app download, or a file upload to a stranger's server. Type, paste, or drop a file in, get the result instantly, and move on.</p>
+    <p>Everything runs directly in your browser using JavaScript. Text you type, images you edit, and files you process never leave your device, nothing is uploaded, logged, or stored anywhere.</p>
+    <p>Docutoolbox is actively maintained and new tools are added regularly based on what's genuinely useful for everyday writing, documents, images, calculations, and development work.</p>
+  </div>
+
+  <footer class="site">DOCUTOOLBOX · <a href="/">Home</a> · <a href="/privacy/">Privacy Policy</a></footer>
+</div>
+
+</body>
+</html>
