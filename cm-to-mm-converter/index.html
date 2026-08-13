@@ -49,14 +49,7 @@
   .intro{ color:var(--text-muted); font-size:14.5px; line-height:1.65; margin-bottom:26px; max-width:620px;}
 
   .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
-  .conv-row{ display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:end; margin-bottom:10px; }
-  @media (max-width:480px){
-    .conv-row{ grid-template-columns:1fr; gap:10px; }
-    .conv-row > div[style*="width:42px"]{ display:none; }
-    .swap-btn{ justify-self:center; }
-    .field select{ font-size:14.5px; padding:12px 14px; }
-    .field input{ font-size:18px; padding:12px 14px; }
-  }
+  .conv-row{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:end; margin-bottom:10px; }
   .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
   .field select{
     width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
@@ -75,6 +68,12 @@
   .field input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
   .swap-btn{ background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--linework); width:42px; height:42px; border-radius:9px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center;}
   .swap-btn:hover{ border-color:var(--linework); }
+
+  @media (max-width:480px){
+    .conv-row{ grid-template-columns:1fr; gap:10px; }
+    .conv-row > div[style*="width:42px"]{ display:none; }
+    .swap-btn{ justify-self:center; }
+  }
 
   .calc-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); margin-top:18px; padding:14px; background:var(--blue-deep); border-radius:10px; border:1px solid var(--grid-line); word-break:break-word;}
   .calc-line strong{ color:var(--accent); }
