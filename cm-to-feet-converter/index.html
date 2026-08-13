@@ -77,7 +77,7 @@
   .desc-block h2:first-child{ margin-top:0; }
   .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
   .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
-  .desc-block ul{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
   .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
 
   footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
@@ -104,12 +104,12 @@
         <div class="conv-row">
           <div class="field">
             <label>From</label>
-            <select id="fromSelect"><option value="cm" selected>Centimeters (cm)</option><option value="ft">Feet (ft)</option><option value="in">Inches (in)</option><option value="km">Kilometers (km)</option><option value="m">Meters (m)</option><option value="mi">Miles (mi)</option><option value="mm">Millimeters (mm)</option></select>
+            <select id="fromSelect"><option value="mm">Millimeters (mm)</option><option value="cm" selected>Centimeters (cm)</option><option value="m">Meters (m)</option><option value="km">Kilometers (km)</option><option value="in">Inches (in)</option><option value="ft">Feet (ft)</option><option value="yd">Yards (yd)</option><option value="mi">Miles (mi)</option></select>
           </div>
           <button class="swap-btn" id="swapBtn" title="Swap units">⇄</button>
           <div class="field">
             <label>To</label>
-            <select id="toSelect"><option value="ft" selected>Feet (ft)</option><option value="in">Inches (in)</option><option value="m">Meters (m)</option><option value="mm">Millimeters (mm)</option></select>
+            <select id="toSelect"><option value="mm">Millimeters (mm)</option><option value="m">Meters (m)</option><option value="km">Kilometers (km)</option><option value="in">Inches (in)</option><option value="ft" selected>Feet (ft)</option><option value="yd">Yards (yd)</option><option value="mi">Miles (mi)</option></select>
           </div>
         </div>
         <div class="conv-row">
@@ -132,34 +132,67 @@
     </div>
     <aside class="sidebar">
       <h4>Length Conversion</h4>
-      <a href="/cm-to-inches-converter/">Centimeters to Inches</a>
-      <a href="/cm-to-meters-converter/">Centimeters to Meters</a>
-      <a href="/cm-to-mm-converter/">Centimeters to Millimeters</a>
-      <a href="/feet-to-cm-converter/">Feet to Centimeters</a>
-      <a href="/feet-to-mm-converter/">Feet to Millimeters</a>
-      <a href="/feet-to-inches-converter/">Feet to Inches</a>
-      <a href="/feet-to-meters-converter/">Feet to Meters</a>
-      <a href="/inches-to-cm-converter/">Inches to Centimeters</a>
-      <a href="/inches-to-feet-converter/">Inches to Feet</a>
-      <a href="/inches-to-meters-converter/">Inches to Meters</a>
-      <a href="/inches-to-mm-converter/">Inches to Millimeters</a>
-      <a href="/km-to-miles-converter/">Kilometers to Miles</a>
-      <a href="/meters-to-cm-converter/">Meters to Centimeters</a>
-      <a href="/meters-to-feet-converter/">Meters to Feet</a>
-      <a href="/meters-to-inches-converter/">Meters to Inches</a>
-      <a href="/miles-to-km-converter/">Miles to Kilometers</a>
       <a href="/mm-to-cm-converter/">Millimeters to Centimeters</a>
-      <a href="/mm-to-feet-converter/">Millimeters to Feet</a>
-      <a href="/mm-to-inches-converter/">Millimeters to Inches</a>
+      <a href="/mm-to-meters-converter/">Millimeters to Meters</a>
       <a href="/mm-to-km-converter/">Millimeters to Kilometers</a>
+      <a href="/mm-to-inches-converter/">Millimeters to Inches</a>
+      <a href="/mm-to-feet-converter/">Millimeters to Feet</a>
+      <a href="/mm-to-yards-converter/">Millimeters to Yards</a>
+      <a href="/mm-to-miles-converter/">Millimeters to Miles</a>
+      <a href="/cm-to-mm-converter/">Centimeters to Millimeters</a>
+      <a href="/cm-to-meters-converter/">Centimeters to Meters</a>
+      <a href="/cm-to-km-converter/">Centimeters to Kilometers</a>
+      <a href="/cm-to-inches-converter/">Centimeters to Inches</a>
+      <a href="/cm-to-yards-converter/">Centimeters to Yards</a>
+      <a href="/cm-to-miles-converter/">Centimeters to Miles</a>
+      <a href="/meters-to-mm-converter/">Meters to Millimeters</a>
+      <a href="/meters-to-cm-converter/">Meters to Centimeters</a>
+      <a href="/meters-to-km-converter/">Meters to Kilometers</a>
+      <a href="/meters-to-inches-converter/">Meters to Inches</a>
+      <a href="/meters-to-feet-converter/">Meters to Feet</a>
+      <a href="/meters-to-yards-converter/">Meters to Yards</a>
+      <a href="/meters-to-miles-converter/">Meters to Miles</a>
+      <a href="/km-to-mm-converter/">Kilometers to Millimeters</a>
+      <a href="/km-to-cm-converter/">Kilometers to Centimeters</a>
+      <a href="/km-to-meters-converter/">Kilometers to Meters</a>
+      <a href="/km-to-inches-converter/">Kilometers to Inches</a>
+      <a href="/km-to-feet-converter/">Kilometers to Feet</a>
+      <a href="/km-to-yards-converter/">Kilometers to Yards</a>
+      <a href="/km-to-miles-converter/">Kilometers to Miles</a>
+      <a href="/inches-to-mm-converter/">Inches to Millimeters</a>
+      <a href="/inches-to-cm-converter/">Inches to Centimeters</a>
+      <a href="/inches-to-meters-converter/">Inches to Meters</a>
+      <a href="/inches-to-km-converter/">Inches to Kilometers</a>
+      <a href="/inches-to-feet-converter/">Inches to Feet</a>
+      <a href="/inches-to-yards-converter/">Inches to Yards</a>
+      <a href="/inches-to-miles-converter/">Inches to Miles</a>
+      <a href="/feet-to-mm-converter/">Feet to Millimeters</a>
+      <a href="/feet-to-cm-converter/">Feet to Centimeters</a>
+      <a href="/feet-to-meters-converter/">Feet to Meters</a>
+      <a href="/feet-to-km-converter/">Feet to Kilometers</a>
+      <a href="/feet-to-inches-converter/">Feet to Inches</a>
+      <a href="/feet-to-yards-converter/">Feet to Yards</a>
+      <a href="/feet-to-miles-converter/">Feet to Miles</a>
+      <a href="/yards-to-mm-converter/">Yards to Millimeters</a>
+      <a href="/yards-to-cm-converter/">Yards to Centimeters</a>
+      <a href="/yards-to-meters-converter/">Yards to Meters</a>
+      <a href="/yards-to-km-converter/">Yards to Kilometers</a>
+      <a href="/yards-to-inches-converter/">Yards to Inches</a>
+      <a href="/yards-to-feet-converter/">Yards to Feet</a>
+      <a href="/yards-to-miles-converter/">Yards to Miles</a>
+      <a href="/miles-to-mm-converter/">Miles to Millimeters</a>
+      <a href="/miles-to-cm-converter/">Miles to Centimeters</a>
+      <a href="/miles-to-meters-converter/">Miles to Meters</a>
+      <a href="/miles-to-km-converter/">Miles to Kilometers</a>
+      <a href="/miles-to-inches-converter/">Miles to Inches</a>
+      <a href="/miles-to-feet-converter/">Miles to Feet</a>
+      <a href="/miles-to-yards-converter/">Miles to Yards</a>
       <a href="/cm-to-feet-inches-converter/">CM to Feet & Inches</a>
       <a href="/feet-inches-to-cm-converter/">Feet & Inches to CM</a>
       <a href="/height-converter/">Height Converter</a>
       
     </aside>
     <div class="desc-block">
-      
-      
       <h2>CM to FT conversion (Centimeters to Feet)</h2>
       <p>This tool converts centimeters (cm) to feet (ft) instantly and precisely. Whether you search for "cm to ft" or "centimeters to feet", this converter gives you the exact result along with the formula, worked examples, and a full reference table below.</p>
 
@@ -219,19 +252,17 @@
       <h3>Do I need to round the result?</h3>
       <p>Not unless your use case requires it, the value shown is exact. For practical purposes like construction or sewing, rounding to 1-2 decimal places is usually sufficient.</p>
     
-    
     </div>
   </div>
   <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
 </div>
 
 <script>
-  const FACTORS = { mm:0.001, cm:0.01, m:1, km:1000, in:0.0254, ft:0.3048, mi:1609.344 };
-  const NAMES = { mm:"Millimeters", cm:"Centimeters", m:"Meters", km:"Kilometers", in:"Inches", ft:"Feet", mi:"Miles" };
-  const SYMS = { mm:"mm", cm:"cm", m:"m", km:"km", in:"in", ft:"ft", mi:"mi" };
+  const FACTORS = { mm:0.001, cm:0.01, m:1, km:1000, in:0.0254, ft:0.3048, yd:0.9144, mi:1609.344 };
+  const NAMES = { mm:"Millimeters", cm:"Centimeters", m:"Meters", km:"Kilometers", in:"Inches", ft:"Feet", yd:"Yards", mi:"Miles" };
+  const SYMS = { mm:"mm", cm:"cm", m:"m", km:"km", in:"in", ft:"ft", yd:"yd", mi:"mi" };
 
-  // slug map: "from_to" -> url
-  const SLUG_MAP = {"cm_ft":"cm-to-feet-converter","cm_in":"cm-to-inches-converter","cm_m":"cm-to-meters-converter","cm_mm":"cm-to-mm-converter","ft_cm":"feet-to-cm-converter","ft_mm":"feet-to-mm-converter","ft_in":"feet-to-inches-converter","ft_m":"feet-to-meters-converter","in_cm":"inches-to-cm-converter","in_ft":"inches-to-feet-converter","in_m":"inches-to-meters-converter","in_mm":"inches-to-mm-converter","km_mi":"km-to-miles-converter","m_cm":"meters-to-cm-converter","m_ft":"meters-to-feet-converter","m_in":"meters-to-inches-converter","mi_km":"miles-to-km-converter","mm_cm":"mm-to-cm-converter","mm_ft":"mm-to-feet-converter","mm_in":"mm-to-inches-converter","mm_km":"mm-to-km-converter"};
+  const SLUG_MAP = {"mm_cm":"mm-to-cm-converter","mm_m":"mm-to-meters-converter","mm_km":"mm-to-km-converter","mm_in":"mm-to-inches-converter","mm_ft":"mm-to-feet-converter","mm_yd":"mm-to-yards-converter","mm_mi":"mm-to-miles-converter","cm_mm":"cm-to-mm-converter","cm_m":"cm-to-meters-converter","cm_km":"cm-to-km-converter","cm_in":"cm-to-inches-converter","cm_ft":"cm-to-feet-converter","cm_yd":"cm-to-yards-converter","cm_mi":"cm-to-miles-converter","m_mm":"meters-to-mm-converter","m_cm":"meters-to-cm-converter","m_km":"meters-to-km-converter","m_in":"meters-to-inches-converter","m_ft":"meters-to-feet-converter","m_yd":"meters-to-yards-converter","m_mi":"meters-to-miles-converter","km_mm":"km-to-mm-converter","km_cm":"km-to-cm-converter","km_m":"km-to-meters-converter","km_in":"km-to-inches-converter","km_ft":"km-to-feet-converter","km_yd":"km-to-yards-converter","km_mi":"km-to-miles-converter","in_mm":"inches-to-mm-converter","in_cm":"inches-to-cm-converter","in_m":"inches-to-meters-converter","in_km":"inches-to-km-converter","in_ft":"inches-to-feet-converter","in_yd":"inches-to-yards-converter","in_mi":"inches-to-miles-converter","ft_mm":"feet-to-mm-converter","ft_cm":"feet-to-cm-converter","ft_m":"feet-to-meters-converter","ft_km":"feet-to-km-converter","ft_in":"feet-to-inches-converter","ft_yd":"feet-to-yards-converter","ft_mi":"feet-to-miles-converter","yd_mm":"yards-to-mm-converter","yd_cm":"yards-to-cm-converter","yd_m":"yards-to-meters-converter","yd_km":"yards-to-km-converter","yd_in":"yards-to-inches-converter","yd_ft":"yards-to-feet-converter","yd_mi":"yards-to-miles-converter","mi_mm":"miles-to-mm-converter","mi_cm":"miles-to-cm-converter","mi_m":"miles-to-meters-converter","mi_km":"miles-to-km-converter","mi_in":"miles-to-inches-converter","mi_ft":"miles-to-feet-converter","mi_yd":"miles-to-yards-converter"};
 
   const fromSelect = document.getElementById('fromSelect');
   const toSelect = document.getElementById('toSelect');
@@ -268,9 +299,9 @@
   });
 
   fromSelect.addEventListener('change', () => {
-    const f = fromSelect.value;
-    // find first available slug starting with this "from"
-    const match = Object.keys(SLUG_MAP).find(k => k.startsWith(f + '_'));
+    const key = fromSelect.value + '_' + toSelect.value;
+    if(SLUG_MAP[key]){ window.location.href = '/' + SLUG_MAP[key] + '/'; return; }
+    const match = Object.keys(SLUG_MAP).find(k => k.startsWith(fromSelect.value + '_'));
     if(match) window.location.href = '/' + SLUG_MAP[match] + '/';
   });
 
