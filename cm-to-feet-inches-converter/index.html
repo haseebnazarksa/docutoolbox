@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CM to Feet and Inches Converter - Centimeters to Feet & Inches | Docutoolbox</title>
+<meta name="description" content="Free cm to feet and inches converter (centimeters to feet & inches). Convert instantly with the exact formula, a worked example, and a reference table.">
+<link rel="canonical" href="https://docutoolbox.com/cm-to-feet-inches-converter/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,4.2vw,36px); line-height:1.15; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:600; padding:14px; border-radius:9px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework); }
+
+  .result-box{ background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:12px; padding:24px; text-align:center; margin-top:8px;}
+  .result-value{ font-family:'Fraunces',serif; font-weight:700; font-size:36px; color:var(--accent); }
+  .result-sub{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-muted); margin-top:8px;}
+
+  .ref-table{ width:100%; border-collapse:collapse; margin-top:20px; }
+  .ref-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--linework); padding:8px 6px; border-bottom:1px solid var(--grid-line); }
+  .ref-table td{ padding:9px 6px; border-bottom:1px solid var(--grid-line); font-size:13.5px; font-family:'JetBrains Mono',monospace; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; max-height:640px; overflow-y:auto;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:8px 0; color:var(--ink); text-decoration:none; font-size:12.5px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>CM to feet and inches converter</h1>
+  <p class="intro">Convert centimeters into feet and inches instantly, with exact results.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="field">
+          <label>Centimeters (cm)</label>
+          <input type="number" id="cmInput" value="170" step="any">
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="resultValue">5 ft 6.93 in</div>
+          <div class="result-sub" id="resultSub">170 cm = 5.58 ft = 66.93 in</div>
+        </div>
+
+        <table class="ref-table" id="refTable"></table>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Length Conversion</h4>
+      <div id="sidebarLinks"></div>
+    </aside>
+    <div class="desc-block">
+      <h2>How to convert cm to feet and inches</h2>
+      <p>To convert centimeters to feet and inches, first divide by 30.48 to get total feet, then take the decimal remainder and multiply by 12 to get the leftover inches. This calculator handles both steps automatically and shows the result in the familiar feet-and-inches format used for height and measurements.</p>
+
+      <h2>Worked example</h2>
+      <p><strong>Convert 175 cm to feet and inches:</strong><br>
+      175 cm ÷ 2.54 = 68.90 total inches<br>
+      68.90 ÷ 12 = 5 feet, remainder 8.90 inches<br>
+      Result: <strong>5 ft 8.90 in</strong></p>
+
+      <h2>Formula</h2>
+      <p><strong>Total inches = cm ÷ 2.54</strong>, then <strong>feet = total inches ÷ 12</strong> (whole number), <strong>remaining inches = total inches mod 12</strong>.</p>
+
+      <h2>What is a centimeter?</h2>
+      <p>A centimeter is a metric unit of length equal to one-hundredth of a meter. It's a common everyday unit for measuring height, small objects, and fabric.</p>
+
+      <h2>What are feet and inches?</h2>
+      <p>Feet and inches are imperial units of length, with 12 inches making up 1 foot. Together they form the standard way height is expressed in the US and UK, for example "5 feet 9 inches."</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Converting a height measurement from metric to the feet-and-inches format common in the US and UK</li>
+        <li>Checking furniture, doorway, or room dimensions given in centimeters</li>
+        <li>Converting international clothing or shoe measurements</li>
+        <li>School and construction measurement conversions</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is this the same as a height converter?</h3>
+      <p>Very similar, this tool is optimized for any centimeter value, while the dedicated <a href="/height-converter/" style="color:var(--linework);">Height Converter</a> is built specifically around common human height ranges with quick-select presets.</p>
+      <h3>Why is the inches value not a round number?</h3>
+      <p>Centimeter and inch measurements rarely divide evenly, since the underlying conversion factor (2.54) isn't a whole number, small decimal remainders are normal and expected.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const cmInput = document.getElementById('cmInput');
+
+  function convert(){
+    const cm = parseFloat(cmInput.value) || 0;
+    const totalInches = cm / 2.54;
+    const feet = Math.floor(totalInches / 12);
+    const remInches = Math.round((totalInches - feet*12) * 100) / 100;
+    const totalFeetDecimal = Math.round((totalInches/12) * 100) / 100;
+
+    document.getElementById('resultValue').textContent = `${feet} ft ${remInches} in`;
+    document.getElementById('resultSub').textContent = `${cm} cm = ${totalFeetDecimal} ft = ${Math.round(totalInches*100)/100} in`;
+
+    const refTable = document.getElementById('refTable');
+    const refVals = [100,150,160,165,170,175,180,185,190,200];
+    let rows = '<tr><th>cm</th><th>ft + in</th></tr>';
+    refVals.forEach(v => {
+      const ti = v/2.54;
+      const f = Math.floor(ti/12);
+      const ri = Math.round((ti - f*12)*100)/100;
+      rows += `<tr><td>${v} cm</td><td>${f} ft ${ri} in</td></tr>`;
+    });
+    refTable.innerHTML = rows;
+  }
+
+  cmInput.addEventListener('input', convert);
+  convert();
+
+  const sidebarLinks = [
+    ["mm-to-cm-converter","Millimeters to Centimeters"],
+    ["mm-to-meters-converter","Millimeters to Meters"],
+    ["mm-to-km-converter","Millimeters to Kilometers"],
+    ["mm-to-inches-converter","Millimeters to Inches"],
+    ["mm-to-feet-converter","Millimeters to Feet"],
+    ["mm-to-yards-converter","Millimeters to Yards"],
+    ["mm-to-miles-converter","Millimeters to Miles"],
+    ["cm-to-mm-converter","Centimeters to Millimeters"],
+    ["cm-to-meters-converter","Centimeters to Meters"],
+    ["cm-to-km-converter","Centimeters to Kilometers"],
+    ["cm-to-inches-converter","Centimeters to Inches"],
+    ["cm-to-feet-converter","Centimeters to Feet"],
+    ["cm-to-yards-converter","Centimeters to Yards"],
+    ["cm-to-miles-converter","Centimeters to Miles"],
+    ["meters-to-mm-converter","Meters to Millimeters"],
+    ["meters-to-cm-converter","Meters to Centimeters"],
+    ["meters-to-km-converter","Meters to Kilometers"],
+    ["meters-to-inches-converter","Meters to Inches"],
+    ["meters-to-feet-converter","Meters to Feet"],
+    ["meters-to-yards-converter","Meters to Yards"],
+    ["meters-to-miles-converter","Meters to Miles"],
+    ["km-to-mm-converter","Kilometers to Millimeters"],
+    ["km-to-cm-converter","Kilometers to Centimeters"],
+    ["km-to-meters-converter","Kilometers to Meters"],
+    ["km-to-inches-converter","Kilometers to Inches"],
+    ["km-to-feet-converter","Kilometers to Feet"],
+    ["km-to-yards-converter","Kilometers to Yards"],
+    ["km-to-miles-converter","Kilometers to Miles"],
+    ["inches-to-mm-converter","Inches to Millimeters"],
+    ["inches-to-cm-converter","Inches to Centimeters"],
+    ["inches-to-meters-converter","Inches to Meters"],
+    ["inches-to-km-converter","Inches to Kilometers"],
+    ["inches-to-feet-converter","Inches to Feet"],
+    ["inches-to-yards-converter","Inches to Yards"],
+    ["inches-to-miles-converter","Inches to Miles"],
+    ["feet-to-mm-converter","Feet to Millimeters"],
+    ["feet-to-cm-converter","Feet to Centimeters"],
+    ["feet-to-meters-converter","Feet to Meters"],
+    ["feet-to-km-converter","Feet to Kilometers"],
+    ["feet-to-inches-converter","Feet to Inches"],
+    ["feet-to-yards-converter","Feet to Yards"],
+    ["feet-to-miles-converter","Feet to Miles"],
+    ["yards-to-mm-converter","Yards to Millimeters"],
+    ["yards-to-cm-converter","Yards to Centimeters"],
+    ["yards-to-meters-converter","Yards to Meters"],
+    ["yards-to-km-converter","Yards to Kilometers"],
+    ["yards-to-inches-converter","Yards to Inches"],
+    ["yards-to-feet-converter","Yards to Feet"],
+    ["yards-to-miles-converter","Yards to Miles"],
+    ["miles-to-mm-converter","Miles to Millimeters"],
+    ["miles-to-cm-converter","Miles to Centimeters"],
+    ["miles-to-meters-converter","Miles to Meters"],
+    ["miles-to-km-converter","Miles to Kilometers"],
+    ["miles-to-inches-converter","Miles to Inches"],
+    ["miles-to-feet-converter","Miles to Feet"],
+    ["miles-to-yards-converter","Miles to Yards"],
+    ["feet-inches-to-cm-converter","Feet & Inches to CM"],
+    ["height-converter","Height Converter"]
+  ];
+  document.getElementById('sidebarLinks').innerHTML = sidebarLinks.map(([s,l]) => `<a href="/${s}/">${l}</a>`).join('');
+</script>
+
+</body>
+</html>
