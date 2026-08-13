@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CM to FT Converter - Centimeters to Feet | Docutoolbox</title>
+<meta name="description" content="Free cm to ft converter (centimeters to feet). Convert instantly with the exact formula, worked examples, and a full reference table. No sign-up required.">
+<link rel="canonical" href="https://docutoolbox.com/cm-to-feet-converter/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,4.2vw,36px); line-height:1.15; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .conv-row{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:end; margin-bottom:10px; }
+  @media (max-width:560px){ .conv-row{ grid-template-columns:1fr; } }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; padding:12px 14px; border-radius:9px; appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center;
+  }
+  .field select:focus{ outline:none; border-color:var(--linework); }
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:600; padding:14px; border-radius:9px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework); }
+  .swap-btn{ background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--linework); width:42px; height:42px; border-radius:9px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center;}
+  .swap-btn:hover{ border-color:var(--linework); }
+
+  .calc-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); margin-top:18px; padding:14px; background:var(--blue-deep); border-radius:10px; border:1px solid var(--grid-line);}
+  .calc-line strong{ color:var(--accent); }
+
+  .ref-table{ width:100%; border-collapse:collapse; margin-top:8px; }
+  .ref-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--linework); padding:8px 6px; border-bottom:1px solid var(--grid-line); }
+  .ref-table td{ padding:9px 6px; border-bottom:1px solid var(--grid-line); font-size:13.5px; font-family:'JetBrains Mono',monospace; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; max-height:640px; overflow-y:auto;}
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:8px 0; color:var(--ink); text-decoration:none; font-size:12.5px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products →</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Centimeters to Feet converter</h1>
+  <p class="intro">Convert centimeters to feet instantly, with the exact calculation and a quick reference table.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="conv-row">
+          <div class="field">
+            <label>From</label>
+            <select id="fromSelect"><option value="cm" selected>Centimeters (cm)</option><option value="ft">Feet (ft)</option><option value="in">Inches (in)</option><option value="km">Kilometers (km)</option><option value="m">Meters (m)</option><option value="mi">Miles (mi)</option><option value="mm">Millimeters (mm)</option></select>
+          </div>
+          <button class="swap-btn" id="swapBtn" title="Swap units">⇄</button>
+          <div class="field">
+            <label>To</label>
+            <select id="toSelect"><option value="ft" selected>Feet (ft)</option><option value="in">Inches (in)</option><option value="m">Meters (m)</option><option value="mm">Millimeters (mm)</option></select>
+          </div>
+        </div>
+        <div class="conv-row">
+          <div class="field">
+            <label>Centimeters</label>
+            <input type="number" id="fromInput" value="1" step="any">
+          </div>
+          <div style="width:42px;"></div>
+          <div class="field">
+            <label>Feet</label>
+            <input type="number" id="toOutput" readonly>
+          </div>
+        </div>
+        <div class="calc-line" id="calcLine"></div>
+
+        <table class="ref-table" id="refTable">
+          <tr><th>cm</th><th>ft</th></tr>
+        </table>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Length Conversion</h4>
+      <a href="/cm-to-inches-converter/">Centimeters to Inches</a>
+      <a href="/cm-to-meters-converter/">Centimeters to Meters</a>
+      <a href="/cm-to-mm-converter/">Centimeters to Millimeters</a>
+      <a href="/feet-to-cm-converter/">Feet to Centimeters</a>
+      <a href="/feet-to-mm-converter/">Feet to Millimeters</a>
+      <a href="/feet-to-inches-converter/">Feet to Inches</a>
+      <a href="/feet-to-meters-converter/">Feet to Meters</a>
+      <a href="/inches-to-cm-converter/">Inches to Centimeters</a>
+      <a href="/inches-to-feet-converter/">Inches to Feet</a>
+      <a href="/inches-to-meters-converter/">Inches to Meters</a>
+      <a href="/inches-to-mm-converter/">Inches to Millimeters</a>
+      <a href="/km-to-miles-converter/">Kilometers to Miles</a>
+      <a href="/meters-to-cm-converter/">Meters to Centimeters</a>
+      <a href="/meters-to-feet-converter/">Meters to Feet</a>
+      <a href="/meters-to-inches-converter/">Meters to Inches</a>
+      <a href="/miles-to-km-converter/">Miles to Kilometers</a>
+      <a href="/mm-to-cm-converter/">Millimeters to Centimeters</a>
+      <a href="/mm-to-feet-converter/">Millimeters to Feet</a>
+      <a href="/mm-to-inches-converter/">Millimeters to Inches</a>
+      <a href="/mm-to-km-converter/">Millimeters to Kilometers</a>
+      <a href="/cm-to-feet-inches-converter/">CM to Feet & Inches</a>
+      <a href="/feet-inches-to-cm-converter/">Feet & Inches to CM</a>
+      <a href="/height-converter/">Height Converter</a>
+      
+    </aside>
+    <div class="desc-block">
+      
+      
+      <h2>CM to FT conversion (Centimeters to Feet)</h2>
+      <p>This tool converts centimeters (cm) to feet (ft) instantly and precisely. Whether you search for "cm to ft" or "centimeters to feet", this converter gives you the exact result along with the formula, worked examples, and a full reference table below.</p>
+
+      <h2>Base conversion values</h2>
+      <p>1 centimeter = <strong>0.0328084 ft</strong></p>
+      <p>1 foot = <strong>30.48 cm</strong></p>
+
+      <h2>How to convert centimeters to feet</h2>
+      <p>To convert a value from centimeters to feet, divide it by <strong>30.48</strong>. This is a fixed, internationally standardized conversion factor, so the result is always mathematically exact, never an estimate.</p>
+
+      <h2>Formula</h2>
+      <p><strong>ft = cm ÷ 30.48</strong></p>
+
+      <h2>Worked examples</h2>
+      <p><strong>Example 1:</strong> Convert 20 cm to ft<br>
+      20 cm ÷ 30.48 = <strong>0.65616798 ft</strong></p>
+      <p><strong>Example 2:</strong> Convert 8 cm to ft<br>
+      8 cm ÷ 30.48 = <strong>0.26246719 ft</strong></p>
+      <p><strong>Example 3:</strong> Convert 100 cm to ft<br>
+      100 cm ÷ 30.48 = <strong>3.2808399 ft</strong></p>
+
+      <h2>How to use this converter</h2>
+      <ol>
+        <li>Type a value into the <strong>Centimeters</strong> field, the result updates instantly.</li>
+        <li>Use the <strong>Swap</strong> button to flip the conversion direction.</li>
+        <li>Change the <strong>From</strong> or <strong>To</strong> dropdown to jump straight to a different unit conversion.</li>
+        <li>Check the reference table below for common values at a glance.</li>
+      </ol>
+
+      <h2>Using the reference table</h2>
+      <p>The table above lists centimeters values from 1 to 1000 converted to feet, useful as a quick lookup without needing to type a custom value. All figures use the same exact conversion factor as the live calculator.</p>
+
+      <h2>What is a centimeter?</h2>
+      <p>A centimeter is a metric unit of length equal to one-hundredth of a meter. It's a common everyday unit for measuring height, small objects, and fabric.</p>
+
+      <h2>What is a foot?</h2>
+      <p>A foot is an imperial unit of length equal to 12 inches. It's widely used for measuring height, room dimensions, and short distances in the US and UK.</p>
+
+      <h2>Metric vs imperial</h2>
+      <p>Centimeters (cm) is part of the <strong>metric</strong> system, while feet (ft) is part of the <strong>imperial</strong> system. Since the two systems use different base units, this conversion relies on a defined equivalence rather than a simple decimal shift, which is exactly what this calculator applies automatically.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Converting measurements between metric and imperial units for construction, sewing, or DIY projects</li>
+        <li>Checking product dimensions listed in a different unit than you're used to</li>
+        <li>Converting recipe, craft, or school measurement problems</li>
+        <li>Quick reference while shopping, traveling, or reading international specifications</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is this centimeters to feet conversion exact?</h3>
+      <p>Yes, the conversion factor between centimeters and feet is a fixed, internationally defined value, so results are mathematically exact, not an approximation.</p>
+      <h3>Can I convert feet back to centimeters?</h3>
+      <p>Yes, click the Swap button above, or use the dropdown menus to jump directly to the reverse conversion page.</p>
+      <h3>How many decimal places does this calculator show?</h3>
+      <p>Results are shown to up to 6 decimal places for precision, very small or very large results switch to scientific notation automatically for readability.</p>
+      <h3>Do I need to round the result?</h3>
+      <p>Not unless your use case requires it, the value shown is exact. For practical purposes like construction or sewing, rounding to 1-2 decimal places is usually sufficient.</p>
+    
+    
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const FACTORS = { mm:0.001, cm:0.01, m:1, km:1000, in:0.0254, ft:0.3048, mi:1609.344 };
+  const NAMES = { mm:"Millimeters", cm:"Centimeters", m:"Meters", km:"Kilometers", in:"Inches", ft:"Feet", mi:"Miles" };
+  const SYMS = { mm:"mm", cm:"cm", m:"m", km:"km", in:"in", ft:"ft", mi:"mi" };
+
+  // slug map: "from_to" -> url
+  const SLUG_MAP = {"cm_ft":"cm-to-feet-converter","cm_in":"cm-to-inches-converter","cm_m":"cm-to-meters-converter","cm_mm":"cm-to-mm-converter","ft_cm":"feet-to-cm-converter","ft_mm":"feet-to-mm-converter","ft_in":"feet-to-inches-converter","ft_m":"feet-to-meters-converter","in_cm":"inches-to-cm-converter","in_ft":"inches-to-feet-converter","in_m":"inches-to-meters-converter","in_mm":"inches-to-mm-converter","km_mi":"km-to-miles-converter","m_cm":"meters-to-cm-converter","m_ft":"meters-to-feet-converter","m_in":"meters-to-inches-converter","mi_km":"miles-to-km-converter","mm_cm":"mm-to-cm-converter","mm_ft":"mm-to-feet-converter","mm_in":"mm-to-inches-converter","mm_km":"mm-to-km-converter"};
+
+  const fromSelect = document.getElementById('fromSelect');
+  const toSelect = document.getElementById('toSelect');
+  const fromInput = document.getElementById('fromInput');
+  const toOutput = document.getElementById('toOutput');
+
+  function convert(){
+    const f = fromSelect.value, t = toSelect.value;
+    const val = parseFloat(fromInput.value) || 0;
+    const meters = val * FACTORS[f];
+    const result = meters / FACTORS[t];
+    const displayResult = Math.abs(result) < 0.0001 && result !== 0 ? result.toExponential(4) : (Math.round(result * 1000000) / 1000000);
+    toOutput.value = displayResult;
+
+    const factor = FACTORS[f] / FACTORS[t];
+    document.getElementById('calcLine').innerHTML = `${val} ${SYMS[f]} × ${factor} = <strong>${displayResult} ${SYMS[t]}</strong>`;
+
+    const refTable = document.getElementById('refTable');
+    const refVals = [1,2,5,10,20,50,100,500,1000];
+    let rows = `<tr><th>${SYMS[f]}</th><th>${SYMS[t]}</th></tr>`;
+    refVals.forEach(v => {
+      const r = (v * FACTORS[f]) / FACTORS[t];
+      const rd = Math.abs(r) < 0.0001 ? r.toExponential(4) : (Math.round(r*1000000)/1000000);
+      rows += `<tr><td>${v} ${SYMS[f]}</td><td>${rd} ${SYMS[t]}</td></tr>`;
+    });
+    refTable.innerHTML = rows;
+  }
+
+  fromInput.addEventListener('input', convert);
+
+  toSelect.addEventListener('change', () => {
+    const key = fromSelect.value + '_' + toSelect.value;
+    if(SLUG_MAP[key]) window.location.href = '/' + SLUG_MAP[key] + '/';
+  });
+
+  fromSelect.addEventListener('change', () => {
+    const f = fromSelect.value;
+    // find first available slug starting with this "from"
+    const match = Object.keys(SLUG_MAP).find(k => k.startsWith(f + '_'));
+    if(match) window.location.href = '/' + SLUG_MAP[match] + '/';
+  });
+
+  document.getElementById('swapBtn').addEventListener('click', () => {
+    const key = toSelect.value + '_' + fromSelect.value;
+    if(SLUG_MAP[key]) window.location.href = '/' + SLUG_MAP[key] + '/';
+  });
+
+  convert();
+</script>
+
+</body>
+</html>
