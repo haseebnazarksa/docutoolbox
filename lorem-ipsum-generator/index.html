@@ -15,6 +15,18 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
   a, button{ outline:none; }
   a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
@@ -51,6 +63,9 @@
   }
   .setting select{ appearance:none; cursor:pointer; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>"); background-repeat:no-repeat; background-position:right 12px center; }
   .setting select:focus, .setting input:focus{ outline:none; border-color:var(--linework); }
+  .setting input[type="number"]::-webkit-outer-spin-button,
+  .setting input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .setting input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
   .opt-row{ display:flex; align-items:center; gap:8px; margin-bottom:16px; font-size:13px; }
   .opt-row input{ width:auto; accent-color:var(--accent); }
 
