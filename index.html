@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Docutoolbox - Free Online Tools. No Sign-up, No Uploads.</title>
+<title>Docutoolbox — Free Online Tools. No Sign-up, No Uploads.</title>
 <meta name="description" content="A free toolbox of browser-based utilities: word counter, text case converter, image compressor, age calculator and more. Nothing you enter ever leaves your device.">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +22,18 @@
     --text-muted:#8B96A3;
     --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
-  a, button{ outline:none; }
-  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
-  button{ user-select:none; -webkit-user-select:none; }
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-mid:#E7E2D6; --blue-card:#FFFFFF; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
     background:
@@ -172,7 +180,7 @@
     font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--text-muted);
     display:flex; justify-content:center; gap:22px; flex-wrap:wrap; margin-top:8px;
   }
-  .trust-line span::before{ content:"- "; color:var(--linework-soft); }
+  .trust-line span::before{ content:"— "; color:var(--linework-soft); }
 
   /* ---------- Schematic diagram (signature element) ---------- */
   .schematic{
@@ -249,17 +257,21 @@
   .feature-row.reverse .feature-text{ order:1; }
 
   .feature-visual{
-    border:1px solid var(--grid-line); border-radius:14px; background:var(--blue-card);
+    border:1px solid transparent; border-radius:14px; background:transparent;
     display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
-    transition:border-color 0.2s ease;
+    min-height:280px; transition:border-color 0.35s ease, background-color 0.35s ease;
   }
-  .feature-visual:hover{ border-color:var(--linework); }
-  .feature-visual img{ display:block; width:100%; height:auto; }
+  .feature-visual.box-ready{
+    border-color:var(--grid-line); background:var(--blue-card);
+  }
+  .feature-visual img{ display:block; width:100%; height:100%; object-fit:cover; position:absolute; inset:0; opacity:0; transition:opacity 0.35s ease; }
+  .feature-visual img.img-loaded{ opacity:1; }
   .feature-visual::before{
-    content:""; position:absolute; inset:0;
+    content:""; position:absolute; inset:0; opacity:0; transition:opacity 0.35s ease;
     background:linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/20px 20px,
                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/20px 20px;
   }
+  .feature-visual.box-ready::before{ opacity:1; }
   .feature-visual svg{ width:88px; height:88px; stroke:var(--linework); fill:none; stroke-width:1.3; position:relative; z-index:1;}
 
   .feature-tag{
@@ -267,8 +279,6 @@
     text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; margin-bottom:16px;
   }
   .feature-text h3{ font-family:'Fraunces',sans-serif; font-weight:700; font-size:26px; margin-bottom:14px; letter-spacing:-0.01em;}
-  .feature-text h3 a{ border-bottom:1.5px solid transparent; transition:border-color 0.2s ease; padding-bottom:2px;}
-  .feature-text h3 a:hover{ border-color:var(--linework); }
   .feature-text p{ color:var(--text-muted); font-size:15px; line-height:1.7; margin-bottom:20px;}
   .feature-link{
     display:inline-flex; align-items:center; gap:8px; color:var(--linework); text-decoration:none;
@@ -280,6 +290,7 @@
     .feature-row, .feature-row.reverse{ grid-template-columns:1fr; gap:26px; }
     .feature-row.reverse .feature-visual, .feature-row.reverse .feature-text{ order:initial; }
     .feature-row{ margin-bottom:56px; }
+    .feature-visual{ min-height:200px; }
   }
 
   /* ---------- All tools grid ---------- */
@@ -430,7 +441,7 @@
     <div class="section-head reveal">
       <div class="section-eyebrow">The toolbox</div>
       <h2>Pick a category, get to work</h2>
-      <p>Every tool runs instantly and locally on your device - no waiting, no accounts, no limits.</p>
+      <p>Every tool runs instantly and locally on your device — no waiting, no accounts, no limits.</p>
     </div>
 
     <div class="feature-row reveal">
@@ -440,7 +451,7 @@
       <div class="feature-text">
         <span class="feature-tag">15 tools</span>
         <h3><a href="/pdf-tools/" style="color:inherit;text-decoration:none;">PDF & Document Tools</a></h3>
-        <p>Merge, split, compress, convert, and edit PDF files - all in your browser.</p>
+        <p>Merge, split, compress, convert, and edit PDF files — all in your browser.</p>
         <a href="/pdf-tools/" class="feature-link">Browse PDF & Document Tools →</a>
       </div>
     </div>
@@ -473,7 +484,7 @@
       <div class="feature-text">
         <span class="feature-tag">15 tools</span>
         <h3><a href="/image-tools/" style="color:inherit;text-decoration:none;">Image Tools & Editing</a></h3>
-        <p>Compress, resize, crop, and convert images - no uploads, all local.</p>
+        <p>Compress, resize, crop, and convert images — no uploads, all local.</p>
         <a href="/image-tools/" class="feature-link">Browse Image Tools & Editing →</a>
       </div>
     </div>
@@ -510,6 +521,17 @@
         <a href="/dev-tools/" class="feature-link">Browse Web Developer & Tech Tools →</a>
       </div>
     </div>
+    <div class="feature-row reverse reveal">
+      <a href="/length-converter/" class="feature-visual" style="text-decoration:none;">
+        <img src="/images/length-converter.png" alt="Length Unit Converters" style="display:block;width:100%;height:auto;">
+      </a>
+      <div class="feature-text">
+        <span class="feature-tag">59 tools</span>
+        <h3><a href="/length-converter/" style="color:inherit;text-decoration:none;">Length Unit Converters</a></h3>
+        <p>Convert between metric and imperial length units, instantly and exactly.</p>
+        <a href="/length-converter/" class="feature-link">Browse Length Unit Converters →</a>
+      </div>
+    </div>
   </section>
 
   <section id="faq">
@@ -520,7 +542,7 @@
     <div class="faq-list" id="faqList">
       <div class="faq-item open">
         <button class="faq-q">What is Docutoolbox? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Docutoolbox is a free collection of small, focused web tools - a word counter, a text case converter, an image compressor, an age calculator, and more being added over time. Each one is built to do a single job well.</p></div>
+        <div class="faq-a"><p>Docutoolbox is a free collection of small, focused web tools — a word counter, a text case converter, an image compressor, an age calculator, and more being added over time. Each one is built to do a single job well.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Is it really free? <span class="plus">+</span></button>
@@ -532,7 +554,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Will more tools be added? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Yes - Docutoolbox is actively growing. New tools are added regularly based on what's genuinely useful for everyday tasks.</p></div>
+        <div class="faq-a"><p>Yes — Docutoolbox is actively growing. New tools are added regularly based on what's genuinely useful for everyday tasks.</p></div>
       </div>
     </div>
   </section>
@@ -573,19 +595,30 @@
     });
   });
 
-  // Scroll-reveal animations - replay every time an element enters or leaves the viewport,
-  // so it animates in whether you're scrolling down or back up.
+  // Scroll-reveal animations
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
         entry.target.classList.add('in-view');
-      } else {
-        entry.target.classList.remove('in-view');
+        revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+
+  // Category image fade-in: nothing visible at all until fully loaded, then box + image appear together
+  document.querySelectorAll('.feature-visual img').forEach(img => {
+    const container = img.closest('.feature-visual');
+    function reveal(){ img.classList.add('img-loaded'); container.classList.add('box-ready'); }
+    function hide(){ img.style.display = 'none'; }
+    if(img.complete && img.naturalWidth > 0){
+      reveal();
+    } else {
+      img.addEventListener('load', reveal);
+      img.addEventListener('error', hide);
+    }
+  });
 </script>
 
 </body>
