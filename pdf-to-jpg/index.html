@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF to JPG / PNG Converter Online — Free & Private | Docutoolbox</title>
-<meta name="description" content="Free online PDF to image converter. Turn every page of a PDF into a high-quality JPG or PNG image and download them individually or as a ZIP. Nothing leaves your browser.">
+<title>Convert PDF to JPG/PNG Free - Extract Images from a PDF Free | Docutoolbox</title>
+<meta name="description" content="Convert PDF to JPG or PNG online for free. Extract every page as a high-quality image and download instantly, right in your browser. No sign-up, nothing uploaded.">
 <link rel="canonical" href="https://docutoolbox.com/pdf-to-jpg/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +14,17 @@
     --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -109,15 +120,15 @@
   button.calc:hover{ background:var(--accent-soft); }
   button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
-  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  .convert-loading{ display:none; align-items:center; justify-content:center; gap:10px; margin-top:18px; padding:18px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework);}
+  .convert-loading .spinner{ width:16px; height:16px; }
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center; opacity:0; transition:opacity 0.35s ease;}
+  #successBox.show{ display:block; opacity:1; }
   #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
   #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
   #downloadBtn:hover{ background:var(--accent-soft); }
-  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
-  .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:static;}
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -177,9 +188,9 @@
           <div class="setting">
             <label>Resolution</label>
             <select id="resolutionSelect">
-              <option value="1">Standard (1x — smaller file)</option>
-              <option value="2" selected>High (2x — recommended)</option>
-              <option value="3">Very high (3x — largest file)</option>
+              <option value="1">Standard (1x  -  smaller file)</option>
+              <option value="2" selected>High (2x  -  recommended)</option>
+              <option value="3">Very high (3x  -  largest file)</option>
             </select>
           </div>
         </div>
@@ -196,11 +207,13 @@
 
         <button class="calc" id="convertBtn" disabled>Convert to images</button>
         <div id="errorMsg"></div>
+
+        <div class="convert-loading" id="convertLoading"><div class="spinner"></div><span>Preparing your images...</span></div>
+
         <div id="successBox">
           <div class="s-title" id="successTitle">✓ Your images are ready</div>
           <a id="downloadBtn" href="#" download="pages.zip">Download</a>
         </div>
-        <div class="privacy-note"><span class="dot"></span> Files are processed entirely in your browser — nothing is uploaded to a server.</div>
       </div>
     </div>
     <aside class="sidebar">
@@ -215,26 +228,26 @@
     </aside>
     <div class="desc-block">
       <h2>What is the PDF to JPG / PNG Converter?</h2>
-      <p>This tool turns every page of a PDF into a standalone image file — either JPG or PNG — so you can use individual pages as pictures: dropping one into a slideshow, posting it on social media, embedding it in a document, or attaching it somewhere that only accepts images rather than PDFs.</p>
+      <p>This tool turns every page of a PDF into a standalone image file  -  either JPG or PNG  -  so you can use individual pages as pictures: dropping one into a slideshow, posting it on social media, embedding it in a document, or attaching it somewhere that only accepts images rather than PDFs.</p>
       <p>Everything runs locally in your browser. Your file is never uploaded to a server, so it works quickly and privately even with sensitive documents.</p>
 
       <h2>How to use it</h2>
       <ol>
         <li>Drop your PDF onto the upload area, or click it to browse your device.</li>
-        <li>Choose your image format — <strong>JPG</strong> for smaller files and photos, or <strong>PNG</strong> for sharper text and graphics with a lossless result.</li>
-        <li>Choose a resolution — higher resolution gives a sharper, larger image at the cost of a bigger file size.</li>
+        <li>Choose your image format  -  <strong>JPG</strong> for smaller files and photos, or <strong>PNG</strong> for sharper text and graphics with a lossless result.</li>
+        <li>Choose a resolution  -  higher resolution gives a sharper, larger image at the cost of a bigger file size.</li>
         <li>All pages are selected by default; click any page to deselect it if you only need some pages converted.</li>
-        <li>Click <strong>Convert to images</strong> and download your result — a single image downloads directly, while multiple pages download together as a ZIP file.</li>
+        <li>Click <strong>Convert to images</strong> and download your result  -  a single image downloads directly, while multiple pages download together as a ZIP file.</li>
       </ol>
 
-      <h2>JPG vs. PNG — which should you choose?</h2>
-      <p><strong>JPG</strong> uses lossy compression, which keeps file sizes small — a good default for photo-heavy pages or when you're sharing images and don't need pixel-perfect sharpness. <strong>PNG</strong> is lossless, which means text and fine lines stay perfectly crisp with no compression artifacts, but the resulting file is typically larger. For pages that are mostly text or diagrams, PNG usually looks noticeably sharper; for pages with photographs, JPG is often the more practical choice.</p>
+      <h2>JPG vs. PNG  -  which should you choose?</h2>
+      <p><strong>JPG</strong> uses lossy compression, which keeps file sizes small  -  a good default for photo-heavy pages or when you're sharing images and don't need pixel-perfect sharpness. <strong>PNG</strong> is lossless, which means text and fine lines stay perfectly crisp with no compression artifacts, but the resulting file is typically larger. For pages that are mostly text or diagrams, PNG usually looks noticeably sharper; for pages with photographs, JPG is often the more practical choice.</p>
 
       <h2>Choosing a resolution</h2>
       <p>The resolution setting controls how many pixels are captured per page. <strong>Standard</strong> produces a smaller, screen-friendly image. <strong>High</strong> (the default) captures roughly twice the detail, which holds up well if you need to zoom in or print the image at a reasonable size. <strong>Very high</strong> captures the most detail, useful if you plan to print at a larger size or need to read fine text in the image, at the cost of a bigger download.</p>
 
       <h2>How it works technically</h2>
-      <p>Each selected page is rendered directly onto an in-browser canvas at your chosen resolution, then exported as a JPG or PNG image file — the same rendering pipeline used by PDF viewers, so what you get matches exactly how the page looks in a PDF reader. When multiple pages are converted at once, they're bundled together into a single ZIP archive so you can download everything in one step.</p>
+      <p>Each selected page is rendered directly onto an in-browser canvas at your chosen resolution, then exported as a JPG or PNG image file  -  the same rendering pipeline used by PDF viewers, so what you get matches exactly how the page looks in a PDF reader. When multiple pages are converted at once, they're bundled together into a single ZIP archive so you can download everything in one step.</p>
 
       <h2>Common uses</h2>
       <ul>
@@ -250,13 +263,13 @@
 
       <h2>Frequently asked questions</h2>
       <h3>Can I convert just some pages instead of the whole document?</h3>
-      <p>Yes — every page is selected by default, but you can click any page to deselect it and exclude it from the conversion.</p>
+      <p>Yes  -  every page is selected by default, but you can click any page to deselect it and exclude it from the conversion.</p>
       <h3>Will the images look exactly like the PDF pages?</h3>
-      <p>Yes — each page is rendered exactly as it appears in a PDF viewer, including text, images, and vector graphics, at the resolution you choose.</p>
+      <p>Yes  -  each page is rendered exactly as it appears in a PDF viewer, including text, images, and vector graphics, at the resolution you choose.</p>
       <h3>Can I convert a password-protected PDF?</h3>
       <p>Password-protected files need to be unlocked first. Use the <a href="/unlock-pdf/" style="color:var(--linework);">Unlock PDF</a> tool to remove the password, then upload the unlocked file here.</p>
       <h3>Why does a higher resolution create a bigger file?</h3>
-      <p>Higher resolution means more pixels are captured for each page, which increases image detail but also increases the file size — choose the resolution that balances sharpness against how large a file you're willing to download or share.</p>
+      <p>Higher resolution means more pixels are captured for each page, which increases image detail but also increases the file size  -  choose the resolution that balances sharpness against how large a file you're willing to download or share.</p>
     </div>
   </div>
 
@@ -280,6 +293,7 @@
   const convertBtn = document.getElementById('convertBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
+  const convertLoading = document.getElementById('convertLoading');
   const successTitle = document.getElementById('successTitle');
   const downloadBtn = document.getElementById('downloadBtn');
   const loadingRow = document.getElementById('loadingRow');
@@ -338,7 +352,7 @@
       toolbar.style.display = 'flex';
       settingsRow.style.display = 'flex';
     }catch(err){
-      errorMsg.textContent = "Couldn't read this PDF — it may be password-protected or corrupted.";
+      errorMsg.textContent = "Couldn't read this PDF  -  it may be password-protected or corrupted.";
       errorMsg.style.display = 'block';
     }
     loadingRow.style.display = 'none';
@@ -364,7 +378,7 @@
   }
 
   function resetResult(){
-    successBox.style.display = 'none';
+    successBox.classList.remove('show');
     errorMsg.style.display = 'none';
   }
 
@@ -372,8 +386,10 @@
     const selected = pages.filter(p => p.selected);
     if(selected.length === 0 || !pdfDocRef) return;
     errorMsg.style.display = 'none';
+    successBox.classList.remove('show');
     convertBtn.disabled = true;
-    convertBtn.textContent = 'Converting…';
+    convertLoading.style.display = 'flex';
+    const minDelay = new Promise(resolve => setTimeout(resolve, 2200));
     try{
       const scale = parseInt(resolutionSelect.value, 10) * 1.5;
       const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
@@ -418,8 +434,12 @@
         downloadBtn.textContent = `Download ${selected.length} images (.zip)`;
         successTitle.textContent = `✓ ${selected.length} images ready`;
       }
-      successBox.style.display = 'block';
+      await minDelay;
+      convertLoading.style.display = 'none';
+      successBox.classList.add('show');
     }catch(err){
+      await minDelay;
+      convertLoading.style.display = 'none';
       errorMsg.textContent = 'Something went wrong during conversion. Please check your file and try again.';
       errorMsg.style.display = 'block';
     }
