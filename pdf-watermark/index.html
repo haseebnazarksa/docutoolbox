@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Add Watermark to PDF Online — Free Text Watermark Tool | Docutoolbox</title>
-<meta name="description" content="Free online PDF watermark tool. Add a custom text watermark to every page — choose the text, position, size, color, rotation, and opacity, preview live, then download.">
+<title>Add Watermark to PDF Online - Free Text Watermark Tool | Docutoolbox</title>
+<meta name="description" content="Free online PDF watermark tool. Add a custom text watermark to every page - choose the text, position, size, color, rotation, and opacity, preview live, then download.">
 <link rel="canonical" href="https://docutoolbox.com/pdf-watermark/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,21 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -110,15 +124,17 @@
   button.calc:hover{ background:var(--accent-soft); }
   button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
-  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  .convert-loading{ display:none; align-items:center; justify-content:center; gap:10px; margin-top:18px; padding:18px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework);}
+  .convert-loading .spinner{ width:16px; height:16px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center; opacity:0; transition:opacity 0.35s ease;}
+  #successBox.show{ display:block; opacity:1; }
   #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
   #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
   #downloadBtn:hover{ background:var(--accent-soft); }
   .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
   .privacy-note .dot2{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -153,7 +169,7 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>PDF watermark generator</h1>
-  <p class="intro">Stamp a custom text watermark across every page of your PDF — see every page update live as you adjust it.</p>
+  <p class="intro">Stamp a custom text watermark across every page of your PDF - see every page update live as you adjust it.</p>
 
   <div class="content-grid">
     <div class="calc-block">
@@ -233,11 +249,13 @@
 
         <button class="calc" id="applyBtn" disabled>Add watermark</button>
         <div id="errorMsg"></div>
+
+        <div class="convert-loading" id="convertLoading"><div class="spinner"></div><span>Preparing your PDF...</span></div>
+
         <div id="successBox">
           <div class="s-title">✓ Your watermarked PDF is ready</div>
           <a id="downloadBtn" href="#" download="watermarked.pdf">Download watermarked.pdf</a>
         </div>
-        <div class="privacy-note"><span class="dot2"></span> Files are processed entirely in your browser — nothing is uploaded to a server.</div>
       </div>
     </div>
     <aside class="sidebar">
@@ -252,13 +270,13 @@
     </aside>
     <div class="desc-block">
       <h2>What is the PDF Watermark Generator?</h2>
-      <p>This tool stamps a custom text watermark — like "CONFIDENTIAL," "DRAFT," or your company name — across every page of a PDF. You control the text, position, rotation angle, size, color, and transparency, and every page updates live in the preview as you adjust each setting, so you always see exactly what the final file will look like.</p>
-      <p>Everything runs locally in your browser — your file is never uploaded to a server, so it's fast and private even for sensitive documents.</p>
+      <p>This tool stamps a custom text watermark - like "CONFIDENTIAL," "DRAFT," or your company name - across every page of a PDF. You control the text, position, rotation angle, size, color, and transparency, and every page updates live in the preview as you adjust each setting, so you always see exactly what the final file will look like.</p>
+      <p>Everything runs locally in your browser - your file is never uploaded to a server, so it's fast and private even for sensitive documents.</p>
 
       <h2>How to use it</h2>
       <ol>
         <li>Drop your PDF onto the upload area, or click it to browse your device.</li>
-        <li>Type your <strong>watermark text</strong> — anything from a single word to a short phrase.</li>
+        <li>Type your <strong>watermark text</strong> - anything from a single word to a short phrase.</li>
         <li>Choose a <strong>layout</strong>: a single placement in one spot, or a tiled pattern repeated across the whole page.</li>
         <li>For a single placement, pick a <strong>position</strong> from the 3×3 grid.</li>
         <li>Adjust <strong>rotation</strong> (a diagonal 45° angle is the classic watermark look), <strong>opacity</strong> (how see-through it is), <strong>font size</strong>, and <strong>color</strong>.</li>
@@ -267,13 +285,13 @@
       </ol>
 
       <h2>Single vs. tiled layout</h2>
-      <p><strong>Single</strong> places one instance of your watermark text at a chosen position — a clean, minimal look that works well for a subtle "DRAFT" label in a corner, or a bold diagonal stamp across the center. <strong>Tiled</strong> repeats the watermark text in a grid pattern across the entire page, which makes it much harder to crop or edit out — a common choice for documents where you want to strongly discourage unauthorized copying or redistribution.</p>
+      <p><strong>Single</strong> places one instance of your watermark text at a chosen position - a clean, minimal look that works well for a subtle "DRAFT" label in a corner, or a bold diagonal stamp across the center. <strong>Tiled</strong> repeats the watermark text in a grid pattern across the entire page, which makes it much harder to crop or edit out - a common choice for documents where you want to strongly discourage unauthorized copying or redistribution.</p>
 
       <h2>Choosing opacity and rotation</h2>
-      <p>Lower opacity makes the watermark subtle enough that it doesn't interfere with reading the underlying content, which is typical for "DRAFT" or branding watermarks. Higher opacity makes it more prominent and attention-grabbing, often used for stronger warnings like "CONFIDENTIAL" or "DO NOT DISTRIBUTE." A 45° diagonal rotation is the traditional watermark angle because it's visible at a glance without following the natural horizontal reading direction of the text underneath — but a 0° horizontal watermark can look more like a formal stamp or label.</p>
+      <p>Lower opacity makes the watermark subtle enough that it doesn't interfere with reading the underlying content, which is typical for "DRAFT" or branding watermarks. Higher opacity makes it more prominent and attention-grabbing, often used for stronger warnings like "CONFIDENTIAL" or "DO NOT DISTRIBUTE." A 45° diagonal rotation is the traditional watermark angle because it's visible at a glance without following the natural horizontal reading direction of the text underneath - but a 0° horizontal watermark can look more like a formal stamp or label.</p>
 
       <h2>How it works technically</h2>
-      <p>The tool renders your watermark text directly into the PDF's page content as real vector text, using the settings you've chosen for opacity, rotation, size, and color — it's not a flattened image, so the underlying document text remains fully selectable and searchable beneath the watermark, and the watermark itself stays crisp at any zoom level.</p>
+      <p>The tool renders your watermark text directly into the PDF's page content as real vector text, using the settings you've chosen for opacity, rotation, size, and color - it's not a flattened image, so the underlying document text remains fully selectable and searchable beneath the watermark, and the watermark itself stays crisp at any zoom level.</p>
 
       <h2>Common uses</h2>
       <ul>
@@ -281,7 +299,7 @@
         <li>Adding "CONFIDENTIAL" to sensitive reports, contracts, or internal documents</li>
         <li>Branding shared PDFs with a company name or website</li>
         <li>Discouraging unauthorized redistribution of paid or proprietary content with a tiled watermark</li>
-        <li>Marking sample or preview documents as "SAMPLE — NOT FOR DISTRIBUTION"</li>
+        <li>Marking sample or preview documents as "SAMPLE - NOT FOR DISTRIBUTION"</li>
       </ul>
 
       <h2>File size and privacy</h2>
@@ -291,11 +309,11 @@
       <h3>Can I remove a watermark after adding it?</h3>
       <p>This tool adds the watermark as part of the page content, so removing it afterward would require editing the PDF directly. Keep your original, unwatermarked file as a backup before downloading the watermarked version.</p>
       <h3>Will the watermark cover up my document's content?</h3>
-      <p>You control the opacity, so you can keep it subtle enough to stay readable underneath, or make it bold and prominent — the live preview across every page lets you check the balance before downloading.</p>
+      <p>You control the opacity, so you can keep it subtle enough to stay readable underneath, or make it bold and prominent - the live preview across every page lets you check the balance before downloading.</p>
       <h3>Can I watermark a password-protected PDF?</h3>
       <p>Password-protected files need to be unlocked first. Use the <a href="/unlock-pdf/" style="color:var(--linework);">Unlock PDF</a> tool to remove the password, then upload the unlocked file here.</p>
       <h3>Does a tiled watermark repeat the same way on every page?</h3>
-      <p>Yes — the same tiled pattern, text, rotation, and opacity settings are applied consistently across every page of the document.</p>
+      <p>Yes - the same tiled pattern, text, rotation, and opacity settings are applied consistently across every page of the document.</p>
     </div>
   </div>
 
@@ -327,6 +345,7 @@
   const applyBtn = document.getElementById('applyBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
+  const convertLoading = document.getElementById('convertLoading');
   const downloadBtn = document.getElementById('downloadBtn');
 
   let sourceArrayBuffer = null;
@@ -398,7 +417,7 @@
       applyBtn.disabled = false;
       renderGrid();
     }catch(err){
-      errorMsg.textContent = "Couldn't read this PDF — it may be password-protected or corrupted.";
+      errorMsg.textContent = "Couldn't read this PDF - it may be password-protected or corrupted.";
       errorMsg.style.display = 'block';
     }
     loadingRow.style.display = 'none';
@@ -469,15 +488,17 @@
   }
 
   function resetResult(){
-    successBox.style.display = 'none';
+    successBox.classList.remove('show');
     errorMsg.style.display = 'none';
   }
 
   applyBtn.addEventListener('click', async () => {
     if(!sourceArrayBuffer) return;
     errorMsg.style.display = 'none';
+    successBox.classList.remove('show');
     applyBtn.disabled = true;
-    applyBtn.textContent = 'Adding watermark…';
+    convertLoading.style.display = 'flex';
+    const minDelay = new Promise(resolve => setTimeout(resolve, 2200));
     try{
       const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib;
       const doc = await PDFDocument.load(sourceArrayBuffer, { ignoreEncryption: true });
@@ -528,8 +549,12 @@
       downloadBtn.href = url;
       downloadBtn.download = `${sourceFileName}-watermarked.pdf`;
       downloadBtn.textContent = `Download ${sourceFileName}-watermarked.pdf`;
-      successBox.style.display = 'block';
+      await minDelay;
+      convertLoading.style.display = 'none';
+      successBox.classList.add('show');
     }catch(err){
+      await minDelay;
+      convertLoading.style.display = 'none';
       errorMsg.textContent = 'Something went wrong while adding the watermark. Please check your file and try again.';
       errorMsg.style.display = 'block';
     }
