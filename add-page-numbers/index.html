@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Add Page Numbers to PDF Online — Free & Private | Docutoolbox</title>
+<title>Add Page Numbers to PDF Online - Free & Private | Docutoolbox</title>
 <meta name="description" content="Free online tool to add page numbers to a PDF. Choose the position, starting number, and format, preview every page live, then download. Everything runs in your browser.">
 <link rel="canonical" href="https://docutoolbox.com/add-page-numbers/">
 <link rel="icon" type="image/png" href="/logo.png">
@@ -15,7 +15,21 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -106,15 +120,17 @@
   button.calc:hover{ background:var(--accent-soft); }
   button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
-  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  .convert-loading{ display:none; align-items:center; justify-content:center; gap:10px; margin-top:18px; padding:18px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework);}
+  .convert-loading .spinner{ width:16px; height:16px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center; opacity:0; transition:opacity 0.35s ease;}
+  #successBox.show{ display:block; opacity:1; }
   #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
   #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
   #downloadBtn:hover{ background:var(--accent-soft); }
   .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
   .privacy-note .dot2{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -149,7 +165,7 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>Add page numbers to PDF</h1>
-  <p class="intro">Upload a PDF, choose the position, format, and starting number — see every page update live — then download the numbered file.</p>
+  <p class="intro">Upload a PDF, choose the position, format, and starting number - see every page update live - then download the numbered file.</p>
 
   <div class="content-grid">
     <div class="calc-block">
@@ -224,11 +240,13 @@
 
         <button class="calc" id="applyBtn" disabled>Add page numbers</button>
         <div id="errorMsg"></div>
+
+        <div class="convert-loading" id="convertLoading"><div class="spinner"></div><span>Preparing your PDF...</span></div>
+
         <div id="successBox">
           <div class="s-title">✓ Your numbered PDF is ready</div>
           <a id="downloadBtn" href="#" download="numbered.pdf">Download numbered.pdf</a>
         </div>
-        <div class="privacy-note"><span class="dot2"></span> Files are processed entirely in your browser — nothing is uploaded to a server.</div>
       </div>
     </div>
     <aside class="sidebar">
@@ -243,39 +261,39 @@
     </aside>
     <div class="desc-block">
       <h2>What is the Page Numbers tool?</h2>
-      <p>This tool stamps page numbers onto every page of a PDF — choose where they sit, what format they follow, and which number to start from, and watch a live thumbnail of every single page update instantly as you adjust the settings. What you see in the preview grid is exactly what you'll get in the downloaded file.</p>
-      <p>Everything runs locally in your browser — your file is never uploaded to a server, so it's fast and private even for confidential documents.</p>
+      <p>This tool stamps page numbers onto every page of a PDF - choose where they sit, what format they follow, and which number to start from, and watch a live thumbnail of every single page update instantly as you adjust the settings. What you see in the preview grid is exactly what you'll get in the downloaded file.</p>
+      <p>Everything runs locally in your browser - your file is never uploaded to a server, so it's fast and private even for confidential documents.</p>
 
       <h2>How to use it</h2>
       <ol>
         <li>Drop your PDF onto the upload area, or click it to browse your device.</li>
         <li>Every page renders as a thumbnail below, with a live number preview shown right on the page.</li>
-        <li>Choose a <strong>position</strong> from the 3×3 grid — top, middle, or bottom, and left, center, or right.</li>
+        <li>Choose a <strong>position</strong> from the 3×3 grid - top, middle, or bottom, and left, center, or right.</li>
         <li>Choose a <strong>format</strong>: plain numbers, "Page 1, Page 2…", "1 of 10, 2 of 10…", or dash-styled numbers.</li>
         <li>Set the <strong>starting number</strong> if you don't want to begin at 1, and optionally turn on <strong>"Skip first page"</strong> for a cover page.</li>
-        <li>Adjust font size and color — every page thumbnail updates instantly as you change any setting.</li>
+        <li>Adjust font size and color - every page thumbnail updates instantly as you change any setting.</li>
         <li>Once it looks right, click <strong>Add page numbers</strong> and download your file.</li>
       </ol>
 
       <h2>Why seeing every page matters</h2>
-      <p>Different pages in the same document can look very different — some have text right up to the edges, others have wide margins, and a cover page often looks nothing like the rest. Seeing a live preview across the entire document, not just a single mock-up, means you can catch a number overlapping real content on a specific page before you download the final file.</p>
+      <p>Different pages in the same document can look very different - some have text right up to the edges, others have wide margins, and a cover page often looks nothing like the rest. Seeing a live preview across the entire document, not just a single mock-up, means you can catch a number overlapping real content on a specific page before you download the final file.</p>
 
       <h2>Choosing a position</h2>
-      <p>The most common choice is <strong>bottom-center</strong> or <strong>bottom-right</strong> — the traditional spot for page numbers in books, reports, and printed documents. Top positions work well for documents with a lot of content near the bottom of each page, and side positions can suit wide or landscape-oriented documents.</p>
+      <p>The most common choice is <strong>bottom-center</strong> or <strong>bottom-right</strong> - the traditional spot for page numbers in books, reports, and printed documents. Top positions work well for documents with a lot of content near the bottom of each page, and side positions can suit wide or landscape-oriented documents.</p>
 
       <h2>Choosing a format</h2>
       <ul>
-        <li><strong>1, 2, 3…</strong> — the simplest, most common format for everyday documents</li>
-        <li><strong>Page 1, Page 2…</strong> — more explicit, useful for informal or internal documents</li>
-        <li><strong>1 of 10, 2 of 10…</strong> — shows readers exactly how many pages remain, common in contracts and forms</li>
-        <li><strong>– 1 –, – 2 –…</strong> — a stylistic dash format seen in some formal or published documents</li>
+        <li><strong>1, 2, 3…</strong> - the simplest, most common format for everyday documents</li>
+        <li><strong>Page 1, Page 2…</strong> - more explicit, useful for informal or internal documents</li>
+        <li><strong>1 of 10, 2 of 10…</strong> - shows readers exactly how many pages remain, common in contracts and forms</li>
+        <li><strong>– 1 –, – 2 –…</strong> - a stylistic dash format seen in some formal or published documents</li>
       </ul>
 
       <h2>Starting number and skipping the cover page</h2>
-      <p>If your document is part of a larger set — like a second volume, or an appendix that continues from a main report — you can set a custom starting number so the numbering picks up correctly rather than restarting at 1. Many formal documents also skip numbering on the cover page: turning on "Skip first page" leaves page one blank in the preview and starts the visible numbering from page two.</p>
+      <p>If your document is part of a larger set - like a second volume, or an appendix that continues from a main report - you can set a custom starting number so the numbering picks up correctly rather than restarting at 1. Many formal documents also skip numbering on the cover page: turning on "Skip first page" leaves page one blank in the preview and starts the visible numbering from page two.</p>
 
       <h2>How it works technically</h2>
-      <p>The tool renders every page of your PDF directly in your browser and overlays a live text preview showing exactly where and how each number will appear. When you click "Add page numbers," it stamps the same numbers as real, selectable text directly into the underlying PDF page content using the fonts already built into PDF viewers — no image is layered on top, so the numbers stay sharp at any zoom level.</p>
+      <p>The tool renders every page of your PDF directly in your browser and overlays a live text preview showing exactly where and how each number will appear. When you click "Add page numbers," it stamps the same numbers as real, selectable text directly into the underlying PDF page content using the fonts already built into PDF viewers - no image is layered on top, so the numbers stay sharp at any zoom level.</p>
 
       <h2>Common uses</h2>
       <ul>
@@ -291,9 +309,9 @@
 
       <h2>Frequently asked questions</h2>
       <h3>Can I number a PDF that already has some numbers printed on it?</h3>
-      <p>Yes, but keep in mind this tool adds a new number on top of the existing page content — since you can see the live preview across every page, you can spot any overlap with existing numbers and choose a different position to avoid it.</p>
+      <p>Yes, but keep in mind this tool adds a new number on top of the existing page content - since you can see the live preview across every page, you can spot any overlap with existing numbers and choose a different position to avoid it.</p>
       <h3>Will adding numbers affect the rest of my content?</h3>
-      <p>No — the original content of every page stays exactly as it was; the page number is simply added as new text in the position you chose.</p>
+      <p>No - the original content of every page stays exactly as it was; the page number is simply added as new text in the position you chose.</p>
       <h3>Can I number a password-protected PDF?</h3>
       <p>Password-protected files need to be unlocked first. Use the <a href="/unlock-pdf/" style="color:var(--linework);">Unlock PDF</a> tool to remove the password, then upload the unlocked file here.</p>
       <h3>Can I remove page numbers later if I change my mind?</h3>
@@ -325,6 +343,7 @@
   const applyBtn = document.getElementById('applyBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
+  const convertLoading = document.getElementById('convertLoading');
   const downloadBtn = document.getElementById('downloadBtn');
 
   let sourceArrayBuffer = null;
@@ -387,7 +406,7 @@
       applyBtn.disabled = false;
       renderGrid();
     }catch(err){
-      errorMsg.textContent = "Couldn't read this PDF — it may be password-protected or corrupted.";
+      errorMsg.textContent = "Couldn't read this PDF - it may be password-protected or corrupted.";
       errorMsg.style.display = 'block';
     }
     loadingRow.style.display = 'none';
@@ -453,15 +472,17 @@
   }
 
   function resetResult(){
-    successBox.style.display = 'none';
+    successBox.classList.remove('show');
     errorMsg.style.display = 'none';
   }
 
   applyBtn.addEventListener('click', async () => {
     if(!sourceArrayBuffer) return;
     errorMsg.style.display = 'none';
+    successBox.classList.remove('show');
     applyBtn.disabled = true;
-    applyBtn.textContent = 'Adding numbers…';
+    convertLoading.style.display = 'flex';
+    const minDelay = new Promise(resolve => setTimeout(resolve, 2200));
     try{
       const { PDFDocument, StandardFonts, rgb } = PDFLib;
       const doc = await PDFDocument.load(sourceArrayBuffer, { ignoreEncryption: true });
@@ -501,8 +522,12 @@
       downloadBtn.href = url;
       downloadBtn.download = `${sourceFileName}-numbered.pdf`;
       downloadBtn.textContent = `Download ${sourceFileName}-numbered.pdf`;
-      successBox.style.display = 'block';
+      await minDelay;
+      convertLoading.style.display = 'none';
+      successBox.classList.add('show');
     }catch(err){
+      await minDelay;
+      convertLoading.style.display = 'none';
       errorMsg.textContent = 'Something went wrong while adding page numbers. Please check your file and try again.';
       errorMsg.style.display = 'block';
     }
