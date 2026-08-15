@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JPG to PDF Converter Online — Combine Images into One PDF Free | Docutoolbox</title>
-<meta name="description" content="Free online image to PDF converter. Upload JPG, PNG, or WEBP images, reorder them, and combine them into a single PDF — instantly, in your browser, with no upload.">
+<title>JPG to PDF Converter Online - Combine Images into One PDF Free | Docutoolbox</title>
+<meta name="description" content="Free online image to PDF converter. Upload JPG, PNG, or WEBP images, reorder them, and combine them into a single PDF - instantly, in your browser, with no upload.">
 <link rel="canonical" href="https://docutoolbox.com/jpg-to-pdf/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,21 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -106,15 +120,18 @@
   button.calc:hover{ background:var(--accent-soft); }
   button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
-  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  .convert-loading{ display:none; align-items:center; justify-content:center; gap:10px; margin-top:18px; padding:18px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework);}
+  .convert-loading .spinner{ width:16px; height:16px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0;}
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center; opacity:0; transition:opacity 0.35s ease;}
+  #successBox.show{ display:block; opacity:1; }
   #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
   #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
   #downloadBtn:hover{ background:var(--accent-soft); }
   .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
   .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -196,11 +213,13 @@
 
         <button class="calc" id="convertBtn" disabled>Create PDF</button>
         <div id="errorMsg"></div>
+
+        <div class="convert-loading" id="convertLoading"><div class="spinner"></div><span>Preparing your PDF...</span></div>
+
         <div id="successBox">
           <div class="s-title">✓ Your PDF is ready</div>
           <a id="downloadBtn" href="#" download="images.pdf">Download images.pdf</a>
         </div>
-        <div class="privacy-note"><span class="dot"></span> Files are processed entirely in your browser — nothing is uploaded to a server.</div>
       </div>
     </div>
     <aside class="sidebar">
@@ -215,28 +234,28 @@
     </aside>
     <div class="desc-block">
       <h2>What is the JPG / Image to PDF tool?</h2>
-      <p>This tool combines one or more images — JPG, PNG, or WEBP — into a single PDF document, with each image becoming its own page. It's built for turning scanned photos, screenshots, or picture-based documents into a proper, shareable PDF file.</p>
-      <p>Everything happens locally in your browser — your images are never uploaded to a server, so it's fast and private even for personal photos or sensitive scans.</p>
+      <p>This tool combines one or more images - JPG, PNG, or WEBP - into a single PDF document, with each image becoming its own page. It's built for turning scanned photos, screenshots, or picture-based documents into a proper, shareable PDF file.</p>
+      <p>Everything happens locally in your browser - your images are never uploaded to a server, so it's fast and private even for personal photos or sensitive scans.</p>
 
       <h2>How to use it</h2>
       <ol>
-        <li>Drop your images onto the upload area, or click it to browse your device — select as many as you need at once.</li>
+        <li>Drop your images onto the upload area, or click it to browse your device - select as many as you need at once.</li>
         <li>Choose your page settings: <strong>page size</strong> (fit-to-image, or a standard A4/Letter page), and for A4/Letter, the <strong>orientation</strong> and <strong>margin</strong>.</li>
-        <li>Drag any image thumbnail to change its order — the numbers update live to show the final page order.</li>
+        <li>Drag any image thumbnail to change its order - the numbers update live to show the final page order.</li>
         <li>Click the × on any image to remove it before creating the PDF.</li>
         <li>Need more images? Click <strong>"+ Add more images"</strong> to add additional files to the set.</li>
         <li>Click <strong>Create PDF</strong> and download the result.</li>
       </ol>
 
       <h2>Choosing a page size</h2>
-      <p><strong>Fit to image</strong> makes each PDF page exactly the same size and shape as its source image — no white borders, no cropping, just the image itself as a page. This is the best choice when your images are already the right shape (like a scanned photo) and you want the PDF to preserve that exactly.</p>
+      <p><strong>Fit to image</strong> makes each PDF page exactly the same size and shape as its source image - no white borders, no cropping, just the image itself as a page. This is the best choice when your images are already the right shape (like a scanned photo) and you want the PDF to preserve that exactly.</p>
       <p><strong>A4</strong> and <strong>Letter</strong> place each image centered on a standard, fixed page size, scaling it down to fit if needed. This is useful when you want a document that prints consistently and matches standard paper sizes, especially if you're mixing images of different shapes and want them to look uniform.</p>
 
       <h2>Orientation and margins</h2>
-      <p>When using A4 or Letter page sizes, you can choose <strong>portrait</strong> (taller than wide, the default for most documents) or <strong>landscape</strong> (wider than tall, useful for wide photos or panoramas). The margin setting controls how much blank space surrounds the image on the page — "None" fills the page edge-to-edge, while "Small" or "Large" leaves a visible white border, similar to a printed photo mat.</p>
+      <p>When using A4 or Letter page sizes, you can choose <strong>portrait</strong> (taller than wide, the default for most documents) or <strong>landscape</strong> (wider than tall, useful for wide photos or panoramas). The margin setting controls how much blank space surrounds the image on the page - "None" fills the page edge-to-edge, while "Small" or "Large" leaves a visible white border, similar to a printed photo mat.</p>
 
       <h2>How it works technically</h2>
-      <p>Each image is placed onto its own PDF page according to your chosen size and orientation settings, preserving the original image quality — images are embedded directly into the PDF rather than being re-compressed or degraded in the process.</p>
+      <p>Each image is placed onto its own PDF page according to your chosen size and orientation settings, preserving the original image quality - images are embedded directly into the PDF rather than being re-compressed or degraded in the process.</p>
 
       <h2>Common uses</h2>
       <ul>
@@ -252,11 +271,11 @@
 
       <h2>Frequently asked questions</h2>
       <h3>Can I mix JPG, PNG, and WEBP images in the same PDF?</h3>
-      <p>Yes — you can upload any combination of these formats, and they'll all be combined into the same PDF, each becoming its own page.</p>
+      <p>Yes - you can upload any combination of these formats, and they'll all be combined into the same PDF, each becoming its own page.</p>
       <h3>Will converting reduce my image quality?</h3>
-      <p>No — your original image data is embedded into the PDF without additional lossy recompression, so quality is preserved.</p>
+      <p>No - your original image data is embedded into the PDF without additional lossy recompression, so quality is preserved.</p>
       <h3>Can I change the order after adding images?</h3>
-      <p>Yes — simply drag any image thumbnail to a new position in the grid at any time before creating the PDF.</p>
+      <p>Yes - simply drag any image thumbnail to a new position in the grid at any time before creating the PDF.</p>
       <h3>Is there a limit to how many images I can combine?</h3>
       <p>There's no hard limit built into the tool, though a very large number of high-resolution images will naturally take longer to process since everything runs on your device.</p>
     </div>
@@ -279,6 +298,7 @@
   const convertBtn = document.getElementById('convertBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
+  const convertLoading = document.getElementById('convertLoading');
   const downloadBtn = document.getElementById('downloadBtn');
 
   let images = [];  // { id, file, thumbUrl }
@@ -386,7 +406,7 @@
   }
 
   function resetResult(){
-    successBox.style.display = 'none';
+    successBox.classList.remove('show');
     errorMsg.style.display = 'none';
   }
 
@@ -415,8 +435,10 @@
   convertBtn.addEventListener('click', async () => {
     if(images.length === 0) return;
     errorMsg.style.display = 'none';
+    successBox.classList.remove('show');
     convertBtn.disabled = true;
-    convertBtn.textContent = 'Creating PDF…';
+    convertLoading.style.display = 'flex';
+    const minDelay = new Promise(resolve => setTimeout(resolve, 2200));
     try{
       const { PDFDocument } = PDFLib;
       const pdfDoc = await PDFDocument.create();
@@ -454,8 +476,12 @@
       const blob = new Blob([bytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       downloadBtn.href = url;
-      successBox.style.display = 'block';
+      await minDelay;
+      convertLoading.style.display = 'none';
+      successBox.classList.add('show');
     }catch(err){
+      await minDelay;
+      convertLoading.style.display = 'none';
       errorMsg.textContent = 'Something went wrong while creating the PDF. Please check your images and try again.';
       errorMsg.style.display = 'block';
     }
