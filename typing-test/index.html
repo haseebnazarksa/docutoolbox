@@ -138,7 +138,8 @@
   .word-wrap{ display:inline-block; transition:transform 0.45s ease, opacity 0.45s ease; }
   .word-wrap.wrong-fall{ transform:translateY(16px); opacity:0.3; }
   #hiddenInput{
-    position:absolute; top:0; left:0; opacity:0; width:1px; height:1px; pointer-events:none; font-size:16px;
+    position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; font-size:16px;
+    border:none; background:transparent; caret-color:transparent; z-index:5;
   }
 
   .action-row{ display:flex; justify-content:center; margin-top:22px; }
@@ -247,7 +248,7 @@
     <div id="testWrap">
       <div class="type-area" id="typeArea">
         <span id="wordsDisplay"></span>
-        <input type="text" id="hiddenInput" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <input type="text" id="hiddenInput" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text">
       </div>
 
       <div class="action-row">
@@ -505,56 +506,49 @@
     typeArea.classList.remove('focused');
   });
 
-  hiddenInput.addEventListener('keydown', (e) => {
-    if(testEnded) return;
-    if(e.key === ' '){
-      e.preventDefault();
-      const wordEl = wordsDisplay.querySelector(`.word-wrap[data-word="${currentWordIndex}"]`);
-      const spaceEl = wordsDisplay.querySelector(`.space-char[data-space="${currentWordIndex}"]`);
-      if(currentCharIndex > 0){
-        if(wordEl){
-          const hasIncorrect = wordEl.querySelector('span.incorrect') !== null;
-          const isIncomplete = currentCharIndex < words[currentWordIndex].length;
-          if(hasIncorrect || isIncomplete){
-            wordEl.classList.add('wrong-fall');
-            if(spaceEl) spaceEl.classList.add('incorrect');
-          } else if(spaceEl){
-            spaceEl.classList.add('correct');
-          }
+  function typeSpace(){
+    const wordEl = wordsDisplay.querySelector(`.word-wrap[data-word="${currentWordIndex}"]`);
+    const spaceEl = wordsDisplay.querySelector(`.space-char[data-space="${currentWordIndex}"]`);
+    if(currentCharIndex > 0){
+      if(wordEl){
+        const hasIncorrect = wordEl.querySelector('span.incorrect') !== null;
+        const isIncomplete = currentCharIndex < words[currentWordIndex].length;
+        if(hasIncorrect || isIncomplete){
+          wordEl.classList.add('wrong-fall');
+          if(spaceEl) spaceEl.classList.add('incorrect');
+        } else if(spaceEl){
+          spaceEl.classList.add('correct');
         }
-        currentWordIndex++;
-        currentCharIndex = 0;
-        markCurrent();
-        checkScroll();
       }
-      return;
+      currentWordIndex++;
+      currentCharIndex = 0;
+      markCurrent();
+      checkScroll();
     }
-    if(e.key === 'Backspace'){
-      e.preventDefault();
-      if(currentCharIndex > 0){
-        currentCharIndex--;
-        const el = wordsDisplay.querySelector(`span[data-w="${currentWordIndex}"][data-c="${currentCharIndex}"]`);
-        if(el){
-          if(el.classList.contains('correct')) correctCount--;
-          if(el.classList.contains('incorrect')) incorrectCount--;
-          el.classList.remove('correct','incorrect');
-          totalTypedCount--;
-        }
-        markCurrent();
-      }
-      return;
-    }
-    if(e.key.length !== 1) return;
-    e.preventDefault();
+  }
 
+  function typeBackspace(){
+    if(currentCharIndex > 0){
+      currentCharIndex--;
+      const el = wordsDisplay.querySelector(`span[data-w="${currentWordIndex}"][data-c="${currentCharIndex}"]`);
+      if(el){
+        if(el.classList.contains('correct')) correctCount--;
+        if(el.classList.contains('incorrect')) incorrectCount--;
+        el.classList.remove('correct','incorrect');
+        totalTypedCount--;
+      }
+      markCurrent();
+    }
+  }
+
+  function typeChar(ch){
     if(!testStarted) startTest();
     if(testEnded) return;
 
     const targetWord = words[currentWordIndex];
-
     if(currentCharIndex >= targetWord.length){
-      // Word already fully typed, extra keystrokes are ignored.
-      // Press space to move to the next word.
+      // Word already fully typed, extra characters are ignored.
+      // A space is needed to move to the next word.
       return;
     }
 
@@ -562,7 +556,7 @@
     const expectedChar = targetWord[currentCharIndex];
 
     totalTypedCount++;
-    if(e.key === expectedChar){
+    if(ch === expectedChar){
       el.classList.remove('incorrect');
       el.classList.add('correct');
       correctCount++;
@@ -576,6 +570,42 @@
     markCurrent();
     checkScroll();
     updateLiveStats();
+  }
+
+  // Uses the 'input' event (instead of keydown) so typing is captured
+  // reliably on both physical keyboards and mobile virtual keyboards,
+  // which don't always report consistent keydown key values.
+  hiddenInput.addEventListener('input', (e) => {
+    if(testEnded){ hiddenInput.value = ''; return; }
+
+    const inputType = e.inputType || '';
+    if(inputType.indexOf('delete') === 0){
+      typeBackspace();
+      hiddenInput.value = '';
+      return;
+    }
+
+    const val = hiddenInput.value;
+    for(let i = 0; i < val.length; i++){
+      const ch = val[i];
+      if(ch === ' ' || ch === '\n'){
+        if(!testStarted) startTest();
+        typeSpace();
+      } else {
+        typeChar(ch);
+      }
+    }
+    hiddenInput.value = '';
+  });
+
+  hiddenInput.addEventListener('keydown', (e) => {
+    // Backspace on an already-empty hidden input fires no 'input' event
+    // in some browsers, so it's handled here as a fallback. Space and
+    // character keys are handled by the 'input' listener above.
+    if(e.key === 'Backspace' && hiddenInput.value === ''){
+      e.preventDefault();
+      typeBackspace();
+    }
   });
 
   function checkScroll(){
