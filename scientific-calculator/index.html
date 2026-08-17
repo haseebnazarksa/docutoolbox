@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scientific Calculator Online — Free Trig, Log & Exponent Calculator | Docutoolbox</title>
-<meta name="description" content="Free online scientific calculator with trigonometry, logarithms, powers, roots, and memory functions. Works instantly in your browser — no download, no sign-up.">
+<title>Scientific Calculator Online - Free Trig, Log & Exponent Calculator | Docutoolbox</title>
+<meta name="description" content="Free online scientific calculator with trigonometry, logarithms, powers, roots, and memory functions. Works instantly in your browser - no download, no sign-up.">
 <link rel="canonical" href="https://docutoolbox.com/scientific-calculator/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,22 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -25,9 +40,15 @@
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);; white-space:nowrap}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;; white-space:nowrap; flex-shrink:0}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
   .content-grid{
     display:grid;
@@ -73,8 +94,7 @@
   .sci-btn.clear{ color:#E39A9A; }
   @media (max-width:480px){ .sci-grid{ gap:6px;} .sci-btn{ padding:12px 0; font-size:12.5px;} .sci-btn.fn{ font-size:10.5px;} }
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -109,7 +129,7 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>Scientific calculator</h1>
-  <p class="intro">A full scientific calculator with trigonometry, logarithms, powers, roots, and memory — right in your browser.</p>
+  <p class="intro">A full scientific calculator with trigonometry, logarithms, powers, roots, and memory - right in your browser.</p>
 
   <div class="content-grid">
     <div class="calc-block">
@@ -189,7 +209,7 @@
     </aside>
     <div class="desc-block">
       <h2>What is the Scientific Calculator?</h2>
-      <p>This is a full-featured scientific calculator that runs entirely in your browser — no app to download, no account to create. Beyond the basic four operations, it supports trigonometric functions, logarithms, powers and roots, factorials, memory storage, and both degree and radian angle modes, covering everything a student, engineer, or curious number-cruncher typically needs.</p>
+      <p>This is a full-featured scientific calculator that runs entirely in your browser - no app to download, no account to create. Beyond the basic four operations, it supports trigonometric functions, logarithms, powers and roots, factorials, memory storage, and both degree and radian angle modes, covering everything a student, engineer, or curious number-cruncher typically needs.</p>
       <p>Every calculation happens instantly on your device. Nothing you type is transmitted anywhere, so you can use it for schoolwork, lab reports, or quick engineering checks with complete privacy.</p>
 
       <h2>How to use it</h2>
@@ -208,14 +228,14 @@
         <li><strong>√x:</strong> square root</li>
         <li><strong>x²:</strong> square (x raised to the power of 2)</li>
         <li><strong>xʸ:</strong> raises the current number to any power you enter next</li>
-        <li><strong>n!:</strong> factorial — the product of all positive integers up to n</li>
+        <li><strong>n!:</strong> factorial - the product of all positive integers up to n</li>
         <li><strong>1/x:</strong> reciprocal of the current number</li>
         <li><strong>π and e:</strong> insert the constants pi (≈3.14159) and Euler's number (≈2.71828)</li>
         <li><strong>±:</strong> toggles the sign of the current number between positive and negative</li>
       </ul>
 
       <h2>Degrees vs. radians</h2>
-      <p>Trigonometric functions can be calculated in two different angle units. <strong>Degrees</strong> (DEG) is the everyday unit most people learn in school, where a full circle is 360°. <strong>Radians</strong> (RAD) is the unit most commonly used in higher mathematics, physics, and engineering, where a full circle is 2π radians. Use the DEG/RAD toggle above the display to switch between them — this affects sin, cos, and tan calculations only.</p>
+      <p>Trigonometric functions can be calculated in two different angle units. <strong>Degrees</strong> (DEG) is the everyday unit most people learn in school, where a full circle is 360°. <strong>Radians</strong> (RAD) is the unit most commonly used in higher mathematics, physics, and engineering, where a full circle is 2π radians. Use the DEG/RAD toggle above the display to switch between them - this affects sin, cos, and tan calculations only.</p>
 
       <h2>Using memory functions</h2>
       <p>The memory buttons let you store a number and reuse it later without retyping it:</p>
@@ -228,7 +248,7 @@
       <p>A small indicator appears above the display whenever a non-zero value is stored in memory, so you always know when memory is active.</p>
 
       <h2>Order of operations</h2>
-      <p>The calculator follows the standard mathematical order of operations (PEMDAS/BODMAS) — parentheses and functions first, then exponents, then multiplication and division, then addition and subtraction — so complex expressions evaluate the way you'd expect from a scientific calculator.</p>
+      <p>The calculator follows the standard mathematical order of operations (PEMDAS/BODMAS) - parentheses and functions first, then exponents, then multiplication and division, then addition and subtraction - so complex expressions evaluate the way you'd expect from a scientific calculator.</p>
 
       <h2>Common uses</h2>
       <ul>
@@ -240,11 +260,11 @@
 
       <h2>Frequently asked questions</h2>
       <h3>Why did I get an unexpected result from a trig function?</h3>
-      <p>Double-check whether you're in DEG or RAD mode — the same input produces very different results depending on the angle unit, and this is the most common source of confusion with scientific calculators.</p>
+      <p>Double-check whether you're in DEG or RAD mode - the same input produces very different results depending on the angle unit, and this is the most common source of confusion with scientific calculators.</p>
       <h3>What happens if I try to divide by zero or take the square root of a negative number?</h3>
       <p>The calculator will show an error, since these operations are undefined in standard real-number arithmetic.</p>
       <h3>Can I chain multiple operations together?</h3>
-      <p>Yes — you can build a full expression with multiple operators and functions before pressing equals, just like on a physical scientific calculator.</p>
+      <p>Yes - you can build a full expression with multiple operators and functions before pressing equals, just like on a physical scientific calculator.</p>
       <h3>Does the factorial function work with decimals?</h3>
       <p>Factorial is defined for non-negative whole numbers, so decimal or negative inputs to n! will return an error.</p>
     </div>

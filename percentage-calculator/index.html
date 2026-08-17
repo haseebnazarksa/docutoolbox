@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Percentage Calculator — Find X% of Y, % Change & More (Free) | Docutoolbox</title>
-<meta name="description" content="Free percentage calculator: find what X% of Y is, what percent one number is of another, and percentage increase or decrease — instant results, no sign-up.">
+<title>Percentage Calculator - Find X% of Y, % Change & More (Free) | Docutoolbox</title>
+<meta name="description" content="Free percentage calculator: find what X% of Y is, what percent one number is of another, and percentage increase or decrease - instant results, no sign-up.">
 <link rel="canonical" href="https://docutoolbox.com/percentage-calculator/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,22 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -25,9 +40,15 @@
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);; white-space:nowrap}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;; white-space:nowrap; flex-shrink:0}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
   /* Layout: desktop = calc+description in left column, sidebar spans right column.
      Mobile = calculator, then sidebar, then description (via grid-template-areas). */
@@ -76,8 +97,7 @@
   .result .value{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; color:var(--accent);}
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -95,6 +115,10 @@
   footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
   footer.site a{ color:var(--text-muted); text-decoration:underline;}
   footer.site a:hover{ color:var(--linework);}
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
 </style>
 </head>
 <body>
@@ -163,30 +187,30 @@
     <div class="desc-block">
       
       <h2>What is the Percentage Calculator?</h2>
-      <p>Percentages describe a part of a whole out of 100, and they come up constantly in everyday life — discounts, tips, grades, statistics, taxes, growth rates. This free tool covers the three percentage calculations people search for most often, all on one page, so you never have to remember which formula applies to which situation.</p>
+      <p>Percentages describe a part of a whole out of 100, and they come up constantly in everyday life - discounts, tips, grades, statistics, taxes, growth rates. This free tool covers the three percentage calculations people search for most often, all on one page, so you never have to remember which formula applies to which situation.</p>
       <p>Every result updates instantly as you type, with no sign-up and no data ever leaving your browser. Whether you're checking a sale price, grading a test, or comparing year-over-year numbers, the right calculation is right here.</p>
 
       <h2>What is X% of Y?</h2>
-      <p>Use this when you know a percentage and a total, and want to find the resulting amount — for example, "what is 20% of $150?" This is the calculation behind discounts, tips, and commission amounts. Simply enter the percentage and the total, and the result appears immediately.</p>
+      <p>Use this when you know a percentage and a total, and want to find the resulting amount - for example, "what is 20% of $150?" This is the calculation behind discounts, tips, and commission amounts. Simply enter the percentage and the total, and the result appears immediately.</p>
       <p><strong>Formula:</strong> result = (percentage ÷ 100) × total. For 20% of 150: (20 ÷ 100) × 150 = 30.</p>
 
       <h2>X is what percent of Y?</h2>
-      <p>Use this when you have two numbers and want to know what percentage one is of the other — for example, "30 out of 150 is what percent?" This is useful for test scores, survey results, completion rates, and market share comparisons.</p>
+      <p>Use this when you have two numbers and want to know what percentage one is of the other - for example, "30 out of 150 is what percent?" This is useful for test scores, survey results, completion rates, and market share comparisons.</p>
       <p><strong>Formula:</strong> percentage = (part ÷ whole) × 100. For 30 out of 150: (30 ÷ 150) × 100 = 20%.</p>
 
       <h2>Percentage increase or decrease</h2>
-      <p>Use this to find how much something has grown or shrunk in percentage terms between two values — for example, going from 100 to 120 is a 20% increase, while going from 120 to 100 is a 16.67% decrease (not 20%, since the base changes direction). This is the calculation used for price changes, salary raises, weight change, and year-over-year business comparisons.</p>
+      <p>Use this to find how much something has grown or shrunk in percentage terms between two values - for example, going from 100 to 120 is a 20% increase, while going from 120 to 100 is a 16.67% decrease (not 20%, since the base changes direction). This is the calculation used for price changes, salary raises, weight change, and year-over-year business comparisons.</p>
       <p><strong>Formula:</strong> % change = ((new value − old value) ÷ old value) × 100. A positive result means an increase; a negative result means a decrease.</p>
 
       <h2>The basic formula behind every percentage</h2>
-      <p>All percentage math comes back to one relationship: <strong>percentage = (part ÷ whole) × 100</strong>. Once you understand that, all three calculators above are really just different ways of rearranging that same equation to solve for a different missing piece — sometimes you know the percentage and need the part, sometimes you know the part and whole and need the percentage, and sometimes you're comparing two "wholes" to find the percentage of change between them.</p>
+      <p>All percentage math comes back to one relationship: <strong>percentage = (part ÷ whole) × 100</strong>. Once you understand that, all three calculators above are really just different ways of rearranging that same equation to solve for a different missing piece - sometimes you know the percentage and need the part, sometimes you know the part and whole and need the percentage, and sometimes you're comparing two "wholes" to find the percentage of change between them.</p>
 
       <h2>Worked examples</h2>
-      <h3>Example 1 — Finding a discount amount</h3>
+      <h3>Example 1 - Finding a discount amount</h3>
       <p>A jacket costs $80 and is 25% off. What's the discount? (25 ÷ 100) × 80 = $20 off, making the sale price $60.</p>
-      <h3>Example 2 — Finding a test score percentage</h3>
+      <h3>Example 2 - Finding a test score percentage</h3>
       <p>You answered 42 questions correctly out of 50. What percentage is that? (42 ÷ 50) × 100 = 84%.</p>
-      <h3>Example 3 — Finding a salary increase</h3>
+      <h3>Example 3 - Finding a salary increase</h3>
       <p>Your salary went from $50,000 to $54,000. What's the percentage increase? ((54,000 − 50,000) ÷ 50,000) × 100 = 8%.</p>
 
       <h2>Common uses</h2>
@@ -201,11 +225,11 @@
 
       <h2>Frequently asked questions</h2>
       <h3>Why isn't a 20% increase followed by a 20% decrease back to the original number?</h3>
-      <p>Because each percentage change is calculated against a different base value. Increasing 100 by 20% gives 120, but decreasing 120 by 20% gives 96, not 100 — the base amount changed in between.</p>
+      <p>Because each percentage change is calculated against a different base value. Increasing 100 by 20% gives 120, but decreasing 120 by 20% gives 96, not 100 - the base amount changed in between.</p>
       <h3>Can I enter decimal percentages, like 7.5%?</h3>
       <p>Yes, all three calculators accept decimal values for both the percentage and the numbers involved.</p>
       <h3>Does this handle negative percentage changes correctly?</h3>
-      <p>Yes — if the new value is smaller than the old value, the percentage change calculator will show a negative percentage, correctly representing a decrease.</p>
+      <p>Yes - if the new value is smaller than the old value, the percentage change calculator will show a negative percentage, correctly representing a decrease.</p>
     
     </div>
   </div>

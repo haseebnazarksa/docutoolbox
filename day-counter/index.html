@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day Counter — Days Until or Since Any Date, Free Countdown | Docutoolbox</title>
+<title>Day Counter - Days Until or Since Any Date, Free Countdown | Docutoolbox</title>
 <meta name="description" content="Free day counter and countdown calculator. Find out exactly how many days remain until a future date, or how many days have passed since a past date.">
 <link rel="canonical" href="https://docutoolbox.com/day-counter/">
 <link rel="icon" type="image/png" href="/logo.png">
@@ -15,7 +15,22 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -25,9 +40,15 @@
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);; white-space:nowrap}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;; white-space:nowrap; flex-shrink:0}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
   /* Layout: desktop = calc+description in left column, sidebar spans right column.
      Mobile = calculator, then sidebar, then description (via grid-template-areas). */
@@ -76,8 +97,7 @@
   .result .value{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; color:var(--accent);}
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -121,7 +141,7 @@
         <div class="field"><label>Pick a date</label><input type="date" id="targetDate"></div>
         <div class="result-grid cols-2">
           <div class="result"><span class="label">Days</span><span class="value" id="dayCount">0</span></div>
-          <div class="result"><span class="label">Status</span><span class="value" id="dayStatus" style="font-size:14px;">—</span></div>
+          <div class="result"><span class="label">Status</span><span class="value" id="dayStatus" style="font-size:14px;">-</span></div>
         </div>
       </div>
     
@@ -146,21 +166,21 @@
     <div class="desc-block">
       
       <h2>What is the Day Counter?</h2>
-      <p>The Day Counter answers a simple question: how many days is it until (or since) a specific date? Pick any date in the past or future and the tool instantly tells you how many days separate it from today — no manual counting on a calendar required.</p>
+      <p>The Day Counter answers a simple question: how many days is it until (or since) a specific date? Pick any date in the past or future and the tool instantly tells you how many days separate it from today - no manual counting on a calendar required.</p>
       <p>It runs entirely in your browser, updates instantly, and works for any date regardless of how far in the past or future it is.</p>
 
       <h2>How to use it</h2>
       <ol>
         <li>Select a date using the date picker.</li>
-        <li>If the date is in the future, you'll see how many days remain until it arrives — a countdown.</li>
-        <li>If it's in the past, you'll see how many days have gone by since — a count-up.</li>
+        <li>If the date is in the future, you'll see how many days remain until it arrives - a countdown.</li>
+        <li>If it's in the past, you'll see how many days have gone by since - a count-up.</li>
       </ol>
 
       <h2>How the calculation works</h2>
       <p>The calculator compares your chosen date to today's date (based on your device's local calendar) and counts the exact number of full days between them, correctly accounting for different month lengths and leap years. Because everything runs locally, the count is always accurate to your current time zone and date.</p>
 
       <h2>Countdown vs. count-up</h2>
-      <p>A <strong>countdown</strong> counts down toward a future event — the number of days shrinks as the date approaches, reaching zero on the day itself. A <strong>count-up</strong> does the opposite, tracking how many days have accumulated since a past event, growing larger every day. This single tool handles both automatically based on whether your chosen date is ahead of or behind today.</p>
+      <p>A <strong>countdown</strong> counts down toward a future event - the number of days shrinks as the date approaches, reaching zero on the day itself. A <strong>count-up</strong> does the opposite, tracking how many days have accumulated since a past event, growing larger every day. This single tool handles both automatically based on whether your chosen date is ahead of or behind today.</p>
 
       <h2>Worked examples</h2>
       <h3>Counting down to a future date</h3>
@@ -171,18 +191,18 @@
       <h2>Common uses</h2>
       <ul>
         <li>Counting down to a wedding, exam, product launch, or holiday</li>
-        <li>Tracking how many days it's been since a milestone — quitting a habit, starting a job, a health event, a sobriety date</li>
+        <li>Tracking how many days it's been since a milestone - quitting a habit, starting a job, a health event, a sobriety date</li>
         <li>Planning how much time is left to prepare for a deadline</li>
         <li>Building anticipation for a trip, concert, or release date</li>
         <li>Tracking streaks for habits, savings goals, or fitness challenges</li>
       </ul>
 
       <h2>How today is determined</h2>
-      <p>"Today" is based on your device's local date and time, so the count will always match the calendar day you're currently on, wherever in the world you're located — there's no server-side date lookup involved.</p>
+      <p>"Today" is based on your device's local date and time, so the count will always match the calendar day you're currently on, wherever in the world you're located - there's no server-side date lookup involved.</p>
 
       <h2>Frequently asked questions</h2>
       <h3>Does the counter update automatically as days pass?</h3>
-      <p>The count reflects the current date each time you load or refresh the page — reopening the calculator on a new day will show an updated count automatically.</p>
+      <p>The count reflects the current date each time you load or refresh the page - reopening the calculator on a new day will show an updated count automatically.</p>
       <h3>Can I count days between two dates that are both in the future or both in the past?</h3>
       <p>This tool specifically counts from today to a chosen date. For counting the days between any two arbitrary dates, use the <a href="/date-calculator/" style="color:var(--linework);">Date Calculator</a> instead.</p>
     

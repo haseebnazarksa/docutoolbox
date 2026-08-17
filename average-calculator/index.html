@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Average Calculator — Mean, Median, Mode & Range Online | Docutoolbox</title>
-<meta name="description" content="Free online average calculator. Paste any list of numbers to instantly get the mean, median, mode, sum, min, max and range — no sign-up, works in your browser.">
+<title>Average Calculator - Mean, Median, Mode & Range Online | Docutoolbox</title>
+<meta name="description" content="Free online average calculator. Paste any list of numbers to instantly get the mean, median, mode, sum, min, max and range - no sign-up, works in your browser.">
 <link rel="canonical" href="https://docutoolbox.com/average-calculator/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,22 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -25,9 +40,15 @@
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);; white-space:nowrap}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;; white-space:nowrap; flex-shrink:0}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
   /* Layout: desktop = calc+description in left column, sidebar spans right column.
      Mobile = calculator, then sidebar, then description (via grid-template-areas). */
@@ -76,8 +97,7 @@
   .result .value{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; color:var(--accent);}
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -120,7 +140,7 @@
         <div class="field">
           <label>Enter numbers (comma, space, or new line separated)</label>
           <textarea id="numInput" placeholder="e.g. 12, 45, 33, 27, 45, 19">10, 20, 30, 40, 50</textarea>
-          <div class="field-hint">You can paste a column from a spreadsheet directly — line breaks work too.</div>
+          <div class="field-hint">You can paste a column from a spreadsheet directly - line breaks work too.</div>
         </div>
         <button class="calc" id="calcBtn">Calculate</button>
         <div id="errorMsg">Please enter at least one valid number.</div>
@@ -156,19 +176,19 @@
     <div class="desc-block">
       <h2>What is the Average Calculator?</h2>
       <p>The Average Calculator is a free, browser-based tool that takes any list of numbers you give it and instantly works out the most important summary statistics: the <strong>mean</strong> (the everyday "average"), the <strong>median</strong>, the <strong>mode</strong>, the <strong>sum</strong>, the <strong>range</strong>, and the minimum and maximum values. Instead of opening a spreadsheet or doing the arithmetic by hand, you simply paste your numbers in and get every result at once.</p>
-      <p>It's built for anyone who needs a quick, reliable answer — students checking homework, teachers averaging test scores, analysts sanity-checking a dataset, or anyone comparing prices, times, or measurements. Nothing you type is uploaded anywhere; the calculation happens entirely on your device in real time.</p>
+      <p>It's built for anyone who needs a quick, reliable answer - students checking homework, teachers averaging test scores, analysts sanity-checking a dataset, or anyone comparing prices, times, or measurements. Nothing you type is uploaded anywhere; the calculation happens entirely on your device in real time.</p>
 
       <h2>How to use it</h2>
       <ol>
-        <li>Type or paste your list of numbers into the input box. You can separate them with commas, spaces, or line breaks — the calculator understands all three, and you can even mix them.</li>
+        <li>Type or paste your list of numbers into the input box. You can separate them with commas, spaces, or line breaks - the calculator understands all three, and you can even mix them.</li>
         <li>Click <strong>Calculate</strong>.</li>
         <li>Read your results: count, sum, mean, median, mode, range, minimum, and maximum all appear together.</li>
-        <li>Edit the list and recalculate as many times as you like — there's no limit on how many numbers you can enter.</li>
+        <li>Edit the list and recalculate as many times as you like - there's no limit on how many numbers you can enter.</li>
       </ol>
       <p>Negative numbers and decimals both work correctly. If you paste something that isn't a valid number (like stray text), the calculator simply ignores it and works with the valid entries.</p>
 
-      <h2>Mean vs. median vs. mode — what's the difference?</h2>
-      <p>These three values are all "measures of central tendency" — ways of describing the "typical" number in a list — but they answer slightly different questions:</p>
+      <h2>Mean vs. median vs. mode - what's the difference?</h2>
+      <p>These three values are all "measures of central tendency" - ways of describing the "typical" number in a list - but they answer slightly different questions:</p>
       <ul>
         <li><strong>Mean</strong> is the sum of all values divided by how many values there are. It's what most people mean by "average," and it's sensitive to every number in the list, including outliers.</li>
         <li><strong>Median</strong> is the middle value once the list is sorted from smallest to largest. If there's an even number of values, it's the average of the two middle numbers. The median isn't affected by extreme outliers, which makes it useful for skewed data like incomes or home prices.</li>
@@ -185,7 +205,7 @@
       <p>The calculator counts how many times each number appears and returns the one (or ones) that occur most frequently. If every number appears exactly once, there is no repeating value, and the tool will show "No mode."</p>
 
       <h3>How the range is calculated</h3>
-      <p>Range is simply the maximum value minus the minimum value. It gives you a quick sense of how spread out your data is — a small range means the numbers are clustered close together, while a large range means they're more spread out.</p>
+      <p>Range is simply the maximum value minus the minimum value. It gives you a quick sense of how spread out your data is - a small range means the numbers are clustered close together, while a large range means they're more spread out.</p>
 
       <h2>A worked example</h2>
       <p>Suppose you scored 78, 85, 92, 85, and 60 on five quizzes. Here's what the calculator would show:</p>
@@ -193,14 +213,14 @@
         <li><strong>Count:</strong> 5</li>
         <li><strong>Sum:</strong> 400</li>
         <li><strong>Mean:</strong> 400 ÷ 5 = 80</li>
-        <li><strong>Median:</strong> sorted list is 60, 78, 85, 85, 92 — the middle value is 85</li>
+        <li><strong>Median:</strong> sorted list is 60, 78, 85, 85, 92 - the middle value is 85</li>
         <li><strong>Mode:</strong> 85 (it appears twice)</li>
         <li><strong>Range:</strong> 92 − 60 = 32</li>
       </ul>
-      <p>Notice that the mean (80) and median (85) tell slightly different stories — the mean is pulled down by the one low score of 60, while the median better reflects your "typical" performance.</p>
+      <p>Notice that the mean (80) and median (85) tell slightly different stories - the mean is pulled down by the one low score of 60, while the median better reflects your "typical" performance.</p>
 
       <h2>When should you use mean vs. median?</h2>
-      <p>Use the <strong>mean</strong> when your data doesn't have extreme outliers and you want a value that accounts for every data point equally — like averaging a consistent set of test scores or measurements. Use the <strong>median</strong> when your data might include outliers that could skew the picture, such as household incomes, real estate prices, or delivery times, where a few very high or very low values could distort a simple average.</p>
+      <p>Use the <strong>mean</strong> when your data doesn't have extreme outliers and you want a value that accounts for every data point equally - like averaging a consistent set of test scores or measurements. Use the <strong>median</strong> when your data might include outliers that could skew the picture, such as household incomes, real estate prices, or delivery times, where a few very high or very low values could distort a simple average.</p>
 
       <h2>Common ways people use this calculator</h2>
       <ul>
@@ -220,7 +240,7 @@
       <h3>What happens if all my numbers are the same?</h3>
       <p>The mean, median, and mode will all equal that number, and the range will be zero.</p>
       <h3>Is there a limit to how many numbers I can enter?</h3>
-      <p>No practical limit — you can paste in a handful of numbers or several hundred, and the calculator will process them instantly in your browser.</p>
+      <p>No practical limit - you can paste in a handful of numbers or several hundred, and the calculator will process them instantly in your browser.</p>
     </div>
   </div>
 

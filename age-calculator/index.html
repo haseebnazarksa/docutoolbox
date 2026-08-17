@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Calculator — Exact Age in Years, Months, Days & Seconds | Docutoolbox</title>
+<title>Age Calculator - Exact Age in Years, Months, Days & Seconds | Docutoolbox</title>
 <meta name="description" content="Free online age calculator. Enter your date of birth to instantly find your exact age in years, months, and days, plus total weeks, hours, minutes, and when your next birthday falls.">
 <link rel="canonical" href="https://docutoolbox.com/age-calculator/">
 <link rel="icon" type="image/png" href="/logo.png">
@@ -15,7 +15,22 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -25,9 +40,15 @@
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);; white-space:nowrap}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;; white-space:nowrap; flex-shrink:0}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
   .content-grid{
     display:grid;
@@ -97,8 +118,7 @@
   .bday-sub{ color:var(--text-muted); font-size:12px; font-family:'JetBrains Mono',monospace;}
   #bdayWeekday{ color:var(--accent); margin-top:4px;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -133,7 +153,7 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>Age calculator</h1>
-  <p class="intro">Enter your date of birth to find your exact age in years, months, and days — plus total weeks, hours, seconds, and when your next birthday falls.</p>
+  <p class="intro">Enter your date of birth to find your exact age in years, months, and days - plus total weeks, hours, seconds, and when your next birthday falls.</p>
 
   <div class="content-grid">
     <div class="calc-block">
@@ -187,8 +207,8 @@
             </div>
             <div class="bday-text">
               <div class="bday-title">Next birthday</div>
-              <div class="bday-sub" id="bdayText">— days away</div>
-              <div class="bday-sub" id="bdayWeekday">—</div>
+              <div class="bday-sub" id="bdayText">- days away</div>
+              <div class="bday-sub" id="bdayWeekday">-</div>
             </div>
           </div>
         </div>
@@ -213,8 +233,8 @@
     </aside>
     <div class="desc-block">
       <h2>What is the Age Calculator?</h2>
-      <p>The Age Calculator finds your exact age from a date of birth — not just in years, but broken down into years, months, and days, along with your total age in weeks, days, hours, minutes, and even a live-updating seconds counter. It also shows exactly how far away your next birthday is, down to the day.</p>
-      <p>Everything runs live in your browser. Your date of birth is never sent anywhere or stored — the moment you close the page, it's gone.</p>
+      <p>The Age Calculator finds your exact age from a date of birth - not just in years, but broken down into years, months, and days, along with your total age in weeks, days, hours, minutes, and even a live-updating seconds counter. It also shows exactly how far away your next birthday is, down to the day.</p>
+      <p>Everything runs live in your browser. Your date of birth is never sent anywhere or stored - the moment you close the page, it's gone.</p>
 
       <h2>How to use it</h2>
       <ol>
@@ -225,31 +245,31 @@
       </ol>
 
       <h2>How the age calculation works</h2>
-      <p>The calculator compares your date of birth to today's date and works out the exact difference in years, months, and days — correctly handling varying month lengths and leap years along the way. Unlike a simple "current year minus birth year" subtraction, it checks whether your birthday has already happened this year to make sure the year count is accurate right up to the day.</p>
+      <p>The calculator compares your date of birth to today's date and works out the exact difference in years, months, and days - correctly handling varying month lengths and leap years along the way. Unlike a simple "current year minus birth year" subtraction, it checks whether your birthday has already happened this year to make sure the year count is accurate right up to the day.</p>
       <p>The "total days," "weeks," "hours," and "minutes" figures are calculated from the exact number of milliseconds between your birth date and the current moment, converted into each unit.</p>
 
       <h2>How the next-birthday countdown works</h2>
-      <p>The calculator finds the next occurrence of your birth month and day — this year if it hasn't happened yet, or next year if it has already passed — and counts the days remaining until it arrives. The progress ring visualizes how far you are through your current "birthday year," filling up as your next birthday approaches.</p>
+      <p>The calculator finds the next occurrence of your birth month and day - this year if it hasn't happened yet, or next year if it has already passed - and counts the days remaining until it arrives. The progress ring visualizes how far you are through your current "birthday year," filling up as your next birthday approaches.</p>
 
       <h2>Worked example</h2>
-      <p>If you were born on March 15, 2000, and today is August 9, 2026, you'd be 26 years, 4 months, and 25 days old. Your next birthday would fall on March 15, 2027 — about 7 months away — and the calculator would also show your age in total days (roughly 9,650), weeks (roughly 1,378), and hours (roughly 231,600).</p>
+      <p>If you were born on March 15, 2000, and today is August 9, 2026, you'd be 26 years, 4 months, and 25 days old. Your next birthday would fall on March 15, 2027 - about 7 months away - and the calculator would also show your age in total days (roughly 9,650), weeks (roughly 1,378), and hours (roughly 231,600).</p>
 
       <h2>Common uses</h2>
       <ul>
         <li>Quickly checking your exact age for a form or application</li>
         <li>Finding out how many days remain until your next birthday</li>
         <li>Checking someone else's age from their date of birth</li>
-        <li>Satisfying curiosity about milestones — how many days, hours, or seconds you've been alive</li>
+        <li>Satisfying curiosity about milestones - how many days, hours, or seconds you've been alive</li>
         <li>Verifying age eligibility requirements for events, memberships, or applications</li>
       </ul>
 
       <h2>Frequently asked questions</h2>
       <h3>How does this age calculator work?</h3>
-      <p>It compares your date of birth to today's date and works out the exact difference in years, months, and days — correctly accounting for leap years and varying month lengths.</p>
+      <p>It compares your date of birth to today's date and works out the exact difference in years, months, and days - correctly accounting for leap years and varying month lengths.</p>
       <h3>Is my date of birth stored anywhere?</h3>
-      <p>No. The calculation happens entirely in your browser — nothing is sent to a server or saved. See the <a href="/privacy/" style="color:var(--linework)">Privacy Policy</a> for details.</p>
+      <p>No. The calculation happens entirely in your browser - nothing is sent to a server or saved. See the <a href="/privacy/" style="color:var(--linework)">Privacy Policy</a> for details.</p>
       <h3>Can I check someone else's age too?</h3>
-      <p>Yes — the calculator works for any valid date of birth, not just your own.</p>
+      <p>Yes - the calculator works for any valid date of birth, not just your own.</p>
       <h3>Why does the "seconds lived" counter keep changing?</h3>
       <p>It updates once per second in real time, since the exact number of seconds you've been alive is constantly increasing.</p>
     </div>

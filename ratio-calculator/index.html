@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ratio & Proportion Calculator — Simplify Ratios, Solve for X | Docutoolbox</title>
+<title>Ratio & Proportion Calculator - Simplify Ratios, Solve for X | Docutoolbox</title>
 <meta name="description" content="Free online ratio calculator. Simplify any ratio to its lowest terms, or solve a proportion (A:B = C:X) for the missing value. No sign-up required.">
 <link rel="canonical" href="https://docutoolbox.com/ratio-calculator/">
 <link rel="icon" type="image/png" href="/logo.png">
@@ -15,7 +15,22 @@
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
   body{
     background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
     color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
@@ -25,9 +40,15 @@
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
   .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);; white-space:nowrap}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;; white-space:nowrap; flex-shrink:0}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
   .content-grid{
     display:grid;
@@ -81,8 +102,7 @@
   .result .value{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; color:var(--accent);}
   #errorMsg1, #errorMsg2{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:sticky; top:90px;}
-  @media (max-width:860px){ .sidebar{ position:static; top:auto; } }
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; }
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -100,6 +120,10 @@
   footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
   footer.site a{ color:var(--text-muted); text-decoration:underline;}
   footer.site a:hover{ color:var(--linework);}
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
 </style>
 </head>
 <body>
@@ -180,7 +204,7 @@
     <div class="desc-block">
       <h2>What is the Ratio & Proportion Calculator?</h2>
       <p>This free tool handles the two most common ratio problems people run into: <strong>simplifying a ratio</strong> down to its lowest terms, and <strong>solving a proportion</strong> when you know three of the four numbers and need to find the missing one. Both calculations happen instantly in your browser, with no sign-up and no data ever leaving your device.</p>
-      <p>Ratios and proportions show up constantly in everyday life — scaling a recipe, mixing paint or cleaning solutions, converting measurements, comparing prices, resizing images, or working through a school assignment. This tool takes the manual arithmetic out of the equation.</p>
+      <p>Ratios and proportions show up constantly in everyday life - scaling a recipe, mixing paint or cleaning solutions, converting measurements, comparing prices, resizing images, or working through a school assignment. This tool takes the manual arithmetic out of the equation.</p>
 
       <h2>How to simplify a ratio</h2>
       <ol>
@@ -202,7 +226,7 @@
 
       <h2>How ratio simplification works</h2>
       <p>To simplify a ratio, the calculator finds the <strong>greatest common divisor (GCD)</strong> of the two numbers and divides both sides by it. The GCD is the largest number that divides evenly into both A and B. Dividing both numbers by their GCD guarantees the smallest possible whole-number ratio that's still mathematically equivalent to the original.</p>
-      <p>For instance, with a ratio of 45:60, the GCD of 45 and 60 is 15. Dividing both sides by 15 gives 3:4 — the simplest form of that ratio.</p>
+      <p>For instance, with a ratio of 45:60, the GCD of 45 and 60 is 15. Dividing both sides by 15 gives 3:4 - the simplest form of that ratio.</p>
 
       <h2>How proportion solving works</h2>
       <p>A proportion states that two ratios are equal: A : B = C : D. Cross-multiplication says that A × D = B × C. Rearranging that equation to solve for the unknown value lets you find any missing term as long as you know the other three. This calculator always solves for the fourth term (X) in A : B = C : X, which covers the vast majority of real-world proportion problems.</p>
@@ -217,8 +241,8 @@
         <li><strong>Photography and design:</strong> keeping images or layouts proportional when resizing</li>
       </ul>
 
-      <h2>Ratio vs. proportion — what's the difference?</h2>
-      <p>A <strong>ratio</strong> compares two quantities, like 3:4. A <strong>proportion</strong> is a statement that two ratios are equal to each other, like 3:4 = 6:8. In other words, a proportion is really just two equivalent ratios placed side by side — which is exactly why solving one lets you find a missing value in the other.</p>
+      <h2>Ratio vs. proportion - what's the difference?</h2>
+      <p>A <strong>ratio</strong> compares two quantities, like 3:4. A <strong>proportion</strong> is a statement that two ratios are equal to each other, like 3:4 = 6:8. In other words, a proportion is really just two equivalent ratios placed side by side - which is exactly why solving one lets you find a missing value in the other.</p>
 
       <h2>Frequently asked questions</h2>
       <h3>Can I use decimal numbers?</h3>
@@ -226,7 +250,7 @@
       <h3>What if my ratio can't be simplified further?</h3>
       <p>If the greatest common divisor of A and B is 1, the ratio is already in its simplest form, and the calculator will show it unchanged.</p>
       <h3>Does the order of A and B matter?</h3>
-      <p>Yes — a ratio of 2:3 is different from 3:2, so make sure you enter your numbers in the order that matches what you're comparing.</p>
+      <p>Yes - a ratio of 2:3 is different from 3:2, so make sure you enter your numbers in the order that matches what you're comparing.</p>
       <h3>Can I solve for a different position, like A instead of X?</h3>
       <p>This calculator is set up to solve for the fourth term (X) in A : B = C : X. If your unknown is in a different position, you can rearrange your proportion so the unknown is last, then enter the known values accordingly.</p>
     </div>
