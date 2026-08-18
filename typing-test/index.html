@@ -165,7 +165,16 @@
   .progress-title{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--linework); margin-bottom:8px; text-align:center;}
   .progress-legend{ display:flex; justify-content:center; gap:20px; margin-bottom:10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--text-muted); }
   .legend-dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle; }
-  #progressCanvas{ width:100%; height:240px; display:block; }
+  #progressCanvas{ width:100%; height:240px; display:block; touch-action:none; }
+  .graph-wrap{ position:relative; }
+  .graph-tooltip{
+    position:absolute; display:none; pointer-events:none; background:var(--blue-card-2); border:1px solid var(--linework-soft);
+    border-radius:8px; padding:8px 11px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink);
+    white-space:nowrap; transform:translate(-50%, -115%); z-index:10; box-shadow:0 6px 18px rgba(0,0,0,0.3);
+  }
+  .graph-tooltip .tt-date{ color:var(--text-muted); font-size:9.5px; margin-bottom:3px; }
+  .graph-tooltip .tt-wpm{ color:var(--accent); font-weight:600; }
+  .graph-tooltip .tt-acc{ color:#6FA9D8; font-weight:600; margin-left:8px; }
   .history-list{ margin-top:16px; border:1px solid var(--grid-line); border-radius:10px; overflow:hidden; }
   .history-row{
     display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; padding:9px 14px;
@@ -287,7 +296,10 @@
           <span><span class="legend-dot" style="background:var(--accent);"></span>WPM</span>
           <span><span class="legend-dot" style="background:#6FA9D8;"></span>Accuracy</span>
         </div>
-        <canvas id="progressCanvas"></canvas>
+        <div class="graph-wrap" id="graphWrap">
+          <canvas id="progressCanvas"></canvas>
+          <div class="graph-tooltip" id="graphTooltip"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -681,6 +693,19 @@
     return `${h}:${m} ${ampm}`;
   }
 
+  function formatDateShort(ts){
+    const d = new Date(ts);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[d.getMonth()]} ${d.getDate()}`;
+  }
+
+  function formatDateTime(ts){
+    return `${formatDateShort(ts)}, ${formatClockTime(ts)}`;
+  }
+
+  let graphPoints = [];
+  let currentGraphHistory = [];
+
   function drawProgressGraph(history){
     const canvas = document.getElementById('progressCanvas');
     const dpr = window.devicePixelRatio || 1;
@@ -707,7 +732,7 @@
       return;
     }
 
-    const padL = 42, padR = 42, padT = 16, padB = 26;
+    const padL = 42, padR = 42, padT = 16, padB = 34;
     const chartW = cssW - padL - padR;
     const chartH = cssH - padT - padB;
     const maxWpm = Math.max(...history.map(h => h.wpm), 10) * 1.15;
@@ -737,15 +762,19 @@
       ctx.fillText(pct + '%', cssW - padR + 8, y + 3);
     });
 
-    // X-axis time labels (first, middle, last)
+    // X-axis date + time labels (first, middle, last)
     ctx.textAlign = 'center';
-    ctx.fillStyle = textMuted;
     [0, Math.floor((history.length - 1) / 2), history.length - 1].forEach(idx => {
       const x = padL + idx * stepX;
-      ctx.fillText(formatClockTime(history[idx].t), x, cssH - 6);
+      ctx.fillStyle = textMuted;
+      ctx.font = '9px JetBrains Mono, monospace';
+      ctx.fillText(formatDateShort(history[idx].t), x, cssH - 15);
+      ctx.font = '10px JetBrains Mono, monospace';
+      ctx.fillText(formatClockTime(history[idx].t), x, cssH - 4);
     });
 
-    function drawLine(getVal, color, maxVal){
+    graphPoints = [];
+    function drawLine(getVal, color, maxVal, isWpm){
       ctx.beginPath();
       history.forEach((h, i) => {
         const x = padL + i * stepX;
@@ -763,11 +792,13 @@
         ctx.arc(x, y, 3.2, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
+        if(isWpm) graphPoints.push({ x, index: i });
       });
     }
 
-    drawLine(h => h.acc, accColor, 100);
-    drawLine(h => h.wpm, accent, maxWpm);
+    drawLine(h => h.acc, accColor, 100, false);
+    drawLine(h => h.wpm, accent, maxWpm, true);
+    currentGraphHistory = history;
 
     renderHistoryList(history);
   }
@@ -783,7 +814,7 @@
     if(history.length === 0){ listEl.innerHTML = ''; return; }
     const rows = history.slice().reverse().slice(0, 8).map(h => `
       <div class="history-row">
-        <span class="hist-time">${formatClockTime(h.t)}</span>
+        <span class="hist-time">${formatDateShort(h.t)}, ${formatClockTime(h.t)}</span>
         <span class="hist-wpm">${h.wpm} <em>wpm</em></span>
         <span class="hist-acc">${h.acc}% <em>acc</em></span>
         <span class="hist-dur">${h.duration ? formatTime(h.duration) : '-'}</span>
@@ -796,6 +827,40 @@
       ${rows}
     `;
   }
+
+  // Hover / tap tooltip on graph points, works for both mouse and touch
+  const progressCanvasEl = document.getElementById('progressCanvas');
+  const graphTooltip = document.getElementById('graphTooltip');
+
+  function showTooltipAt(clientX, clientY){
+    if(graphPoints.length === 0) return;
+    const rect = progressCanvasEl.getBoundingClientRect();
+    const localX = clientX - rect.left;
+    let nearest = graphPoints[0];
+    let minDist = Math.abs(localX - nearest.x);
+    graphPoints.forEach(p => {
+      const dist = Math.abs(localX - p.x);
+      if(dist < minDist){ minDist = dist; nearest = p; }
+    });
+    const h = currentGraphHistory[nearest.index];
+    if(!h) return;
+
+    graphTooltip.innerHTML = `
+      <div class="tt-date">${formatDateTime(h.t)}</div>
+      <span class="tt-wpm">${h.wpm} wpm</span><span class="tt-acc">${h.acc}% acc</span>
+    `;
+    graphTooltip.style.left = nearest.x + 'px';
+    const yGuess = rect.height / 2;
+    graphTooltip.style.top = yGuess + 'px';
+    graphTooltip.style.display = 'block';
+  }
+
+  function hideTooltip(){ graphTooltip.style.display = 'none'; }
+
+  progressCanvasEl.addEventListener('pointermove', (e) => { showTooltipAt(e.clientX, e.clientY); });
+  progressCanvasEl.addEventListener('pointerdown', (e) => { showTooltipAt(e.clientX, e.clientY); });
+  progressCanvasEl.addEventListener('pointerleave', hideTooltip);
+  progressCanvasEl.addEventListener('pointerup', () => { setTimeout(hideTooltip, 1200); });
 
   function endTest(){
     testEnded = true;
