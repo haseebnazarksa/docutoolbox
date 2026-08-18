@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Format Converter Online - JPG, PNG & WEBP Free | Docutoolbox</title>
-<meta name="description" content="Free online image format converter. Convert between JPG, PNG, and WEBP with a live preview and quality control. No upload, works entirely in your browser.">
+<title>Image Format Converter: JPG, PNG, WEBP, PDF & More | Docutoolbox</title>
+<meta name="description" content="Convert images between JPG, PNG, WEBP, BMP, TIFF, GIF, SVG, and PDF online for free. Resize while you convert, right in your browser. No sign-up.">
 <link rel="canonical" href="https://docutoolbox.com/image-format-converter/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +14,15 @@
     --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
     --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
     --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{ background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important; }
   }
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
   a, button{ outline:none; }
@@ -27,29 +36,25 @@
   .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
 
   header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
-  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto;}
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink);}
-  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto; gap:12px;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink); white-space:nowrap;}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease; white-space:nowrap; flex-shrink:0;}
   .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
 
-  .content-grid{
-    display:grid;
-    grid-template-columns:1fr 280px;
-    grid-template-areas: "calc side" "desc side";
-    gap:36px;
-    align-items:start;
-  }
-  .calc-block{ grid-area:calc; }
-  .desc-block{ grid-area:desc; }
-  .sidebar{ grid-area:side; }
-  @media (max-width:860px){
-    .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; }
-  }
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
 
   .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
   .eyebrow::before{content:"◇ ";}
-  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.5vw,40px); line-height:1.1; margin-bottom:14px; letter-spacing:-0.01em;}
-  .intro{ color:var(--text-muted); font-size:15px; line-height:1.65; margin-bottom:30px; max-width:620px;}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(24px,4.2vw,36px); line-height:1.2; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:14.5px; line-height:1.65; margin-bottom:26px; max-width:620px;}
 
   .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
 
@@ -66,19 +71,44 @@
   .conv-area{ display:none; }
   .preview-wrap{
     background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; padding:16px;
-    display:flex; align-items:center; justify-content:center; min-height:180px; margin-bottom:16px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; height:220px; margin-bottom:16px; overflow:hidden;
   }
-  .preview-wrap img{ max-width:100%; max-height:300px; object-fit:contain; border-radius:4px; }
+  .preview-wrap img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:4px; }
   .orig-meta{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted); margin-bottom:18px; }
   .orig-meta strong{ color:var(--linework); }
 
-  .format-row{ display:flex; gap:8px; margin-bottom:20px; }
-  .format-btn{ flex:1; padding:14px 8px; border-radius:9px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; cursor:pointer; transition:all 0.15s ease; text-align:center;}
-  .format-btn small{ display:block; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:400; margin-top:3px; opacity:0.7;}
+  .section-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;}
+
+  .format-row{ display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:22px; }
+  .format-btn{ padding:12px 6px; border-radius:9px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px; cursor:pointer; transition:all 0.15s ease; text-align:center;}
+  .format-btn small{ display:block; font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:400; margin-top:3px; opacity:0.7;}
   .format-btn:hover{ border-color:var(--linework-soft); color:var(--ink); }
   .format-btn.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent); }
   .format-btn.active small{ color:#0A2E45; opacity:0.75;}
   .format-btn.disabled{ opacity:0.35; cursor:not-allowed; }
+  @media (max-width:480px){ .format-row{ grid-template-columns:repeat(3, 1fr); } }
+
+  .resize-tabs{ display:flex; gap:8px; margin-bottom:14px; }
+  .resize-tab{ flex:1; padding:9px 6px; border-radius:8px; border:1px solid var(--grid-line); background:var(--blue-deep); color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:11.5px; cursor:pointer; text-align:center; transition:all 0.15s ease;}
+  .resize-tab:hover{ border-color:var(--linework-soft); color:var(--ink); }
+  .resize-tab.active{ background:var(--accent); color:#0A2E45; border-color:var(--accent); font-weight:600;}
+  .resize-panel{ display:none; margin-bottom:20px; }
+  .resize-panel.show{ display:block; }
+  .dim-row{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .dim-field{ flex:1; }
+  .dim-field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; text-align:center;}
+  .dim-field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink); text-align:center;
+    font-family:'JetBrains Mono',monospace; font-size:16px; padding:10px; border-radius:8px;
+  }
+  .dim-field input::-webkit-outer-spin-button, .dim-field input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .dim-field input{ -moz-appearance:textfield; appearance:textfield; }
+  .dim-x{ font-family:'Fraunces',serif; font-size:18px; color:var(--linework); padding-top:16px;}
+  .lock-row{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-muted); }
+  .lock-row input{ width:auto; accent-color:var(--accent); }
+  .pct-row{ display:flex; align-items:center; gap:14px; }
+  .pct-row input[type="range"]{ flex:1; accent-color:var(--accent); }
+  .pct-val{ font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent); min-width:50px; text-align:right;}
 
   .setting{ margin-bottom:16px; }
   .setting label{ display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;}
@@ -91,22 +121,26 @@
   .result-value{ font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--ink);}
   .result-value.accent{ color:var(--accent); }
 
+  .loading-row{ display:none; align-items:center; justify-content:center; gap:10px; margin-top:16px; padding:14px; background:var(--blue-deep); border:1px solid var(--grid-line); border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework);}
+  .spinner{ width:15px; height:15px; border:2px solid var(--grid-line); border-top-color:var(--linework); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0;}
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
   button.calc{
     width:100%; margin-top:6px; padding:14px; border:none; border-radius:9px; background:var(--accent);
     color:#0A2E45; font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer;
   }
   button.calc:hover{ background:var(--accent-soft); }
+  button.calc:disabled{ background:var(--grid-line); color:var(--text-muted); cursor:not-allowed; }
   .change-img-btn{ width:100%; margin-top:10px; padding:11px; border:1px solid var(--grid-line); border-radius:9px; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer;}
   .change-img-btn:hover{ border-color:var(--linework); color:var(--linework); }
   #errorMsg{ color:#E39A9A; font-size:13px; text-align:center; margin-top:12px; display:none; font-family:'JetBrains Mono',monospace;}
-  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center;}
+  #successBox{ display:none; margin-top:18px; background:var(--blue-deep); border:1px solid var(--linework-soft); border-radius:10px; padding:18px; text-align:center; opacity:0; transition:opacity 0.35s ease;}
+  #successBox.show{ display:block; opacity:1; }
   #successBox .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--accent); margin-bottom:10px;}
   #downloadBtn{ display:inline-block; background:var(--accent); color:#0A2E45; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:600; font-size:13.5px; }
   #downloadBtn:hover{ background:var(--accent-soft); }
-  .privacy-note{ display:flex; align-items:center; gap:8px; justify-content:center; margin-top:16px; font-size:11.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;}
-  .privacy-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:0 0 auto;}
 
-  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px;}
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; position:static;}
   .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
   .sidebar a{ display:block; padding:9px 0; color:var(--ink); text-decoration:none; font-size:13px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
   .sidebar a:hover{ color:var(--linework);}
@@ -144,7 +178,7 @@
 <div class="wrap">
   <div class="eyebrow">Docutoolbox</div>
   <h1>Image format converter</h1>
-  <p class="intro">Convert an image between JPG, PNG, and WEBP, with a live preview and file size comparison before you download.</p>
+  <p class="intro">Convert an image between JPG, PNG, WEBP, BMP, TIFF, GIF, SVG, or PDF, and resize it at the same time if you need to.</p>
 
   <div class="content-grid">
     <div class="calc-block">
@@ -158,12 +192,41 @@
 
         <div class="conv-area" id="convArea">
           <div class="preview-wrap"><img id="previewImg" alt="Uploaded image preview"></div>
-          <div class="orig-meta">Original: <strong id="origFormat">JPG</strong> · <strong id="origSize">0 KB</strong></div>
+          <div class="orig-meta">Original: <strong id="origFormat">JPG</strong> · <strong id="origDims">0 × 0</strong> · <strong id="origSize">0 KB</strong></div>
 
+          <div class="section-label">Convert to</div>
           <div class="format-row" id="formatRow">
-            <button class="format-btn" data-fmt="jpeg">JPG<small>Smaller, lossy</small></button>
+            <button class="format-btn" data-fmt="jpeg">JPG<small>Lossy</small></button>
             <button class="format-btn" data-fmt="png">PNG<small>Lossless</small></button>
-            <button class="format-btn" data-fmt="webp">WEBP<small>Modern, efficient</small></button>
+            <button class="format-btn" data-fmt="webp">WEBP<small>Efficient</small></button>
+            <button class="format-btn" data-fmt="bmp">BMP<small>Uncompressed</small></button>
+            <button class="format-btn" data-fmt="tiff">TIFF<small>Print-ready</small></button>
+            <button class="format-btn" data-fmt="gif">GIF<small>256 colors</small></button>
+            <button class="format-btn" data-fmt="svg">SVG<small>Embedded</small></button>
+            <button class="format-btn" data-fmt="pdf">PDF<small>Document</small></button>
+          </div>
+
+          <div class="section-label">Image resolution</div>
+          <div class="resize-tabs" id="resizeTabs">
+            <button class="resize-tab active" data-mode="none">No change</button>
+            <button class="resize-tab" data-mode="pixels">Change by pixels</button>
+            <button class="resize-tab" data-mode="percent">Change by %</button>
+          </div>
+
+          <div class="resize-panel" id="pixelsPanel">
+            <div class="dim-row">
+              <div class="dim-field"><label>Width</label><input type="number" id="widthInput" min="1"></div>
+              <div class="dim-x">×</div>
+              <div class="dim-field"><label>Height</label><input type="number" id="heightInput" min="1"></div>
+            </div>
+            <div class="lock-row"><input type="checkbox" id="lockAspect" checked><label for="lockAspect">Lock aspect ratio</label></div>
+          </div>
+
+          <div class="resize-panel" id="percentPanel">
+            <div class="pct-row">
+              <input type="range" id="pctSlider" min="5" max="200" value="100">
+              <span class="pct-val" id="pctVal">100%</span>
+            </div>
           </div>
 
           <div class="setting" id="qualitySetting">
@@ -185,12 +248,14 @@
           <button class="calc" id="convertBtn">Convert image</button>
           <button class="change-img-btn" id="changeImgBtn">Choose a different image</button>
           <div id="errorMsg"></div>
+
+          <div class="loading-row" id="loadingRow"><div class="spinner"></div><span>Converting...</span></div>
+
           <div id="successBox">
             <div class="s-title">✓ Your converted image is ready</div>
             <a id="downloadBtn" href="#" download="converted.jpg">Download</a>
           </div>
         </div>
-        <div class="privacy-note"><span class="dot"></span> Your image is processed entirely in your browser - nothing is uploaded to a server.</div>
       </div>
     </div>
     <aside class="sidebar">
@@ -198,10 +263,10 @@
       <a href="/image-compressor/">Image Compressor</a>
       <a href="/image-resizer/">Image Resizer</a>
       <a href="/image-cropper/">Image Cropper</a>
-      <a href="/image-flip-rotate/">Flip / Rotate Image</a>
-      <a href="/image-color-inverter/">Image Color Inverter</a>
-      <a href="/image-blur/">Blur Image</a>
-      <a href="/image-color-picker/">Color Picker from Image</a>
+      <a href="/flip-rotate-image/">Flip / Rotate Image</a>
+      <a href="/color-inverter/">Image Color Inverter</a>
+      <a href="/blur-image/">Blur Image Online</a>
+      <a href="/color-picker/">Color Picker from Image</a>
       <a href="/base64-image-converter/">Base64 ↔ Image</a>
       <a href="/svg-to-png/">SVG to PNG Converter</a>
       <a href="/exif-viewer/">EXIF Viewer & Remover</a>
@@ -210,61 +275,78 @@
     </aside>
     <div class="desc-block">
       <h2>What is the Image Format Converter?</h2>
-      <p>This tool converts an image from one file format to another, between JPG, PNG, and WEBP, right in your browser. Upload an image, pick the format you want to convert it to, and see a live preview and file size comparison before downloading the result.</p>
+      <p>This tool converts an image between eight formats, JPG, PNG, WEBP, BMP, TIFF, GIF, SVG, or PDF, right in your browser, with an optional resize built in so you can change the file type and dimensions in one step.</p>
       <p>Everything happens locally using the Canvas API. Your image is never uploaded to a server, so it's fast and private.</p>
 
       <h2>How to use it</h2>
       <ol>
         <li>Drop your image onto the upload area, or click it to browse your device.</li>
-        <li>Choose the format you want to convert it to: <strong>JPG</strong>, <strong>PNG</strong>, or <strong>WEBP</strong>.</li>
-        <li>For JPG and WEBP, adjust the <strong>quality</strong> slider to balance file size against visual quality.</li>
+        <li>Choose the format you want to convert it to.</li>
+        <li>Optionally resize it, by exact pixels or by a percentage, before converting.</li>
+        <li>For JPG, WEBP, and GIF, adjust the quality slider if needed.</li>
         <li>Click <strong>Convert image</strong> to see the before/after file size comparison.</li>
         <li>Download your converted file.</li>
       </ol>
 
       <h2>Choosing the right format</h2>
       <table>
-        <tr><th>Format</th><th>Best for</th><th>Transparency</th><th>Compression</th></tr>
-        <tr><td>JPG</td><td>Photos, complex images</td><td>No</td><td>Lossy, small files</td></tr>
-        <tr><td>PNG</td><td>Graphics, screenshots, logos</td><td>Yes</td><td>Lossless, larger files</td></tr>
-        <tr><td>WEBP</td><td>Websites, general use</td><td>Yes</td><td>Lossy or lossless, very efficient</td></tr>
+        <tr><th>Format</th><th>Best for</th><th>Transparency</th><th>Notes</th></tr>
+        <tr><td>JPG</td><td>Photos</td><td>No</td><td>Lossy, small files</td></tr>
+        <tr><td>PNG</td><td>Graphics, screenshots</td><td>Yes</td><td>Lossless</td></tr>
+        <tr><td>WEBP</td><td>Websites, general use</td><td>Yes</td><td>Very efficient</td></tr>
+        <tr><td>BMP</td><td>Legacy Windows software</td><td>No</td><td>Uncompressed, large files</td></tr>
+        <tr><td>TIFF</td><td>Print, archiving</td><td>No</td><td>Uncompressed, high fidelity</td></tr>
+        <tr><td>GIF</td><td>Simple graphics, icons</td><td>Yes</td><td>Limited to 256 colors</td></tr>
+        <tr><td>SVG</td><td>Embedding in web pages</td><td>Yes</td><td>Wraps the image in a vector container</td></tr>
+        <tr><td>PDF</td><td>Documents, printing, sharing</td><td>N/A</td><td>Image placed on a single page</td></tr>
       </table>
-      <p><strong>JPG</strong> is the most widely supported format and works well for photographs, where its lossy compression is hard to notice at reasonable quality settings. <strong>PNG</strong> is lossless and supports transparency, making it the right choice for logos, icons, and screenshots with sharp edges or text. <strong>WEBP</strong> is a modern format that typically produces smaller files than JPG or PNG at a similar visual quality, and it's now supported by all current browsers, though it's slightly less universally supported by older software outside the browser.</p>
+      <p>A note on <strong>GIF</strong>: since it supports a maximum of 256 colors, photos are automatically reduced to their closest 256-color match, which works well for simple graphics and icons but shows visible color banding on complex photographs. A note on <strong>SVG</strong>: SVG is a vector format, and a photo can't truly become vector art, so this option embeds your original image data inside a valid SVG file, useful when a tool or platform specifically requires an .svg file extension.</p>
 
       <h2>Why convert between formats?</h2>
       <ul>
         <li>Converting a PNG screenshot to JPG to shrink its file size when transparency isn't needed</li>
-        <li>Converting a JPG photo to WEBP for a faster-loading website</li>
-        <li>Converting a WEBP image to JPG or PNG for compatibility with older software or platforms that don't support WEBP</li>
-        <li>Converting to PNG when you need a transparent background preserved</li>
+        <li>Converting a photo to PDF to attach it to a document or print it</li>
+        <li>Converting to TIFF or BMP for older desktop software that expects those formats</li>
+        <li>Converting to WEBP for a faster-loading website</li>
+        <li>Resizing an image to exact dimensions while also changing its format, in a single step</li>
       </ul>
 
       <h2>How it works technically</h2>
-      <p>The tool loads your image into an in-browser canvas, then re-exports it using the browser's built-in image encoder for your chosen format and quality setting. This is the same underlying technology used by professional image editing software, running directly on your device.</p>
+      <p>The tool loads your image into an in-browser canvas, applies any resize you've set, then re-encodes the pixel data into your chosen format. JPG, PNG, and WEBP use the browser's built-in encoder, while BMP, TIFF, GIF, SVG, and PDF are assembled directly in JavaScript following each format's file specification. Everything runs on your device, nothing is uploaded anywhere.</p>
 
       <h2>Frequently asked questions</h2>
+      <h3>Why isn't HEIC available as an output format?</h3>
+      <p>HEIC is a patent-encumbered format that no web browser can encode client-side, any tool claiming to convert to HEIC in your browser is quietly producing a JPG or PNG with a renamed file extension. We'd rather leave it out than mislead you.</p>
       <h3>Will converting to JPG lose my image's transparency?</h3>
-      <p>Yes, JPG does not support transparency, so any transparent areas will be filled with white when converting from a format like PNG that supports it.</p>
-      <h3>Does converting always reduce file size?</h3>
-      <p>Not always, it depends on the source format, the target format, and the quality setting you choose. Converting a highly compressed JPG to lossless PNG, for instance, will typically increase the file size rather than reduce it.</p>
-      <h3>Is WEBP supported everywhere?</h3>
-      <p>All current major browsers support WEBP, but some older software or platforms outside the browser may not, so JPG or PNG remain safer choices for maximum compatibility if you're unsure where the image will be used.</p>
-      <h3>Does this tool change my image's dimensions?</h3>
-      <p>No, only the file format and compression change. To also resize the image, use the <a href="/image-resizer/" style="color:var(--linework);">Image Resizer</a> tool.</p>
+      <p>Yes, JPG, BMP, and TIFF here do not support transparency, so any transparent areas are filled with white. PNG, WEBP, GIF, and SVG all preserve transparency.</p>
+      <h3>Does resizing distort my image?</h3>
+      <p>Only if aspect ratio lock is off and you set a width and height that don't match the original proportions. Keep the lock on to resize without distortion.</p>
+      <h3>Is my image uploaded anywhere?</h3>
+      <p>No, all conversion happens locally in your browser using the Canvas API, nothing is sent to a server.</p>
     </div>
   </div>
 
   <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script>
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('fileInput');
   const convArea = document.getElementById('convArea');
   const previewImg = document.getElementById('previewImg');
   const origFormat = document.getElementById('origFormat');
+  const origDims = document.getElementById('origDims');
   const origSize = document.getElementById('origSize');
   const formatRow = document.getElementById('formatRow');
+  const resizeTabs = document.getElementById('resizeTabs');
+  const pixelsPanel = document.getElementById('pixelsPanel');
+  const percentPanel = document.getElementById('percentPanel');
+  const widthInput = document.getElementById('widthInput');
+  const heightInput = document.getElementById('heightInput');
+  const lockAspect = document.getElementById('lockAspect');
+  const pctSlider = document.getElementById('pctSlider');
+  const pctVal = document.getElementById('pctVal');
   const qualitySetting = document.getElementById('qualitySetting');
   const qualitySlider = document.getElementById('qualitySlider');
   const qualityVal = document.getElementById('qualityVal');
@@ -276,9 +358,12 @@
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
   const downloadBtn = document.getElementById('downloadBtn');
+  const loadingRow = document.getElementById('loadingRow');
 
   let currentFile = null;
   let selectedFormat = null;
+  let resizeMode = 'none';
+  let naturalW = 0, naturalH = 0;
 
   dropzone.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
@@ -312,12 +397,20 @@
     resultCompare.style.display = 'none';
     const url = URL.createObjectURL(file);
     previewImg.src = url;
+    const tempImg = new Image();
+    tempImg.onload = () => {
+      naturalW = tempImg.naturalWidth;
+      naturalH = tempImg.naturalHeight;
+      origDims.textContent = `${naturalW} × ${naturalH}`;
+      widthInput.value = naturalW;
+      heightInput.value = naturalH;
+    };
+    tempImg.src = url;
     origFormat.textContent = formatLabel(file.type);
     origSize.textContent = formatBytes(file.size);
     dropzone.style.display = 'none';
     convArea.style.display = 'block';
 
-    // Default target format = a different one than source
     const currentKey = file.type.split('/')[1] === 'jpg' ? 'jpeg' : file.type.split('/')[1];
     formatRow.querySelectorAll('.format-btn').forEach(btn => {
       const isSame = btn.dataset.fmt === currentKey;
@@ -346,45 +439,311 @@
   }
   qualitySlider.addEventListener('input', () => { qualityVal.textContent = qualitySlider.value + '%'; });
 
+  resizeTabs.querySelectorAll('.resize-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      resizeTabs.querySelectorAll('.resize-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      resizeMode = tab.dataset.mode;
+      pixelsPanel.classList.toggle('show', resizeMode === 'pixels');
+      percentPanel.classList.toggle('show', resizeMode === 'percent');
+    });
+  });
+
+  widthInput.addEventListener('input', () => {
+    if(lockAspect.checked && naturalW && naturalH && widthInput.value){
+      heightInput.value = Math.round(widthInput.value * (naturalH / naturalW));
+    }
+  });
+  heightInput.addEventListener('input', () => {
+    if(lockAspect.checked && naturalW && naturalH && heightInput.value){
+      widthInput.value = Math.round(heightInput.value * (naturalW / naturalH));
+    }
+  });
+  pctSlider.addEventListener('input', () => { pctVal.textContent = pctSlider.value + '%'; });
+
+  function getTargetDims(){
+    if(resizeMode === 'pixels'){
+      return { w: parseInt(widthInput.value,10) || naturalW, h: parseInt(heightInput.value,10) || naturalH };
+    }
+    if(resizeMode === 'percent'){
+      const pct = parseInt(pctSlider.value,10) / 100;
+      return { w: Math.max(1, Math.round(naturalW * pct)), h: Math.max(1, Math.round(naturalH * pct)) };
+    }
+    return { w: naturalW, h: naturalH };
+  }
+
   function resetResult(){
-    successBox.style.display = 'none';
+    successBox.classList.remove('show');
     errorMsg.style.display = 'none';
   }
 
-  convertBtn.addEventListener('click', () => {
+  // ---- BMP encoder (24-bit uncompressed) ----
+  function encodeBMP(canvas){
+    const w = canvas.width, h = canvas.height;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0,0,w,h).data;
+    const rowSize = Math.floor((w*3+3)/4)*4;
+    const pixelArraySize = rowSize*h;
+    const fileSize = 54 + pixelArraySize;
+    const buffer = new ArrayBuffer(fileSize);
+    const view = new DataView(buffer);
+    view.setUint8(0,0x42); view.setUint8(1,0x4D);
+    view.setUint32(2, fileSize, true);
+    view.setUint32(6, 0, true);
+    view.setUint32(10, 54, true);
+    view.setUint32(14, 40, true);
+    view.setInt32(18, w, true);
+    view.setInt32(22, h, true);
+    view.setUint16(26, 1, true);
+    view.setUint16(28, 24, true);
+    view.setUint32(30, 0, true);
+    view.setUint32(34, pixelArraySize, true);
+    view.setInt32(38, 2835, true);
+    view.setInt32(42, 2835, true);
+    view.setUint32(46, 0, true);
+    view.setUint32(50, 0, true);
+    let offset = 54;
+    for(let y = h-1; y >= 0; y--){
+      for(let x = 0; x < w; x++){
+        const i = (y*w+x)*4;
+        view.setUint8(offset++, imgData[i+2]);
+        view.setUint8(offset++, imgData[i+1]);
+        view.setUint8(offset++, imgData[i]);
+      }
+      const pad = rowSize - w*3;
+      for(let p=0;p<pad;p++) view.setUint8(offset++, 0);
+    }
+    return new Blob([buffer], { type: 'image/bmp' });
+  }
+
+  // ---- TIFF encoder (baseline, uncompressed RGB) ----
+  function encodeTIFF(canvas){
+    const w = canvas.width, h = canvas.height;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0,0,w,h).data;
+    const pixelBytes = new Uint8Array(w*h*3);
+    for(let i=0, j=0; i<imgData.length; i+=4, j+=3){
+      pixelBytes[j] = imgData[i]; pixelBytes[j+1] = imgData[i+1]; pixelBytes[j+2] = imgData[i+2];
+    }
+    const numTags = 9;
+    const headerSize = 8;
+    const ifdSize = 2 + numTags*12 + 4;
+    const bpsOffset = headerSize + ifdSize;
+    const pixelDataOffset = bpsOffset + 6;
+    const totalSize = pixelDataOffset + pixelBytes.length;
+    const buffer = new ArrayBuffer(totalSize);
+    const view = new DataView(buffer);
+    view.setUint8(0, 0x49); view.setUint8(1, 0x49);
+    view.setUint16(2, 42, true);
+    view.setUint32(4, headerSize, true);
+    let off = headerSize;
+    view.setUint16(off, numTags, true); off += 2;
+    function writeTag(tag, type, count, value){
+      view.setUint16(off, tag, true); off += 2;
+      view.setUint16(off, type, true); off += 2;
+      view.setUint32(off, count, true); off += 4;
+      view.setUint32(off, value, true); off += 4;
+    }
+    writeTag(256, 3, 1, w);
+    writeTag(257, 3, 1, h);
+    writeTag(258, 3, 3, bpsOffset);
+    writeTag(259, 3, 1, 1);
+    writeTag(262, 3, 1, 2);
+    writeTag(273, 4, 1, pixelDataOffset);
+    writeTag(277, 3, 1, 3);
+    writeTag(278, 4, 1, h);
+    writeTag(279, 4, 1, pixelBytes.length);
+    view.setUint32(off, 0, true); off += 4;
+    view.setUint16(bpsOffset, 8, true);
+    view.setUint16(bpsOffset+2, 8, true);
+    view.setUint16(bpsOffset+4, 8, true);
+    const bytes = new Uint8Array(buffer);
+    bytes.set(pixelBytes, pixelDataOffset);
+    return new Blob([buffer], { type: 'image/tiff' });
+  }
+
+  // ---- GIF encoder (static, 256-color quantized, LZW) ----
+  function quantizeToGifPalette(imageData){
+    const rLevels = 8, gLevels = 8, bLevels = 4;
+    const rStep = 256/rLevels, gStep = 256/gLevels, bStep = 256/bLevels;
+    const palette = [];
+    const paletteIndex = new Map();
+    const data = imageData.data;
+    const indices = new Uint8Array(data.length/4);
+    for(let i=0, p=0; i<data.length; i+=4, p++){
+      const r = Math.min(rLevels-1, Math.floor(data[i]/rStep));
+      const g = Math.min(gLevels-1, Math.floor(data[i+1]/gStep));
+      const b = Math.min(bLevels-1, Math.floor(data[i+2]/bStep));
+      const key = r*gLevels*bLevels + g*bLevels + b;
+      let idx = paletteIndex.get(key);
+      if(idx === undefined){
+        idx = palette.length;
+        paletteIndex.set(key, idx);
+        palette.push([
+          Math.min(255, Math.round(r*rStep + rStep/2)),
+          Math.min(255, Math.round(g*gStep + gStep/2)),
+          Math.min(255, Math.round(b*bStep + bStep/2))
+        ]);
+      }
+      indices[p] = idx;
+    }
+    return { palette, indices };
+  }
+
+  function gifLZWEncode(indices, minCodeSize){
+    const clearCode = 1 << minCodeSize;
+    const eoiCode = clearCode + 1;
+    let codeSize, dict, nextCode;
+    function resetDict(){
+      dict = new Map();
+      for(let i=0;i<clearCode;i++) dict.set(String(i), i);
+      nextCode = eoiCode + 1;
+      codeSize = minCodeSize + 1;
+    }
+    let bitBuffer = 0, bitCount = 0;
+    const bytes = [];
+    function emitCode(code){
+      bitBuffer |= (code << bitCount);
+      bitCount += codeSize;
+      while(bitCount >= 8){ bytes.push(bitBuffer & 0xFF); bitBuffer >>>= 8; bitCount -= 8; }
+    }
+    resetDict();
+    emitCode(clearCode);
+    let w = null;
+    for(let i=0;i<indices.length;i++){
+      const k = indices[i];
+      const wk = (w === null) ? String(k) : (w + ',' + k);
+      if(dict.has(wk)){
+        w = wk;
+      } else {
+        emitCode(dict.get(w));
+        if(nextCode === 4096){
+          emitCode(clearCode);
+          resetDict();
+        } else {
+          if(nextCode >= (1 << codeSize) && codeSize < 12) codeSize++;
+          dict.set(wk, nextCode);
+          nextCode++;
+        }
+        w = String(k);
+      }
+    }
+    if(w !== null) emitCode(dict.get(w));
+    emitCode(eoiCode);
+    if(bitCount > 0) bytes.push(bitBuffer & 0xFF);
+    return bytes;
+  }
+
+  function encodeGIF(canvas){
+    const w = canvas.width, h = canvas.height;
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0,0,w,h);
+    const { palette, indices } = quantizeToGifPalette(imageData);
+    let palBits = Math.max(1, Math.ceil(Math.log2(Math.max(2, palette.length))));
+    const palSize = 1 << palBits;
+    while(palette.length < palSize) palette.push([0,0,0]);
+    const minCodeSize = Math.max(2, palBits);
+
+    const bytes = [];
+    function pushStr(s){ for(let i=0;i<s.length;i++) bytes.push(s.charCodeAt(i)); }
+    function pushU16(n){ bytes.push(n & 0xFF, (n>>8)&0xFF); }
+
+    pushStr('GIF89a');
+    pushU16(w); pushU16(h);
+    bytes.push((1<<7) | (7<<4) | (0<<3) | (palBits-1));
+    bytes.push(0); bytes.push(0);
+    palette.forEach(c => bytes.push(c[0], c[1], c[2]));
+
+    bytes.push(0x2C);
+    pushU16(0); pushU16(0); pushU16(w); pushU16(h);
+    bytes.push(0);
+
+    bytes.push(minCodeSize);
+    const lzwBytes = gifLZWEncode(Array.from(indices), minCodeSize);
+    let pos = 0;
+    while(pos < lzwBytes.length){
+      const chunkSize = Math.min(255, lzwBytes.length - pos);
+      bytes.push(chunkSize);
+      for(let i=0;i<chunkSize;i++) bytes.push(lzwBytes[pos+i]);
+      pos += chunkSize;
+    }
+    bytes.push(0);
+    bytes.push(0x3B);
+    return new Blob([new Uint8Array(bytes)], { type: 'image/gif' });
+  }
+
+  function encodeSVG(canvas){
+    const dataUrl = canvas.toDataURL('image/png');
+    const w = canvas.width, h = canvas.height;
+    const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><image width="${w}" height="${h}" href="${dataUrl}"/></svg>`;
+    return new Blob([svgStr], { type: 'image/svg+xml' });
+  }
+
+  async function encodePDF(canvas){
+    const { PDFDocument } = PDFLib;
+    const doc = await PDFDocument.create();
+    const pngBytes = await (await fetch(canvas.toDataURL('image/png'))).arrayBuffer();
+    const img = await doc.embedPng(pngBytes);
+    const page = doc.addPage([canvas.width, canvas.height]);
+    page.drawImage(img, { x:0, y:0, width:canvas.width, height:canvas.height });
+    const bytes = await doc.save();
+    return new Blob([bytes], { type: 'application/pdf' });
+  }
+
+  const extFor = { jpeg:'jpg', png:'png', webp:'webp', bmp:'bmp', tiff:'tiff', gif:'gif', svg:'svg', pdf:'pdf' };
+
+  convertBtn.addEventListener('click', async () => {
     if(!currentFile || !selectedFormat) return;
     errorMsg.style.display = 'none';
+    successBox.classList.remove('show');
     convertBtn.disabled = true;
-    convertBtn.textContent = 'Converting…';
+    loadingRow.style.display = 'flex';
+    const minDelay = new Promise(resolve => setTimeout(resolve, 900));
 
-    const img = new Image();
-    img.onload = () => {
+    try{
+      const img = new Image();
+      await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; img.src = previewImg.src; });
+
+      const { w: tw, h: th } = getTargetDims();
       const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+      canvas.width = tw; canvas.height = th;
       const ctx = canvas.getContext('2d');
-      if(selectedFormat === 'jpeg'){ ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
-      ctx.drawImage(img, 0, 0);
-      const mime = 'image/' + selectedFormat;
-      const quality = qualitySlider.value / 100;
-      const dataUrl = canvas.toDataURL(mime, quality);
+      if(selectedFormat === 'jpeg' || selectedFormat === 'bmp' || selectedFormat === 'tiff'){
+        ctx.fillStyle = '#fff'; ctx.fillRect(0,0,tw,th);
+      }
+      ctx.drawImage(img, 0, 0, tw, th);
 
-      // estimate size from base64 length
-      const base64Length = dataUrl.split(',')[1].length;
-      const approxBytes = Math.round(base64Length * 0.75);
+      let blob;
+      if(selectedFormat === 'bmp') blob = encodeBMP(canvas);
+      else if(selectedFormat === 'tiff') blob = encodeTIFF(canvas);
+      else if(selectedFormat === 'gif') blob = encodeGIF(canvas);
+      else if(selectedFormat === 'svg') blob = encodeSVG(canvas);
+      else if(selectedFormat === 'pdf') blob = await encodePDF(canvas);
+      else {
+        const mime = 'image/' + selectedFormat;
+        const quality = qualitySlider.value / 100;
+        blob = await new Promise(resolve => canvas.toBlob(resolve, mime, quality));
+      }
+
+      await minDelay;
 
       resultOrigSize.textContent = formatBytes(currentFile.size);
-      resultNewSize.textContent = formatBytes(approxBytes);
+      resultNewSize.textContent = formatBytes(blob.size);
       resultCompare.style.display = 'grid';
 
-      const ext = selectedFormat === 'jpeg' ? 'jpg' : selectedFormat;
-      downloadBtn.href = dataUrl;
+      const ext = extFor[selectedFormat] || selectedFormat;
+      const url = URL.createObjectURL(blob);
+      downloadBtn.href = url;
       downloadBtn.download = `converted.${ext}`;
-      successBox.style.display = 'block';
-      convertBtn.disabled = false;
-      convertBtn.textContent = 'Convert image';
-    };
-    img.src = previewImg.src;
+      loadingRow.style.display = 'none';
+      successBox.classList.add('show');
+    }catch(err){
+      await minDelay;
+      loadingRow.style.display = 'none';
+      errorMsg.textContent = 'Something went wrong during conversion. Please try again.';
+      errorMsg.style.display = 'block';
+    }
+    convertBtn.disabled = false;
   });
 </script>
 
