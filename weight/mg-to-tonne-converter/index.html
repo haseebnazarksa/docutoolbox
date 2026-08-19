@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MG to Tonne Converter - Milligrams to Tonnes | Docutoolbox</title>
+<meta name="description" content="Free mg to tonne converter (milligrams to tonnes). Convert instantly with the exact formula, worked examples, and a full reference table. No sign-up required.">
+<link rel="canonical" href="https://docutoolbox.com/weight/mg-to-tonne-converter/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto; gap:12px;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink); white-space:nowrap;}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease; white-space:nowrap; flex-shrink:0;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
+
+  .content-grid{ display:grid; grid-template-columns:1fr 280px; grid-template-areas: "calc side" "desc side"; gap:36px; align-items:start; }
+  .calc-block{ grid-area:calc; } .desc-block{ grid-area:desc; } .sidebar{ grid-area:side; }
+  @media (max-width:860px){ .content-grid{ grid-template-columns:1fr; grid-template-areas: "calc" "side" "desc"; gap:24px; } }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(24px,4.2vw,36px); line-height:1.2; margin-bottom:14px; letter-spacing:-0.01em;}
+  .intro{ color:var(--text-muted); font-size:14.5px; line-height:1.65; margin-bottom:26px; max-width:620px;}
+
+  .card{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  .conv-row{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:end; margin-bottom:10px; }
+  .field label{ display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;}
+  .field select{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'Inter',sans-serif; font-weight:600; font-size:16px; padding:12px 14px; border-radius:9px; appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238FADC0'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center;
+  }
+  .field select:focus{ outline:none; border-color:var(--linework); }
+  .field input{
+    width:100%; background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:600; padding:14px; border-radius:9px;
+  }
+  .field input:focus{ outline:none; border-color:var(--linework); }
+  .field input[type="number"]::-webkit-outer-spin-button,
+  .field input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .field input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
+  .swap-btn{ background:var(--blue-deep); border:1px solid var(--grid-line); color:var(--linework); width:42px; height:42px; border-radius:9px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center;}
+  .swap-btn:hover{ border-color:var(--linework); }
+
+  @media (max-width:480px){
+    .conv-row{ grid-template-columns:1fr; gap:10px; }
+    .conv-row > div[style*="width:42px"]{ display:none; }
+    .swap-btn{ justify-self:center; }
+  }
+
+  .calc-line{ text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--linework-soft); margin-top:18px; padding:14px; background:var(--blue-deep); border-radius:10px; border:1px solid var(--grid-line); word-break:break-word;}
+  .calc-line strong{ color:var(--accent); }
+
+  .ref-table{ width:100%; border-collapse:collapse; margin-top:8px; }
+  .ref-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--linework); padding:8px 6px; border-bottom:1px solid var(--grid-line); }
+  .ref-table td{ padding:9px 6px; border-bottom:1px solid var(--grid-line); font-size:13.5px; font-family:'JetBrains Mono',monospace; }
+
+  .sidebar{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:22px; max-height:640px; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;}
+  .sidebar::-webkit-scrollbar{ width:0; height:0; background:transparent; }
+  .sidebar h4{ font-family:'Fraunces',serif; font-size:14.5px; margin-bottom:14px; color:var(--linework);}
+  .sidebar a{ display:block; padding:8px 0; color:var(--ink); text-decoration:none; font-size:12.5px; border-bottom:1px solid var(--grid-line); transition:color 0.15s ease;}
+  .sidebar a:hover{ color:var(--linework);} .sidebar a:last-child{ border-bottom:none;}
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:30px; margin-top:8px;}
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul, .desc-block ol{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products &rarr;</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox</div>
+  <h1>Milligrams to Tonnes converter</h1>
+  <p class="intro">Convert milligrams to tonnes instantly, with the exact calculation and a quick reference table.</p>
+
+  <div class="content-grid">
+    <div class="calc-block">
+      <div class="card">
+        <div class="conv-row">
+          <div class="field">
+            <label>From</label>
+            <select id="fromSelect"></select>
+          </div>
+          <button class="swap-btn" id="swapBtn" title="Swap units">&#8644;</button>
+          <div class="field">
+            <label>To</label>
+            <select id="toSelect"></select>
+          </div>
+        </div>
+        <div class="conv-row">
+          <div class="field">
+            <label id="fromLabel">Milligrams</label>
+            <input type="number" id="fromInput" value="1" step="any">
+          </div>
+          <div style="width:42px;"></div>
+          <div class="field">
+            <label id="toLabel">Tonnes</label>
+            <input type="number" id="toInput" value="0" step="any">
+          </div>
+        </div>
+        <div class="calc-line" id="calcLine"></div>
+
+        <table class="ref-table" id="refTable">
+          <tr><th>mg</th><th>t</th></tr>
+        </table>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <h4>Weight Conversion</h4>
+      <a href="/weight/tonne-to-mg-converter/">Tonnes to Milligrams</a>
+      <a href="/weight/mg-to-kg-converter/">Milligrams to Kilograms</a>
+      <a href="/weight/kg-to-mg-converter/">Kilograms to Milligrams</a>
+      <a href="/weight/mg-to-gram-converter/">Milligrams to Grams</a>
+      <a href="/weight/gram-to-mg-converter/">Grams to Milligrams</a>
+      <a href="/weight/mg-to-mcg-converter/">Milligrams to Micrograms</a>
+      <a href="/weight/mcg-to-mg-converter/">Micrograms to Milligrams</a>
+      <a href="/weight/mg-to-imperial-ton-converter/">Milligrams to Imperial Ton</a>
+      <a href="/weight/imperial-ton-to-mg-converter/">Imperial Ton to Milligrams</a>
+      <a href="/weight/mg-to-us-ton-converter/">Milligrams to US Ton</a>
+      <a href="/weight/us-ton-to-mg-converter/">US Ton to Milligrams</a>
+      <a href="/weight/mg-to-stone-converter/">Milligrams to Stone</a>
+      <a href="/weight/stone-to-mg-converter/">Stone to Milligrams</a>
+      <a href="/weight/mg-to-lb-converter/">Milligrams to Pounds</a>
+      <a href="/weight/lb-to-mg-converter/">Pounds to Milligrams</a>
+      <a href="/weight/mg-to-oz-converter/">Milligrams to Ounces</a>
+      <a href="/weight/oz-to-mg-converter/">Ounces to Milligrams</a>
+      <a href="/weight/" style="color:var(--linework-soft); font-weight:600;">See all weight converters &rarr;</a>
+    </aside>
+    <div class="desc-block">
+      <h2>MG to Tonne conversion (Milligrams to Tonnes)</h2>
+      <p>This tool converts milligrams (mg) to tonnes (t) instantly and precisely. Whether you search for "mg to tonne" or "milligrams to tonnes", this converter gives you the exact result along with the formula, worked examples, and a full reference table below.</p>
+
+      <h2>Base conversion values</h2>
+      <p>1 milligram = <strong>0 t</strong></p>
+      <p>1 tonne = <strong>1,000,000,000 mg</strong></p>
+
+      <h2>How to convert milligrams to tonnes</h2>
+      <p>To convert a value from milligrams to tonnes, divide it by <strong>1,000,000,000</strong>. This is a fixed, internationally standardized conversion factor, so the result is always mathematically exact, never an estimate.</p>
+
+      <h2>Formula</h2>
+      <p><strong>t = mg &divide; 1,000,000,000</strong></p>
+
+      <h2>Worked examples</h2>
+      <p><strong>Example 1:</strong> Convert 2 mg to t<br>
+      2 mg &divide; 1,000,000,000 = <strong>0 t</strong></p>
+
+      <p><strong>Example 2:</strong> Convert 0.5 mg to t<br>
+      0.5 mg &divide; 1,000,000,000 = <strong>0 t</strong></p>
+
+      <p><strong>Example 3:</strong> Convert 12 mg to t<br>
+      12 mg &divide; 1,000,000,000 = <strong>0 t</strong></p>
+      <h2>How to use this converter</h2>
+      <ol>
+        <li>Type a value into either the <strong>Milligrams</strong> or <strong>Tonnes</strong> field, the other field updates instantly.</li>
+        <li>Use the <strong>Swap</strong> button to flip the conversion direction.</li>
+        <li>Change the <strong>From</strong> or <strong>To</strong> dropdown to jump straight to a different unit conversion.</li>
+        <li>Check the reference table below for common values at a glance.</li>
+      </ol>
+
+      <h2>Using the reference table</h2>
+      <p>The table above lists milligrams values converted to tonnes, useful as a quick lookup without needing to type a custom value. All figures use the same exact conversion factor as the live calculator.</p>
+
+      <h2>What is a milligram?</h2>
+      <p>A milligram is a small metric unit of mass equal to one-thousandth of a gram. It's mainly used for medication dosages, nutrition labels, and laboratory measurements.</p>
+
+      <h2>What is a tonne?</h2>
+      <p>A tonne (metric ton) is a metric unit of mass equal to 1,000 kilograms. It's used for large-scale measurements like shipping cargo, vehicle weight, and industrial materials.</p>
+
+      <h2>Common uses</h2>
+      <ul>
+        <li>Converting measurements between metric and imperial units for shipping, trade, or industrial use</li>
+        <li>Checking product or shipment weights listed in a different unit than you're used to</li>
+        <li>Working out recipe, medication, or lab measurements accurately</li>
+        <li>Quick reference while shopping, traveling, or reading international specifications</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is this milligrams to tonnes conversion exact?</h3>
+      <p>Yes, the conversion factor between milligrams and tonnes is a fixed, internationally defined value, so results are mathematically exact, not an approximation.</p>
+      <h3>Can I convert tonnes back to milligrams?</h3>
+      <p>Yes, just type the value into the Tonnes field and the Milligrams field updates automatically, or click the Swap button to flip the layout, or use the dropdown menus to jump directly to the reverse conversion page.</p>
+      <h3>How many decimal places does this calculator show?</h3>
+      <p>Results are shown to up to 6 decimal places for precision, very small or very large results switch to scientific notation automatically for readability.</p>
+      <h3>Do I need to round the result?</h3>
+      <p>Not unless your use case requires it, the value shown is exact. For practical purposes like cooking or shipping, rounding to 1-2 decimal places is usually sufficient.</p>
+    </div>
+  </div>
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> &middot; <a href="/about/">About</a> &middot; <a href="/privacy/">Privacy</a></footer>
+</div>
+
+<script>
+  const UNIT_KEYS = ['tonne','kg','g','mg','mcg','imperial-ton','us-ton','stone','lb','oz'];
+  const FACTORS = { tonne:1000000, kg:1000, g:1, mg:0.001, mcg:0.000001, 'imperial-ton':1016046.9088, 'us-ton':907184.74, stone:6350.29318, lb:453.59237, oz:28.349523125 };
+  const NAMES = { tonne:"Tonne", kg:"Kilograms", g:"Grams", mg:"Milligrams", mcg:"Micrograms", 'imperial-ton':"Imperial Ton", 'us-ton':"US Ton", stone:"Stone", lb:"Pounds", oz:"Ounces" };
+  const SYMS = { tonne:"t", kg:"kg", g:"g", mg:"mg", mcg:"mcg", 'imperial-ton':"long tn", 'us-ton':"short tn", stone:"st", lb:"lb", oz:"oz" };
+  const SLUG_WORD = { g:"gram" };
+  function slugFor(key){ return SLUG_WORD[key] || key; }
+
+  const fromSelect = document.getElementById('fromSelect');
+  const toSelect = document.getElementById('toSelect');
+  const fromInput = document.getElementById('fromInput');
+  const toInput = document.getElementById('toInput');
+  const fromLabel = document.getElementById('fromLabel');
+  const toLabel = document.getElementById('toLabel');
+
+  const CURRENT_FROM = 'mg';
+  const CURRENT_TO = 'tonne';
+
+  UNIT_KEYS.forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k; opt.textContent = NAMES[k] + ' (' + SYMS[k] + ')';
+    if (k === CURRENT_FROM) opt.selected = true;
+    fromSelect.appendChild(opt);
+  });
+  UNIT_KEYS.filter(k => k !== CURRENT_FROM).forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k; opt.textContent = NAMES[k] + ' (' + SYMS[k] + ')';
+    if (k === CURRENT_TO) opt.selected = true;
+    toSelect.appendChild(opt);
+  });
+
+  function fmtNum(n){
+    if (!isFinite(n)) return '';
+    return Math.abs(n) < 0.0001 && n !== 0 ? n.toExponential(4) : (Math.round(n * 1000000) / 1000000);
+  }
+
+  function updateRefTable(){
+    const f = fromSelect.value, t = toSelect.value;
+    const refTable = document.getElementById('refTable');
+    const refVals = [1,2,5,10,20,50,100,500,1000];
+    let rows = `<tr><th>${SYMS[f]}</th><th>${SYMS[t]}</th></tr>`;
+    refVals.forEach(v => {
+      const r = (v * FACTORS[f]) / FACTORS[t];
+      rows += `<tr><td>${v} ${SYMS[f]}</td><td>${fmtNum(r)} ${SYMS[t]}</td></tr>`;
+    });
+    refTable.innerHTML = rows;
+  }
+
+  let updating = false;
+
+  function convertFrom(){
+    if (updating) return;
+    updating = true;
+    const f = fromSelect.value, t = toSelect.value;
+    const val = parseFloat(fromInput.value);
+    if (!isNaN(val)){
+      const result = (val * FACTORS[f]) / FACTORS[t];
+      toInput.value = fmtNum(result);
+      document.getElementById('calcLine').innerHTML = `${val} ${SYMS[f]} &times; ${fmtNum(FACTORS[f]/FACTORS[t])} = <strong>${fmtNum(result)} ${SYMS[t]}</strong>`;
+    } else {
+      toInput.value = '';
+      document.getElementById('calcLine').textContent = '';
+    }
+    updateRefTable();
+    updating = false;
+  }
+
+  function convertTo(){
+    if (updating) return;
+    updating = true;
+    const f = fromSelect.value, t = toSelect.value;
+    const val = parseFloat(toInput.value);
+    if (!isNaN(val)){
+      const result = (val * FACTORS[t]) / FACTORS[f];
+      fromInput.value = fmtNum(result);
+      document.getElementById('calcLine').innerHTML = `${fmtNum(result)} ${SYMS[f]} &times; ${fmtNum(FACTORS[f]/FACTORS[t])} = <strong>${val} ${SYMS[t]}</strong>`;
+    } else {
+      fromInput.value = '';
+      document.getElementById('calcLine').textContent = '';
+    }
+    updateRefTable();
+    updating = false;
+  }
+
+  fromInput.addEventListener('input', convertFrom);
+  toInput.addEventListener('input', convertTo);
+
+  fromSelect.addEventListener('change', () => {
+    window.location.href = '/weight/' + slugFor(fromSelect.value) + '-to-' + slugFor(toSelect.value) + '-converter/';
+  });
+  toSelect.addEventListener('change', () => {
+    window.location.href = '/weight/' + slugFor(fromSelect.value) + '-to-' + slugFor(toSelect.value) + '-converter/';
+  });
+  document.getElementById('swapBtn').addEventListener('click', () => {
+    window.location.href = '/weight/' + slugFor(toSelect.value) + '-to-' + slugFor(fromSelect.value) + '-converter/';
+  });
+
+  convertFrom();
+</script>
+
+</body>
+</html>
