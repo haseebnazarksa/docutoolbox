@@ -669,16 +669,28 @@
 
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
 
-  // Category image reveal: nothing visible at all until fully loaded, then box + image appear together
+  // Category image reveal: nothing visible at all until fully loaded, then box + image appear together.
+  // Each image tries its written extension first, and if that fails, automatically
+  // retries with the other common extension (.jpg <-> .png) before giving up.
   document.querySelectorAll('.feature-visual img').forEach(img => {
     const container = img.closest('.feature-visual');
     function reveal(){ img.classList.add('img-loaded'); container.classList.add('box-ready'); }
     function hide(){ img.style.display = 'none'; }
+    function tryOtherExtension(){
+      const src = img.getAttribute('src');
+      let altSrc = null;
+      if(/\.png$/i.test(src)) altSrc = src.replace(/\.png$/i, '.jpg');
+      else if(/\.jpe?g$/i.test(src)) altSrc = src.replace(/\.jpe?g$/i, '.png');
+      if(!altSrc){ hide(); return; }
+      img.addEventListener('load', reveal, { once: true });
+      img.addEventListener('error', hide, { once: true });
+      img.src = altSrc;
+    }
     if(img.complete && img.naturalWidth > 0){
       reveal();
     } else {
-      img.addEventListener('load', reveal);
-      img.addEventListener('error', hide);
+      img.addEventListener('load', reveal, { once: true });
+      img.addEventListener('error', tryOtherExtension, { once: true });
     }
   });
 </script>
