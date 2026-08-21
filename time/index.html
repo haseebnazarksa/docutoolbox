@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Unit Converters - Free Online Tools | Docutoolbox</title>
+<meta name="description" content="Free time unit converters: seconds, minutes, hours, days, weeks, months, years, decades, and more. Instant, exact conversions with reference tables. No sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/time/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto; gap:12px;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink); white-space:nowrap;}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease; white-space:nowrap; flex-shrink:0;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,4.5vw,40px); line-height:1.15; margin-bottom:14px; letter-spacing:-0.01em; display:flex; align-items:center; gap:14px;}
+  h1 svg{ width:34px; height:34px; stroke:var(--linework); fill:none; stroke-width:1.5; flex-shrink:0;}
+  .intro{ color:var(--text-muted); font-size:14.5px; line-height:1.65; margin-bottom:32px; max-width:640px;}
+
+  .tool-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-bottom:56px; }
+  .tool-card{
+    display:block; background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius);
+    padding:18px; text-decoration:none; color:var(--ink); transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .tool-card:hover{ border-color:var(--linework); transform:translateY(-2px); }
+  .tool-card-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:6px; }
+  .tool-card-link{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--accent); }
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:32px; }
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  .factor-table{ width:100%; border-collapse:collapse; margin:8px 0 18px; }
+  .factor-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--linework); padding:8px 6px; border-bottom:1px solid var(--grid-line); }
+  .factor-table td{ padding:9px 6px; border-bottom:1px solid var(--grid-line); font-size:13.5px; font-family:'JetBrains Mono',monospace; }
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products &rarr;</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox &middot; 132 tools</div>
+  <h1><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Time Unit Converters</h1>
+  <p class="intro">Free, instant time conversions between nanoseconds, seconds, minutes, hours, days, weeks, months, years, decades, and centuries. Every conversion uses the exact formula, with a quick reference table.</p>
+
+  <div class="tool-grid">
+    <a href="/time/nanosecond-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-second-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-minute-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-hour-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-day-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-week-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-month-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-decade-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/nanosecond-to-century-converter/" class="tool-card"><div class="tool-card-title">Nanosecond to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-second-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-minute-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-hour-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-day-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-week-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-month-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-decade-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/microsecond-to-century-converter/" class="tool-card"><div class="tool-card-title">Microsecond to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-second-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-minute-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-hour-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-day-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-week-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-month-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-decade-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/millisecond-to-century-converter/" class="tool-card"><div class="tool-card-title">Millisecond to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Second to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Second to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Second to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-minute-converter/" class="tool-card"><div class="tool-card-title">Second to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-hour-converter/" class="tool-card"><div class="tool-card-title">Second to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-day-converter/" class="tool-card"><div class="tool-card-title">Second to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-week-converter/" class="tool-card"><div class="tool-card-title">Second to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-month-converter/" class="tool-card"><div class="tool-card-title">Second to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Second to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-decade-converter/" class="tool-card"><div class="tool-card-title">Second to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/second-to-century-converter/" class="tool-card"><div class="tool-card-title">Second to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Minute to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Minute to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Minute to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-second-converter/" class="tool-card"><div class="tool-card-title">Minute to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-hour-converter/" class="tool-card"><div class="tool-card-title">Minute to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-day-converter/" class="tool-card"><div class="tool-card-title">Minute to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-week-converter/" class="tool-card"><div class="tool-card-title">Minute to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-month-converter/" class="tool-card"><div class="tool-card-title">Minute to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Minute to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-decade-converter/" class="tool-card"><div class="tool-card-title">Minute to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/minute-to-century-converter/" class="tool-card"><div class="tool-card-title">Minute to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Hour to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Hour to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Hour to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-second-converter/" class="tool-card"><div class="tool-card-title">Hour to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-minute-converter/" class="tool-card"><div class="tool-card-title">Hour to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-day-converter/" class="tool-card"><div class="tool-card-title">Hour to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-week-converter/" class="tool-card"><div class="tool-card-title">Hour to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-month-converter/" class="tool-card"><div class="tool-card-title">Hour to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Hour to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-decade-converter/" class="tool-card"><div class="tool-card-title">Hour to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/hour-to-century-converter/" class="tool-card"><div class="tool-card-title">Hour to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Day to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Day to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Day to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-second-converter/" class="tool-card"><div class="tool-card-title">Day to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-minute-converter/" class="tool-card"><div class="tool-card-title">Day to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-hour-converter/" class="tool-card"><div class="tool-card-title">Day to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-week-converter/" class="tool-card"><div class="tool-card-title">Day to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-month-converter/" class="tool-card"><div class="tool-card-title">Day to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Day to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-decade-converter/" class="tool-card"><div class="tool-card-title">Day to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/day-to-century-converter/" class="tool-card"><div class="tool-card-title">Day to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Week to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Week to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Week to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-second-converter/" class="tool-card"><div class="tool-card-title">Week to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-minute-converter/" class="tool-card"><div class="tool-card-title">Week to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-hour-converter/" class="tool-card"><div class="tool-card-title">Week to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-day-converter/" class="tool-card"><div class="tool-card-title">Week to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-month-converter/" class="tool-card"><div class="tool-card-title">Week to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Week to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-decade-converter/" class="tool-card"><div class="tool-card-title">Week to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/week-to-century-converter/" class="tool-card"><div class="tool-card-title">Week to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Month to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Month to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Month to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-second-converter/" class="tool-card"><div class="tool-card-title">Month to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-minute-converter/" class="tool-card"><div class="tool-card-title">Month to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-hour-converter/" class="tool-card"><div class="tool-card-title">Month to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-day-converter/" class="tool-card"><div class="tool-card-title">Month to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-week-converter/" class="tool-card"><div class="tool-card-title">Month to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Month to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-decade-converter/" class="tool-card"><div class="tool-card-title">Month to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/month-to-century-converter/" class="tool-card"><div class="tool-card-title">Month to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-second-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-minute-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-hour-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-day-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-week-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-month-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-decade-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/calendar-year-to-century-converter/" class="tool-card"><div class="tool-card-title">Calendar year to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Decade to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Decade to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Decade to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-second-converter/" class="tool-card"><div class="tool-card-title">Decade to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-minute-converter/" class="tool-card"><div class="tool-card-title">Decade to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-hour-converter/" class="tool-card"><div class="tool-card-title">Decade to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-day-converter/" class="tool-card"><div class="tool-card-title">Decade to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-week-converter/" class="tool-card"><div class="tool-card-title">Decade to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-month-converter/" class="tool-card"><div class="tool-card-title">Decade to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Decade to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/decade-to-century-converter/" class="tool-card"><div class="tool-card-title">Decade to Century</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-nanosecond-converter/" class="tool-card"><div class="tool-card-title">Century to Nanosecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-microsecond-converter/" class="tool-card"><div class="tool-card-title">Century to Microsecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-millisecond-converter/" class="tool-card"><div class="tool-card-title">Century to Millisecond</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-second-converter/" class="tool-card"><div class="tool-card-title">Century to Second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-minute-converter/" class="tool-card"><div class="tool-card-title">Century to Minute</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-hour-converter/" class="tool-card"><div class="tool-card-title">Century to Hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-day-converter/" class="tool-card"><div class="tool-card-title">Century to Day</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-week-converter/" class="tool-card"><div class="tool-card-title">Century to Week</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-month-converter/" class="tool-card"><div class="tool-card-title">Century to Month</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-calendar-year-converter/" class="tool-card"><div class="tool-card-title">Century to Calendar year</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/time/century-to-decade-converter/" class="tool-card"><div class="tool-card-title">Century to Decade</div><span class="tool-card-link">Open &rarr;</span></a>
+  </div>
+
+  <div class="desc-block">
+    <h2>Free time unit converters</h2>
+    <p>Docutoolbox's Time Unit Converters cover every conversion between twelve time units, from nanoseconds up to centuries. Each converter has its own dedicated page for the fastest, most focused conversion experience, with live results, the exact formula, and a quick reference table.</p>
+
+    <h2>How the converters work</h2>
+    <p>Every time unit is converted through a common base of seconds, so results stay accurate and consistent across the full range, from nanoseconds to centuries. Switching the "From" or "To" unit on any converter page instantly takes you to the matching dedicated converter, so you always land on the most relevant tool for your exact conversion.</p>
+
+    <h2>Time unit reference</h2>
+    <table class="factor-table">
+      <tr><th>Unit</th><th>Equal to</th></tr>
+      <tr><td>Nanosecond</td><td>0.000000001 sec</td></tr>
+      <tr><td>Microsecond</td><td>0.000001 sec</td></tr>
+      <tr><td>Millisecond</td><td>0.001 sec</td></tr>
+      <tr><td>Second</td><td>1 sec (base unit)</td></tr>
+      <tr><td>Minute</td><td>60 sec</td></tr>
+      <tr><td>Hour</td><td>3,600 sec</td></tr>
+      <tr><td>Day</td><td>86,400 sec</td></tr>
+      <tr><td>Week</td><td>604,800 sec</td></tr>
+      <tr><td>Month</td><td>2,629,746 sec (avg)</td></tr>
+      <tr><td>Calendar year</td><td>31,556,952 sec (avg)</td></tr>
+      <tr><td>Decade</td><td>315,569,520 sec (avg)</td></tr>
+      <tr><td>Century</td><td>3,155,695,200 sec (avg)</td></tr>
+    </table>
+    <p>Month, calendar year, decade, and century use average Gregorian calendar lengths, since these units don't have a single fixed number of days, this is the same standard most calculators and calendars use.</p>
+
+    <h2>Common uses</h2>
+    <ul>
+      <li>Converting code execution times and signal timings in software and electronics</li>
+      <li>Calculating meeting durations, work shifts, and daily schedules</li>
+      <li>Planning project deadlines, billing cycles, and subscription periods</li>
+      <li>Working out age, tenure, historical timelines, and long-term financial projections</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Are these conversions exact?</h3>
+    <p>Yes, conversions between fixed-length units such as seconds, minutes, hours, days, and weeks are mathematically exact. Month, calendar year, decade, and century use standard average lengths, since calendar months and years vary slightly in actual day count.</p>
+    <h3>Why do month and year use an average value?</h3>
+    <p>A calendar month can range from 28 to 31 days, and a calendar year can be 365 or 366 days depending on leap years. To keep conversions consistent, these converters use the average Gregorian calendar length, the same approach used by most standard converters.</p>
+    <h3>Is my data stored or sent anywhere?</h3>
+    <p>No, every calculation happens locally in your browser using JavaScript, nothing is uploaded or stored.</p>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> &middot; <a href="/about/">About</a> &middot; <a href="/privacy/">Privacy</a></footer>
+</div>
+
+</body>
+</html>
