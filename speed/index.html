@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed Unit Converters - Free Online Tools | Docutoolbox</title>
+<meta name="description" content="Free speed unit converters: m/s to km/h, mph to km/h, knots to mph, and more. Instant, exact conversions with reference tables. No sign-up.">
+<link rel="canonical" href="https://docutoolbox.com/speed/">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0E1620; --blue-card:#161F2B; --blue-card-2:#1B2632; --grid-line:rgba(243,239,231,0.09);
+    --linework:#E4C766; --linework-soft:#C9A227; --accent:#C9A227; --accent-soft:#E4C766;
+    --ink:#F3EFE7; --text-muted:#8B96A3; --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --blue-deep:#EEEAE1; --blue-card:#FFFFFF; --blue-card-2:#E7E2D6; --grid-line:rgba(20,20,20,0.10);
+      --linework:#A6790E; --linework-soft:#8F6B0C; --accent:#C9A227; --accent-soft:#B8901F;
+      --ink:#16181C; --text-muted:#6B7280;
+    }
+    header.site{ background:rgba(255,255,255,0.92) !important; }
+    body{
+      background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.07), transparent 60%), var(--blue-deep) !important;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  a, button{ outline:none; }
+  a:focus-visible, button:focus-visible{ outline:1.5px solid var(--linework); outline-offset:2px; }
+  button{ user-select:none; -webkit-user-select:none; }
+  body{
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.08), transparent 60%), var(--blue-deep);
+    color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:60px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(14,22,32,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--grid-line); margin-bottom:48px;}
+  .navbar{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto; gap:12px;}
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:var(--ink); white-space:nowrap;}
+  .all-products-btn{ background:var(--accent); color:#0A2E45; padding:10px 20px; border-radius:8px; font-weight:600; text-decoration:none; font-family:'Inter',sans-serif; font-size:13.5px; transition:background 0.15s ease; white-space:nowrap; flex-shrink:0;}
+  .all-products-btn:hover{ background:var(--accent-soft); }
+  @media (max-width:420px){
+    .navbar{ padding:14px 16px; }
+    .logo{ font-size:15px; gap:7px; }
+    .logo img{ width:24px !important; height:24px !important; }
+    .all-products-btn{ padding:8px 12px; font-size:12px; }
+  }
+
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--linework); margin-bottom:14px;}
+  .eyebrow::before{content:"◇ ";}
+  h1{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,4.5vw,40px); line-height:1.15; margin-bottom:14px; letter-spacing:-0.01em; display:flex; align-items:center; gap:14px;}
+  h1 svg{ width:34px; height:34px; stroke:var(--linework); fill:none; stroke-width:1.5; flex-shrink:0;}
+  .intro{ color:var(--text-muted); font-size:14.5px; line-height:1.65; margin-bottom:32px; max-width:640px;}
+
+  .tool-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-bottom:56px; }
+  .tool-card{
+    display:block; background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius);
+    padding:18px; text-decoration:none; color:var(--ink); transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .tool-card:hover{ border-color:var(--linework); transform:translateY(-2px); }
+  .tool-card-title{ font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:6px; }
+  .tool-card-link{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--accent); }
+
+  .desc-block{ background:var(--blue-card); border:1px solid var(--grid-line); border-radius:var(--radius); padding:32px; }
+  .desc-block h2{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin:26px 0 12px; color:var(--linework);}
+  .desc-block h2:first-child{ margin-top:0; }
+  .desc-block h3{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:20px 0 8px;}
+  .desc-block p{ color:var(--ink); font-size:14.5px; line-height:1.75; margin-bottom:14px;}
+  .desc-block ul{ color:var(--ink); font-size:14.5px; line-height:1.8; margin:0 0 14px 22px;}
+  .desc-block li{ margin-bottom:6px; } .desc-block strong{ color:var(--linework); font-weight:600;}
+
+  .factor-table{ width:100%; border-collapse:collapse; margin:8px 0 14px; }
+  .factor-table th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--linework); padding:8px 6px; border-bottom:1px solid var(--grid-line); }
+  .factor-table td{ padding:9px 6px; border-bottom:1px solid var(--grid-line); font-size:13.5px; font-family:'JetBrains Mono',monospace; }
+
+  footer.site{ text-align:center; margin-top:48px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em;}
+  footer.site a{ color:var(--text-muted); text-decoration:underline;} footer.site a:hover{ color:var(--linework);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="/" class="logo"><img src="/logo.png" alt="Docutoolbox logo" style="width:30px;height:30px;object-fit:contain;border-radius:6px;">Docutoolbox</a>
+    <a href="/products/" class="all-products-btn">All Products &rarr;</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Docutoolbox &middot; 20 tools</div>
+  <h1><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 12l4.5-3"/><path d="M12 7v1"/><path d="M12 16v1"/><path d="M7 12h1"/><path d="M16 12h1"/></svg>Speed Unit Converters</h1>
+  <p class="intro">Free, instant speed conversions between meters per second, kilometers per hour, miles per hour, feet per second, and knots. Every conversion uses the exact formula, with a quick reference table.</p>
+
+  <div class="tool-grid">
+    <a href="/speed/feet-per-second-to-kilometers-per-hour-converter/" class="tool-card"><div class="tool-card-title">Feet per second to Kilometers per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/feet-per-second-to-knots-converter/" class="tool-card"><div class="tool-card-title">Feet per second to Knots</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/feet-per-second-to-meters-per-second-converter/" class="tool-card"><div class="tool-card-title">Feet per second to Meters per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/feet-per-second-to-miles-per-hour-converter/" class="tool-card"><div class="tool-card-title">Feet per second to Miles per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/kilometers-per-hour-to-feet-per-second-converter/" class="tool-card"><div class="tool-card-title">Kilometers per hour to Feet per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/kilometers-per-hour-to-knots-converter/" class="tool-card"><div class="tool-card-title">Kilometers per hour to Knots</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/kilometers-per-hour-to-meters-per-second-converter/" class="tool-card"><div class="tool-card-title">Kilometers per hour to Meters per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/kilometers-per-hour-to-miles-per-hour-converter/" class="tool-card"><div class="tool-card-title">Kilometers per hour to Miles per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/knots-to-feet-per-second-converter/" class="tool-card"><div class="tool-card-title">Knots to Feet per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/knots-to-kilometers-per-hour-converter/" class="tool-card"><div class="tool-card-title">Knots to Kilometers per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/knots-to-meters-per-second-converter/" class="tool-card"><div class="tool-card-title">Knots to Meters per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/knots-to-miles-per-hour-converter/" class="tool-card"><div class="tool-card-title">Knots to Miles per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/meters-per-second-to-feet-per-second-converter/" class="tool-card"><div class="tool-card-title">Meters per second to Feet per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/meters-per-second-to-kilometers-per-hour-converter/" class="tool-card"><div class="tool-card-title">Meters per second to Kilometers per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/meters-per-second-to-knots-converter/" class="tool-card"><div class="tool-card-title">Meters per second to Knots</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/meters-per-second-to-miles-per-hour-converter/" class="tool-card"><div class="tool-card-title">Meters per second to Miles per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/miles-per-hour-to-feet-per-second-converter/" class="tool-card"><div class="tool-card-title">Miles per hour to Feet per second</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/miles-per-hour-to-kilometers-per-hour-converter/" class="tool-card"><div class="tool-card-title">Miles per hour to Kilometers per hour</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/miles-per-hour-to-knots-converter/" class="tool-card"><div class="tool-card-title">Miles per hour to Knots</div><span class="tool-card-link">Open &rarr;</span></a>
+    <a href="/speed/miles-per-hour-to-meters-per-second-converter/" class="tool-card"><div class="tool-card-title">Miles per hour to Meters per second</div><span class="tool-card-link">Open &rarr;</span></a>
+  </div>
+
+  <div class="desc-block">
+    <h2>Free speed unit converters</h2>
+    <p>Docutoolbox's Speed Unit Converters cover every conversion between meters per second, kilometers per hour, miles per hour, feet per second, and knots. Each converter has its own dedicated page for the fastest, most focused conversion experience, with live results, the exact formula, and a quick reference table.</p>
+
+    <h2>How the converters work</h2>
+    <p>Speed conversions are ratio based, so every unit is defined as a fixed multiple of meters per second, the base unit used internally. Converting any value is simply multiplying by the source unit's factor and dividing by the target unit's factor. Switching the "From" or "To" unit on any converter page instantly takes you to the matching dedicated converter, so you always land on the most relevant tool for your exact conversion.</p>
+
+    <h2>Conversion factors</h2>
+    <p>Each unit below is shown as its equivalent value in meters per second, the base unit used for every calculation on this site.</p>
+    <table class="factor-table">
+      <tr><th>Unit</th><th>Equal to</th></tr>
+      <tr><td>Meter per second (m/s)</td><td>1 m/s</td></tr>
+      <tr><td>Kilometer per hour (km/h)</td><td>0.277778 m/s</td></tr>
+      <tr><td>Mile per hour (mph)</td><td>0.44704 m/s</td></tr>
+      <tr><td>Foot per second (ft/s)</td><td>0.3048 m/s</td></tr>
+      <tr><td>Knot (kn)</td><td>0.514444 m/s</td></tr>
+    </table>
+
+    <h2>Common uses</h2>
+    <ul>
+      <li>Converting vehicle speed limits and speedometer readings between metric and imperial regions</li>
+      <li>Reading marine vessel speed and aircraft airspeed reported in knots</li>
+      <li>Scientific, engineering, and physics calculations that use meters per second or feet per second</li>
+      <li>Sports and athletics, such as running, cycling, or wind speed measurements</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Are these conversions exact?</h3>
+    <p>Yes, all speed conversions here use fixed, mathematically defined ratios between meters per second, kilometers per hour, miles per hour, feet per second, and knots, results are always exact.</p>
+    <h3>Which speed unit should I use?</h3>
+    <p>Use kilometers per hour or miles per hour for everyday road speeds depending on your region, meters per second for scientific and physics work, feet per second for technical or ballistics calculations, and knots for maritime or aviation speeds.</p>
+    <h3>Is my data stored or sent anywhere?</h3>
+    <p>No, every calculation happens locally in your browser using JavaScript, nothing is uploaded or stored.</p>
+  </div>
+
+  <footer class="site">MORE TOOLS AT <a href="/">Docutoolbox</a> &middot; <a href="/about/">About</a> &middot; <a href="/privacy/">Privacy</a></footer>
+</div>
+
+</body>
+</html>
